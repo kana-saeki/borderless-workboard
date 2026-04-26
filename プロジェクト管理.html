@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ボーダレスジャパン プロジェクト管理</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
+header{background:#1a1a2e;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.header-inner{display:flex;align-items:center;gap:16px;max-width:1280px;margin:0 auto;height:54px;padding:0 20px}
+header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
+.tab-nav{display:flex;overflow-x:auto}
+.tab-btn{padding:0 14px;height:54px;border:none;background:transparent;color:rgba(255,255,255,.55);font-size:13px;font-family:inherit;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;font-weight:500;white-space:nowrap}
+.tab-btn:hover{color:rgba(255,255,255,.9)}
+.tab-btn.active{color:#fff;border-bottom-color:#7eb8f7}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.page{max-width:1200px;margin:0 auto;padding:24px 16px}
+
+/* Dashboard */
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.org-summary-card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);border-top:4px solid #ccc;cursor:pointer;transition:box-shadow .2s,transform .1s}
+.org-summary-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.12);transform:translateY(-2px)}
+.osc-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.osc-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.osc-name{font-size:13px;font-weight:700;line-height:1.3}
+.osc-obj-count{font-size:11px;color:#888;margin-top:1px}
+.osc-rate{font-size:28px;font-weight:800;line-height:1;margin-bottom:6px}
+.osc-bar{height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-bottom:8px}
+.osc-fill{height:100%;border-radius:3px;transition:width .6s}
+.osc-krs{font-size:11px;color:#888}
+
+.dash-section{margin-bottom:28px}
+.section-title{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title span{font-size:12px;font-weight:500;color:#888}
+.proj-cards-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.mini-proj-card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.07);border-left:4px solid #ccc}
+.mpc-name{font-size:14px;font-weight:700;margin-bottom:4px}
+.mpc-meta{font-size:12px;color:#888;margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mpc-prog{height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.mpc-prog-fill{height:100%;border-radius:3px;background:#3b82f6}
+
+.task-quick-list{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.tq-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+.tq-item:last-child{border-bottom:none}
+.tq-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tq-title{flex:1;font-weight:500}
+.tq-due{font-size:11px;color:#888;white-space:nowrap}
+.tq-ov{color:#dc2626!important;font-weight:600}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.stat-card{background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);text-align:center}
+.stat-num{font-size:26px;font-weight:800;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:#888}
+.n-total{color:#1a1a2e}.n-active{color:#3b82f6}.n-warn{color:#f59e0b}.n-done{color:#22c55e}
+
+/* OKR Tab */
+.okr-org-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.okr-org-btn{padding:8px 18px;border-radius:24px;border:2px solid #e0e0e0;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
+.okr-org-btn:hover{border-color:#4a90e2;color:#4a90e2}
+.okr-org-btn.active{color:#fff;border-color:transparent}
+.okr-accordion{display:flex;flex-direction:column;gap:14px}
+.obj-card{background:#fff;border-radius:14px;box-shadow:0 1px 6px rgba(0,0,0,.08);overflow:hidden}
+.obj-head{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none}
+.obj-head:hover{background:#fafafa}
+.obj-num{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
+.obj-name{flex:1;font-size:15px;font-weight:700}
+.obj-desc{font-size:12px;color:#888;margin-top:2px;line-height:1.5}
+.obj-chevron{font-size:12px;color:#999;transition:transform .2s;flex-shrink:0}
+.obj-card.open .obj-chevron{transform:rotate(90deg)}
+.obj-body{border-top:1px solid #f0f0f0;display:none}
+.obj-card.open .obj-body{display:block}
+.kr-list{padding:8px 20px 16px}
+.kr-item{display:grid;grid-template-columns:1fr 140px 140px 120px 60px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f5}
+.kr-item:last-child{border-bottom:none}
+.kr-name{font-size:13px;font-weight:600;line-height:1.4}
+.kr-target{font-size:12px;color:#666;text-align:right}
+.kr-actual-wrap{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.kr-actual-input{width:90px;padding:5px 8px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:13px;text-align:right;font-family:inherit;outline:none;transition:border-color .2s}
+.kr-actual-input:focus{border-color:#4a90e2}
+.kr-unit{font-size:11px;color:#888}
+.kr-bar-wrap{display:flex;flex-direction:column;gap:3px}
+.kr-bar{height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.kr-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+.kr-rate{font-size:12px;font-weight:700;text-align:right}
+.kr-header{display:grid;grid-template-columns:1fr 140px 140px 120px 60px;gap:8px;padding:8px 0 6px;border-bottom:2px solid #f0f0f0;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.kr-header>*:nth-child(2),.kr-header>*:nth-child(3),.kr-header>*:nth-child(4),.kr-header>*:nth-child(5){text-align:right}
+.obj-projs{padding:0 20px 14px;display:flex;gap:8px;flex-wrap:wrap}
+.obj-proj-badge{padding:4px 12px;border-radius:14px;font-size:12px;font-weight:600;background:#f0f2f5;color:#444;display:flex;align-items:center;gap:4px}
+
+/* Projects Tab */
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.summary-item{background:#fff;border-radius:12px;padding:16px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07);text-align:center}
+.summary-item .num{font-size:26px;font-weight:700;line-height:1;margin-bottom:6px}
+.summary-item .lbl{font-size:12px;color:#888}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+.proj-card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:4px solid #94a3b8;transition:box-shadow .2s,transform .1s}
+.proj-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-1px)}
+.proj-card.s-active{border-top-color:#3b82f6}.proj-card.s-warning{border-top-color:#f59e0b}
+.proj-card.s-delayed{border-top-color:#ef4444}.proj-card.s-completed{border-top-color:#22c55e;opacity:.78}
+.proj-card-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.proj-name{font-size:15px;font-weight:700;line-height:1.3}
+.proj-org-lbl{font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;font-weight:600;display:inline-block;margin-top:3px}
+.proj-acts{display:flex;gap:4px;flex-shrink:0}
+.btn-icon{border:none;background:#f5f5f5;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.btn-icon:hover{background:#e0e0e0}
+.proj-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center;margin-top:8px}
+.sbadge{font-size:11px;padding:2px 10px;border-radius:10px;font-weight:600}
+.sbadge.s-active{background:#dbeafe;color:#1d4ed8}.sbadge.s-warning{background:#fef3c7;color:#b45309}
+.sbadge.s-delayed{background:#fee2e2;color:#b91c1c}.sbadge.s-completed{background:#dcfce7;color:#15803d}
+.date-range{font-size:11px;color:#888}
+.prog-wrap{margin-bottom:10px}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:4px}
+.prog-bar{height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:#3b82f6;transition:width .4s}
+.s-warning .prog-fill{background:#f59e0b}.s-delayed .prog-fill{background:#ef4444}.s-completed .prog-fill{background:#22c55e}
+.ms-list-view{border-top:1px solid #f5f5f5;padding-top:8px;margin-top:6px}
+.ms-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666;padding:3px 0}
+.ms-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ms-done-c .ms-dot{background:#22c55e}.ms-up .ms-dot{background:#3b82f6}.ms-late .ms-dot{background:#ef4444}
+.ms-done-c .ms-n{text-decoration:line-through;color:#aaa}.ms-late .ms-n{color:#ef4444}
+.ms-d{margin-left:auto;font-size:11px;color:#bbb}
+.proj-krs-wrap{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.kr-link-badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600}
+.btn-notion{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:6px;background:#1a1a2e;color:#fff;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:8px}
+.btn-notion:hover{background:#2d2d4e}
+.btn-primary{background:#1a1a2e;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary:hover{background:#2d2d4e}
+.proj-filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.fb{padding:6px 14px;border:1.5px solid #ddd;border-radius:20px;background:#fff;font-size:13px;cursor:pointer;transition:all .15s;font-family:inherit}
+.fb:hover{border-color:#4a90e2;color:#4a90e2}
+.fb.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal h2{font-size:18px;margin-bottom:20px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:13px;font-weight:600;color:#555;margin-bottom:5px}
+.fc{width:100%;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;transition:border-color .2s}
+.fc:focus{border-color:#4a90e2;background:#fff}
+.frow{display:flex;gap:10px}
+.frow .fg{flex:1}
+.modal-acts{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.btn-cancel{padding:9px 18px;border-radius:8px;border:1.5px solid #ddd;background:#fff;font-size:14px;cursor:pointer;font-family:inherit}
+.btn-cancel:hover{background:#f5f5f5}
+.ms-edit-item{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.ms-edit-item input[type=text]{flex:1;padding:6px 10px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:13px;font-family:inherit;outline:none}
+.ms-edit-item input[type=date]{width:140px;padding:6px 10px;border:1.5px solid #e0e0e0;border-radius:6px;font-size:13px;font-family:inherit;outline:none}
+.ms-edit-item input:focus{border-color:#4a90e2}
+.btn-add-ms{font-size:12px;padding:5px 12px;background:#f0f2f5;border:1px solid #ddd;border-radius:6px;cursor:pointer;font-family:inherit}
+.btn-add-ms:hover{background:#e8e8e8}
+.btn-rm-ms{border:none;background:#fee2e2;color:#dc2626;border-radius:6px;width:24px;height:24px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.kr-checkbox-list{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;border:1.5px solid #e0e0e0;border-radius:8px;padding:10px;background:#fafafa}
+.kr-checkbox-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;cursor:pointer;padding:4px 0}
+.kr-checkbox-item input[type=checkbox]{width:14px;height:14px;margin-top:1px;cursor:pointer;accent-color:#4a90e2;flex-shrink:0}
+.kr-checkbox-org-label{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;padding:4px 0 2px;letter-spacing:.5px}
+
+/* Tasks */
+.add-card{background:#fff;border-radius:12px;padding:20px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.add-card-title{font-size:13px;font-weight:600;margin-bottom:14px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+.frow-t{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.frow-t input[type=text],.frow-t input[type=date],.frow-t select{flex:1;min-width:110px;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;transition:border-color .2s;outline:none}
+.frow-t input:focus,.frow-t select:focus{border-color:#4a90e2;background:#fff}
+.filters-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.fsearch{padding:6px 12px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;font-family:inherit;outline:none;width:180px;transition:border-color .2s;margin-left:auto}
+.fsearch:focus{border-color:#4a90e2}
+.columns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.column{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #f0f0f0}
+.col-title{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.cdot{width:10px;height:10px;border-radius:50%}
+.col-todo .cdot{background:#94a3b8}.col-doing .cdot{background:#f59e0b}.col-done .cdot{background:#22c55e}
+.ccnt{background:#f0f2f5;border-radius:12px;padding:2px 8px;font-size:12px;color:#666;font-weight:600}
+.tlist{display:flex;flex-direction:column;gap:10px;min-height:60px}
+.tcard{border:1.5px solid #eee;border-radius:10px;padding:12px 14px;background:#fafafa;transition:box-shadow .15s,transform .1s}
+.tcard:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-1px)}
+.tcard.done-card{opacity:.6}
+.ttop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.ttitle{font-size:14px;font-weight:600;line-height:1.4;word-break:break-word}
+.done-card .ttitle{text-decoration:line-through;color:#aaa}
+.tmeta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.ph{background:#fee2e2;color:#dc2626}.pm{background:#fef3c7;color:#d97706}.pl{background:#e0f2fe;color:#0284c7}
+.bc{background:#ede9fe;color:#7c3aed}.bt{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}.bp{background:#dbeafe;color:#1d4ed8}
+.bdue{font-size:11px;color:#888}.bdue.ov{color:#dc2626;font-weight:600}
+.tacts{display:flex;gap:4px;flex-shrink:0}
+.btn-st{border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;background:#e8f4fd;color:#1a6fb5}
+.btn-st:hover{background:#d0eaf8}
+.btn-dl{border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;background:#fee2e2;color:#dc2626}
+.btn-dl:hover{background:#fecaca}
+.empty{text-align:center;color:#ccc;font-size:13px;padding:20px 0}
+
+/* Monitor */
+.mon-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:gap}
+.btn-refresh{padding:8px 16px;border-radius:8px;border:1.5px solid #ddd;background:#fff;font-size:13px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:background .15s}
+.btn-refresh:hover{background:#f5f5f5}
+.btn-refresh.loading{opacity:.6;pointer-events:none}
+.no-cfg{text-align:center;padding:60px 20px;color:#888;font-size:14px;line-height:2.2}
+.no-cfg a{color:#4a90e2;cursor:pointer;text-decoration:underline}
+.org-sec{margin-bottom:28px}
+.org-sec-title{font-size:15px;font-weight:700;padding:12px 18px;color:#fff;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:10px}
+.org-body{background:#fff;border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kpi-sec{border-bottom:1px solid #f0f0f0}
+.kpi-sec:last-child{border-bottom:none}
+.kpi-head{padding:12px 18px;background:#f8f9fb;border-bottom:1px solid #eee;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.kpi-name{font-size:14px;font-weight:600}
+.kpi-totals{font-size:12px;color:#666}
+.kpi-rate{margin-left:auto;font-size:14px;font-weight:700}
+.kpi-bar-wrap{padding:4px 18px 8px}
+.kbar{height:7px;background:#eee;border-radius:4px;overflow:hidden}
+.kbar-fill{height:100%;border-radius:4px;transition:width .5s}
+.kbar-fill.ko{background:#22c55e}.kbar-fill.kw{background:#f59e0b}.kbar-fill.kd{background:#ef4444}.kbar-fill.kn{background:#3b82f6}
+.proj-rows{padding:4px 18px 12px}
+.proj-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f5f5f5;font-size:13px}
+.proj-row:last-child{border-bottom:none}
+.pr-name{flex:1;font-weight:500}
+.pr-tgt{color:#888;width:80px;text-align:right;font-size:12px}
+.pr-act{font-weight:700;width:80px;text-align:right}
+.pr-bar{flex:1;max-width:100px;height:5px;background:#eee;border-radius:3px;overflow:hidden}
+.pr-bar-fill{height:100%;border-radius:3px;background:#3b82f6}
+.pr-rate{width:52px;text-align:right;font-size:12px;font-weight:700}
+.ro{color:#16a34a}.rw{color:#d97706}.rd{color:#dc2626}
+.mon-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:2px solid #f0f0f0;padding-bottom:0}
+.mon-tab-btn{padding:8px 16px;border:none;background:transparent;font-size:14px;font-family:inherit;cursor:pointer;color:#888;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+.mon-tab-btn.active{color:#1a1a2e;border-bottom-color:#1a1a2e;font-weight:700}
+.mon-tab-content{display:none}
+.mon-tab-content.active{display:block}
+.mon-table{width:100%;border-collapse:collapse;font-size:13px}
+.mon-table th{padding:10px 14px;background:#f8f9fb;font-weight:700;color:#555;text-align:left;border-bottom:2px solid #eee;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.mon-table td{padding:10px 14px;border-bottom:1px solid #f5f5f5}
+.mon-table tr:last-child td{border-bottom:none}
+.mon-table tr:hover td{background:#f9f9f9}
+
+/* Settings */
+.settings-sec{margin-bottom:28px}
+.settings-sec h3{font-size:13px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px}
+.hint{font-size:12px;color:#999;margin-top:4px}
+.col-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.notice{background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px;font-size:13px;color:#666;line-height:1.8}
+.btn-save{background:#1a1a2e;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-save:hover{background:#2d2d4e}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#1a1a2e;color:#fff;padding:10px 18px;border-radius:8px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* Settings org tabs */
+.settings-org-tabs{display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:0}
+.settings-org-tab{padding:10px 18px;border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.settings-org-tab:hover{color:#1a1a2e}
+.settings-org-tab.active{color:#1a1a2e;border-bottom-color:#1a1a2e}
+.settings-org-panel{display:none;padding:20px 0}
+.settings-org-panel.active{display:block}
+.settings-subsec{background:#fff;border-radius:12px;border:1.5px solid #e0e0e0;margin-bottom:16px;overflow:hidden}
+.settings-subsec-head{display:flex;align-items:center;gap:10px;padding:14px 18px;font-size:14px;font-weight:700;background:#fafafa;border-bottom:1px solid #eee;cursor:pointer;user-select:none}
+.settings-subsec-head:hover{background:#f0f2f5}
+.settings-subsec-body{padding:16px 18px}
+.settings-subsec-chevron{font-size:11px;color:#999;transition:transform .2s;margin-left:auto}
+.settings-subsec.open .settings-subsec-chevron{transform:rotate(90deg)}
+.settings-subsec-body{display:none}
+.settings-subsec.open .settings-subsec-body{display:block}
+/* Sheet/DB item cards */
+.item-card{border:1.5px solid #e8e8e8;border-radius:10px;margin-bottom:10px;overflow:hidden}
+.item-card-head{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#f9f9f9;cursor:pointer;user-select:none}
+.item-card-head:hover{background:#f0f2f5}
+.item-card-label{flex:1;font-size:13px;font-weight:600}
+.item-card-status{font-size:11px;color:#888}
+.item-card-body{display:none;padding:14px;border-top:1px solid #eee}
+.item-card.open .item-card-body{display:block}
+.item-card-chevron{font-size:10px;color:#aaa;transition:transform .2s}
+.item-card.open .item-card-chevron{transform:rotate(90deg)}
+.btn-add-item{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1.5px dashed #ccc;background:transparent;font-size:13px;color:#888;cursor:pointer;width:100%;font-family:inherit;transition:all .2s;margin-top:4px}
+.btn-add-item:hover{border-color:#4a90e2;color:#4a90e2;background:#f0f6ff}
+.btn-rm-item{border:none;background:#fee2e2;color:#dc2626;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:background .15s}
+.btn-rm-item:hover{background:#fecaca}
+/* Toggle switch */
+.toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:#ccc;border-radius:24px;transition:.3s}
+.toggle-slider::before{position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-switch input:checked + .toggle-slider{background:#10b981}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px)}
+
+.ro{color:#16a34a}.rw{color:#d97706}.rd{color:#dc2626}
+@media(max-width:800px){.dash-grid,.stats-row,.summary-bar{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.kr-item{grid-template-columns:1fr 100px;}.kr-item>*:nth-child(n+3){display:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>🌏 BJ プロジェクト管理</h1>
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
+      <button class="tab-btn" data-tab="okr">OKR</button>
+      <button class="tab-btn" data-tab="projects">プロジェクト</button>
+      <button class="tab-btn" data-tab="tasks">タスク</button>
+      <button class="tab-btn" data-tab="monitor">モニタリング</button>
+      <button class="tab-btn" data-tab="settings">⚙ 設定</button>
+    </nav>
+  </div>
+</header>
+
+<!-- DASHBOARD TAB -->
+<div id="tab-dashboard" class="tab-content active">
+  <div class="page">
+    <div class="dash-grid" id="dash-org-cards"></div>
+    <div class="stats-row" id="dash-stats"></div>
+    <div class="dash-section">
+      <div class="section-title">🚀 進行中のプロジェクト <span id="active-proj-count"></span></div>
+      <div class="proj-cards-row" id="dash-active-projects"></div>
+    </div>
+    <div class="dash-section">
+      <div class="section-title">📋 直近のタスク（期限順）</div>
+      <div class="task-quick-list" id="dash-tasks"></div>
+    </div>
+  </div>
+</div>
+
+<!-- OKR TAB -->
+<div id="tab-okr" class="tab-content">
+  <div class="page">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px">2026年度 OKR</div>
+        <div style="font-size:13px;color:#888">各KRの実績値を入力してください。自動保存されます。</div>
+      </div>
+      <button class="btn-primary" onclick="exportOKR()">📊 OKRサマリーをコピー</button>
+    </div>
+    <div class="okr-org-tabs" id="okr-org-tabs"></div>
+    <div id="okr-content"></div>
+  </div>
+</div>
+
+<!-- PROJECTS TAB -->
+<div id="tab-projects" class="tab-content">
+  <div class="page">
+    <div class="summary-bar" id="proj-summary"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+      <div class="proj-filter-row" id="proj-org-filter"></div>
+      <button class="btn-primary" onclick="openProjModal()">＋ プロジェクトを追加</button>
+    </div>
+    <div class="project-grid" id="project-grid"></div>
+  </div>
+</div>
+
+<!-- TASKS TAB -->
+<div id="tab-tasks" class="tab-content">
+  <div class="page">
+    <div class="add-card">
+      <div class="add-card-title">新しいタスク</div>
+      <div class="frow-t">
+        <input type="text" id="t-title" placeholder="タスク名" style="flex:2">
+        <input type="date" id="t-due">
+        <select id="t-priority"><option value="high">高</option><option value="mid" selected>中</option><option value="low">低</option></select>
+        <select id="t-proj-sel"><option value="">プロジェクト</option></select>
+        <input type="text" id="t-tags" placeholder="タグ (カンマ区切り)">
+        <button class="btn-primary" onclick="addTask()" style="flex-shrink:0">追加</button>
+      </div>
+    </div>
+    <div class="filters-row">
+      <button class="fb active" data-tf="all" onclick="setTF(this,'all')">すべて</button>
+      <button class="fb" data-tf="high" onclick="setTF(this,'high')">🔴 高優先度</button>
+      <button class="fb" data-tf="overdue" onclick="setTF(this,'overdue')">⏰ 期限超過</button>
+      <input type="text" class="fsearch" id="t-search" placeholder="🔍 検索" oninput="renderTasks()">
+    </div>
+    <div class="columns">
+      <div class="column col-todo"><div class="col-head"><div class="col-title"><div class="cdot"></div>未着手</div><span class="ccnt" id="cnt-todo">0</span></div><div class="tlist" id="list-todo"></div></div>
+      <div class="column col-doing"><div class="col-head"><div class="col-title"><div class="cdot"></div>対応中</div><span class="ccnt" id="cnt-doing">0</span></div><div class="tlist" id="list-doing"></div></div>
+      <div class="column col-done"><div class="col-head"><div class="col-title"><div class="cdot"></div>完了</div><span class="ccnt" id="cnt-done">0</span></div><div class="tlist" id="list-done"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MONITOR TAB -->
+<div id="tab-monitor" class="tab-content">
+  <div class="page">
+    <div class="mon-head">
+      <div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px">KPIモニタリング</div>
+        <div style="font-size:13px;color:#888">Googleスプレッドシートから実績データを取得します</div>
+      </div>
+      <button class="btn-refresh" id="btn-refresh" onclick="fetchSheets()">🔄 データを更新</button>
+    </div>
+    <div class="mon-tabs">
+      <button class="mon-tab-btn active" data-mt="okr-mon" onclick="setMonTab(this,'okr-mon')">OKR実績</button>
+      <button class="mon-tab-btn" data-mt="sheets-raw" onclick="setMonTab(this,'sheets-raw')">シートデータ</button>
+    </div>
+    <div id="mt-okr-mon" class="mon-tab-content active">
+      <div id="mon-okr-content"></div>
+    </div>
+    <div id="mt-sheets-raw" class="mon-tab-content">
+      <div id="mon-sheets-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS TAB -->
+<div id="tab-settings" class="tab-content">
+  <div class="page">
+    <div style="max-width:820px">
+      <div style="font-size:20px;font-weight:800;margin-bottom:6px">設定</div>
+      <div style="font-size:13px;color:#888;margin-bottom:28px">各組織のGoogle スプレッドシート・Notion連携を個別に設定できます</div>
+
+      <!-- Global Notion proxy -->
+      <div class="settings-sec">
+        <h3>🌐 Notion CORSプロキシ（全組織共通）</h3>
+        <div class="fg">
+          <label>Cloudflare Worker URL</label>
+          <input class="fc" id="s-notion-proxy" placeholder="https://your-worker.your-account.workers.dev">
+          <div class="hint">未設定の場合、すべての組織でNotionタスク自動取得は無効になります</div>
+        </div>
+      </div>
+
+      <!-- Per-org settings -->
+      <div class="settings-sec">
+        <h3>📂 組織別連携設定</h3>
+        <div class="settings-org-tabs" id="settings-org-tabs"></div>
+        <div id="settings-org-panels"></div>
+      </div>
+
+      <div style="margin-bottom:32px">
+        <button class="btn-save" onclick="saveSettings()">💾 設定を保存</button>
+      </div>
+
+      <!-- Data management -->
+      <div class="settings-sec">
+        <h3>データ管理</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-cancel" onclick="exportData()">💾 データをエクスポート</button>
+          <button class="btn-cancel" onclick="importDataClick()">📂 データをインポート</button>
+          <button class="btn-cancel" style="color:#dc2626;border-color:#fecaca" onclick="clearAllData()">🗑 すべてのデータを削除</button>
+        </div>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="proj-modal">
+  <div class="modal">
+    <h2 id="proj-modal-title">プロジェクトを追加</h2>
+    <div class="fg"><label>プロジェクト名 *</label><input class="fc" id="pm-name" placeholder="プロジェクト名"></div>
+    <div class="frow">
+      <div class="fg"><label>組織 *</label>
+        <select class="fc" id="pm-org" onchange="updateKRCheckboxes()">
+          <option value="">選択してください</option>
+          <option value="hr">HRスタジオ</option>
+          <option value="pr">PRスタジオ</option>
+          <option value="corp">コーポレート</option>
+          <option value="group">グループ経営強化</option>
+        </select>
+      </div>
+      <div class="fg"><label>ステータス</label>
+        <select class="fc" id="pm-status">
+          <option value="active">進行中</option>
+          <option value="warning">要注意</option>
+          <option value="delayed">遅延</option>
+          <option value="completed">完了</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>開始日</label><input class="fc" type="date" id="pm-start"></div>
+      <div class="fg"><label>終了予定日</label><input class="fc" type="date" id="pm-end"></div>
+    </div>
+    <div class="fg"><label>貢献するKey Result（複数選択可）</label>
+      <div class="kr-checkbox-list" id="kr-checkbox-list"><div style="color:#888;font-size:13px">組織を選択するとKRが表示されます</div></div>
+    </div>
+    <div class="fg"><label>NotionページURL</label><input class="fc" id="pm-notion" placeholder="https://www.notion.so/..."></div>
+    <div class="fg"><label>説明</label><textarea class="fc" id="pm-desc" rows="3" placeholder="プロジェクトの概要"></textarea></div>
+    <div class="fg"><label>マイルストーン</label>
+      <div id="ms-list"></div>
+      <button class="btn-add-ms" onclick="addMsRow()">＋ マイルストーンを追加</button>
+    </div>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeProjModal()">キャンセル</button>
+      <button class="btn-primary" onclick="saveProject()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================== OKR DATA ==================
+const ORG_META = {
+  hr:    { name:'HRスタジオ',     color:'#10b981', icon:'👥', bg:'rgba(16,185,129,.1)' },
+  pr:    { name:'PRスタジオ',     color:'#3b82f6', icon:'📣', bg:'rgba(59,130,246,.1)' },
+  corp:  { name:'コーポレート',   color:'#f59e0b', icon:'🏢', bg:'rgba(245,158,11,.1)' },
+  group: { name:'グループ経営強化', color:'#8b5cf6', icon:'🌐', bg:'rgba(139,92,246,.1)' }
+};
+
+const OKR_DATA = {
+  hr: {
+    objectives: [
+      { id:'hr_o1', name:'新卒・二卒採用', desc:'27新卒18名（留学生8名含む）/二卒10名 内定承諾達成',
+        krs:[
+          { id:'hr_o1_kr1', name:'新卒内定承諾数', target:18, unit:'名', note:'留学生8名含む' },
+          { id:'hr_o1_kr2', name:'二卒内定承諾数', target:10, unit:'名' }
+        ]},
+      { id:'hr_o2', name:'中途採用リードタイム短縮', desc:'承諾から2ヶ月以内の採用完了',
+        krs:[
+          { id:'hr_o2_kr1', name:'採用リードタイム（平均）', target:2, unit:'ヶ月以内', lowerIsBetter:true }
+        ]},
+      { id:'hr_o3', name:'人材育成・事業責任者輩出', desc:'年間5名の事業責任者候補を輩出',
+        krs:[
+          { id:'hr_o3_kr1', name:'事業責任者候補輩出数', target:5, unit:'名/年' }
+        ]},
+      { id:'hr_o4', name:'カルチャー浸透（海外展開）', desc:'海外3拠点でカルチャー浸透施策を実施',
+        krs:[
+          { id:'hr_o4_kr1', name:'海外拠点施策実施数', target:3, unit:'拠点' }
+        ]},
+      { id:'hr_o5', name:'HRチーム力強化', desc:'チームKPI達成率80%以上',
+        krs:[
+          { id:'hr_o5_kr1', name:'チームKPI達成率', target:80, unit:'%' }
+        ]}
+    ]
+  },
+  pr: {
+    objectives: [
+      { id:'pr_o1', name:'事業PR×成功事例認知向上', desc:'ボーダレス事業の成功事例を社会に広く認知させる',
+        krs:[
+          { id:'pr_o1_kr1', name:'成功事例メディア掲載数', target:10, unit:'件' },
+          { id:'pr_o1_kr2', name:'プレスリリース配信数', target:12, unit:'件' }
+        ]},
+      { id:'pr_o2', name:'思想の社会拡散', desc:'ボーダレスの思想・ミッションを社会全体に広める',
+        krs:[
+          { id:'pr_o2_kr1', name:'思想系コンテンツSNSリーチ', target:100000, unit:'人' },
+          { id:'pr_o2_kr2', name:'代表・幹部登壇数', target:10, unit:'回' }
+        ]},
+      { id:'pr_o3', name:'採用人材プール拡大', desc:'人材プール3,000名以上・エントリー数前年比+20%',
+        krs:[
+          { id:'pr_o3_kr1', name:'人材プール登録数', target:3000, unit:'名' },
+          { id:'pr_o3_kr2', name:'エントリー数増加率', target:20, unit:'%' }
+        ]},
+      { id:'pr_o4', name:'共創プロジェクト推進', desc:'ENJIN CAMP満足度90%以上・共創PJ5件成立',
+        krs:[
+          { id:'pr_o4_kr1', name:'ENJIN CAMP参加者満足度', target:90, unit:'%' },
+          { id:'pr_o4_kr2', name:'共創プロジェクト成立数', target:5, unit:'件' }
+        ]},
+      { id:'pr_o5', name:'PR組織設計・ブランド確立', desc:'メディア掲載10件・アワード受賞3件',
+        krs:[
+          { id:'pr_o5_kr1', name:'メディア掲載数', target:10, unit:'件' },
+          { id:'pr_o5_kr2', name:'アワード受賞数', target:3, unit:'件' }
+        ]}
+    ]
+  },
+  corp: {
+    objectives: [
+      { id:'corp_o1', name:'会計基盤強化', desc:'月次速報値7営業日以内・予実差異20%以下',
+        krs:[
+          { id:'corp_o1_kr1', name:'月次速報値提出リードタイム', target:7, unit:'営業日以内', lowerIsBetter:true },
+          { id:'corp_o1_kr2', name:'予実差異率', target:20, unit:'%以下', lowerIsBetter:true }
+        ]},
+      { id:'corp_o2', name:'労務基盤整備', desc:'労務手続き2日以内処理・エラー率3%以下',
+        krs:[
+          { id:'corp_o2_kr1', name:'労務手続き処理日数', target:2, unit:'日以内', lowerIsBetter:true },
+          { id:'corp_o2_kr2', name:'処理エラー率', target:3, unit:'%以下', lowerIsBetter:true }
+        ]},
+      { id:'corp_o3', name:'法務・情シス安定化', desc:'インシデント5%削減・問い合わせ8時間以内対応',
+        krs:[
+          { id:'corp_o3_kr1', name:'セキュリティインシデント削減率', target:5, unit:'%削減' },
+          { id:'corp_o3_kr2', name:'問い合わせ対応時間', target:8, unit:'h以内', lowerIsBetter:true }
+        ]},
+      { id:'corp_o4', name:'働く環境整備', desc:'全社員が働きやすい環境の整備・改善',
+        krs:[
+          { id:'corp_o4_kr1', name:'従業員満足度スコア', target:80, unit:'%以上' },
+          { id:'corp_o4_kr2', name:'環境改善施策実施数', target:4, unit:'件/年' }
+        ]},
+      { id:'corp_o5', name:'専門性強化', desc:'チームメンバーの専門スキル・資格取得推進',
+        krs:[
+          { id:'corp_o5_kr1', name:'専門資格取得数', target:6, unit:'件/年' },
+          { id:'corp_o5_kr2', name:'社外研修・学習機会参加数', target:12, unit:'回/年' }
+        ]}
+    ]
+  },
+  group: {
+    objectives: [
+      { id:'group_kgi', name:'SGS成長率（KGI）', desc:'SGS20%必達・25%目標',
+        krs:[
+          { id:'group_kgi_kr1', name:'SGS成長率（必達ライン）', target:20, unit:'%' },
+          { id:'group_kgi_kr2', name:'SGS成長率（目標ライン）', target:25, unit:'%' }
+        ]},
+      { id:'group_kr01', name:'MS通過率向上', desc:'メンバー社MS通過率60%達成',
+        krs:[
+          { id:'group_kr01_kr1', name:'MS通過率', target:60, unit:'%' }
+        ]},
+      { id:'group_kr02', name:'資金循環・ガバナンス強化', desc:'グループ全体の資金循環最適化とガバナンス体制強化',
+        krs:[
+          { id:'group_kr02_kr1', name:'資金循環施策実施数', target:3, unit:'件' },
+          { id:'group_kr02_kr2', name:'ガバナンス評価スコア', target:80, unit:'点' }
+        ]},
+      { id:'group_kr03', name:'開発人材最適配置', desc:'開発人材のグループ最適配置実現',
+        krs:[
+          { id:'group_kr03_kr1', name:'配置最適化達成率', target:90, unit:'%' },
+          { id:'group_kr03_kr2', name:'越境配置人数', target:5, unit:'名' }
+        ]},
+      { id:'group_kr04', name:'組織横断機能強化', desc:'toB/toG営業の組織横断機能強化',
+        krs:[
+          { id:'group_kr04_kr1', name:'toB/toG案件数', target:10, unit:'件' },
+          { id:'group_kr04_kr2', name:'横断チーム稼働数', target:3, unit:'チーム' }
+        ]}
+    ]
+  }
+};
+
+// Get all KRs flat
+function allKRs() {
+  const list = [];
+  for (const orgId of Object.keys(OKR_DATA)) {
+    const org = ORG_META[orgId];
+    for (const obj of OKR_DATA[orgId].objectives) {
+      for (const kr of obj.krs) {
+        list.push({ ...kr, orgId, orgName: org.name, objId: obj.id, objName: obj.name });
+      }
+    }
+  }
+  return list;
+}
+
+function getKRById(krId) {
+  return allKRs().find(k => k.id === krId);
+}
+
+// ================== STATE ==================
+function defaultOrgSettings() {
+  const orgs = {};
+  for (const id of Object.keys(ORG_META)) {
+    orgs[id] = {
+      notion: { enabled: false, token: '', dbs: [] },
+      sheets: []
+    };
+  }
+  return orgs;
+}
+
+let state = {
+  projects: [],
+  tasks: [],
+  actuals: {},
+  settings: { notionProxy: '', orgs: defaultOrgSettings() },
+  sheetsData: {}   // { orgId_sheetUid: rows[] }
+};
+
+function loadState() {
+  try { state.projects = JSON.parse(localStorage.getItem('bj_projects_v2') || '[]'); } catch(e){}
+  try { state.tasks    = JSON.parse(localStorage.getItem('bj_tasks_v1')    || '[]'); } catch(e){}
+  try { state.actuals  = JSON.parse(localStorage.getItem('bj_okr_actuals') || '{}'); } catch(e){}
+  try {
+    const saved = JSON.parse(localStorage.getItem('bj_settings') || '{}');
+    const defaults = defaultOrgSettings();
+    const orgs = {};
+    for (const id of Object.keys(ORG_META)) {
+      orgs[id] = {
+        notion: { ...defaults[id].notion, ...(saved.orgs?.[id]?.notion || {}) },
+        sheets:  saved.orgs?.[id]?.sheets || []
+      };
+    }
+    state.settings = { notionProxy: saved.notionProxy || '', orgs };
+  } catch(e){}
+  const proxyEl = document.getElementById('s-notion-proxy');
+  if (proxyEl) proxyEl.value = state.settings.notionProxy;
+  renderSettingsOrgs();
+}
+
+// ---- Settings org tabs ----
+let settingsOrgTab = 'hr';
+function renderSettingsOrgs() {
+  const tabsEl    = document.getElementById('settings-org-tabs');
+  const panelsEl  = document.getElementById('settings-org-panels');
+  if (!tabsEl || !panelsEl) return;
+
+  tabsEl.innerHTML = Object.entries(ORG_META).map(([id, meta]) =>
+    `<button class="settings-org-tab ${id===settingsOrgTab?'active':''}"
+       onclick="switchSettingsOrg('${id}')">${meta.icon} ${meta.name}</button>`
+  ).join('');
+
+  panelsEl.innerHTML = Object.entries(ORG_META).map(([id, meta]) =>
+    `<div class="settings-org-panel ${id===settingsOrgTab?'active':''}" id="settings-panel-${id}">
+       ${buildOrgPanel(id, meta)}
+     </div>`
+  ).join('');
+}
+
+function switchSettingsOrg(id) {
+  settingsOrgTab = id;
+  document.querySelectorAll('.settings-org-tab').forEach(b =>
+    b.classList.toggle('active', b.textContent.includes(ORG_META[id].name))
+  );
+  document.querySelectorAll('.settings-org-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('settings-panel-' + id)?.classList.add('active');
+}
+
+function buildOrgPanel(orgId, meta) {
+  const cfg = state.settings.orgs[orgId];
+  const notion = cfg.notion;
+  const sheets = cfg.sheets;
+
+  // Notion databases list
+  const dbsHtml = (notion.dbs || []).map((db, i) => `
+    <div class="item-card open" id="ndb-card-${orgId}-${i}">
+      <div class="item-card-head" onclick="toggleItemCard('ndb-card-${orgId}-${i}')">
+        <span class="item-card-label">${db.name || 'データベース ' + (i+1)}</span>
+        <span class="item-card-chevron">▶</span>
+        <button class="btn-rm-item" onclick="event.stopPropagation();removeNotionDB('${orgId}',${i})">削除</button>
+      </div>
+      <div class="item-card-body">
+        <div class="fg"><label>データベース名（メモ）</label>
+          <input class="fc" id="ndb-name-${orgId}-${i}" value="${e(db.name)}" placeholder="タスクDB"></div>
+        <div class="fg"><label>データベースID</label>
+          <input class="fc" id="ndb-id-${orgId}-${i}" value="${e(db.id)}" placeholder="32文字のID">
+          <div class="hint">Notion DBのURLの /〈ここ〉?v= の部分</div></div>
+      </div>
+    </div>`).join('');
+
+  // Sheets list
+  const sheetsHtml = sheets.map((sh, i) => `
+    <div class="item-card open" id="sh-card-${orgId}-${i}">
+      <div class="item-card-head" onclick="toggleItemCard('sh-card-${orgId}-${i}')">
+        <span class="item-card-label">${sh.label || 'シート ' + (i+1)}</span>
+        <span class="item-card-status">${sh.sheetName || ''}</span>
+        <span class="item-card-chevron">▶</span>
+        <button class="btn-rm-item" onclick="event.stopPropagation();removeSheet('${orgId}',${i})">削除</button>
+      </div>
+      <div class="item-card-body">
+        <div class="frow">
+          <div class="fg"><label>シートの表示名</label>
+            <input class="fc" id="sh-label-${orgId}-${i}" value="${e(sh.label)}" placeholder="KPI管理シート"></div>
+          <div class="fg"><label>APIキー</label>
+            <input class="fc" id="sh-apikey-${orgId}-${i}" value="${e(sh.apiKey)}" placeholder="AIzaSy..."></div>
+        </div>
+        <div class="fg"><label>スプレッドシートID</label>
+          <input class="fc" id="sh-sid-${orgId}-${i}" value="${e(sh.sheetsId)}" placeholder="URLの /d/〈ここ〉/edit">
+          <div class="hint">Google Sheets APIキーが必要です（Cloud Console で取得）</div></div>
+        <div class="frow">
+          <div class="fg"><label>タブ名</label>
+            <input class="fc" id="sh-sname-${orgId}-${i}" value="${e(sh.sheetName||'Sheet1')}" placeholder="Sheet1"></div>
+          <div class="fg"><label>データ開始行</label>
+            <input class="fc" type="number" id="sh-hrow-${orgId}-${i}" value="${sh.headerRow||2}"></div>
+        </div>
+        <div style="font-size:12px;font-weight:600;color:#666;margin:10px 0 6px">列インデックス（0始まり）</div>
+        <div class="col-grid">
+          <div class="fg"><label>KPI名</label><input class="fc" type="number" id="sh-c0-${orgId}-${i}" value="${sh.c0??0}"></div>
+          <div class="fg"><label>プロジェクト名</label><input class="fc" type="number" id="sh-c1-${orgId}-${i}" value="${sh.c1??1}"></div>
+          <div class="fg"><label>単位</label><input class="fc" type="number" id="sh-c2-${orgId}-${i}" value="${sh.c2??2}"></div>
+          <div class="fg"><label>目標値</label><input class="fc" type="number" id="sh-c3-${orgId}-${i}" value="${sh.c3??3}"></div>
+          <div class="fg"><label>実績値</label><input class="fc" type="number" id="sh-c4-${orgId}-${i}" value="${sh.c4??4}"></div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  return `
+    <!-- Notion -->
+    <div class="settings-subsec open" id="subsec-notion-${orgId}">
+      <div class="settings-subsec-head" onclick="toggleSubsec('subsec-notion-${orgId}')">
+        <span>📝</span><span>Notion タスク連携</span>
+        <span style="font-size:11px;color:#888;font-weight:400;margin-left:4px">${notion.dbs?.length||0}件のDB設定</span>
+        <span class="settings-subsec-chevron">▶</span>
+      </div>
+      <div class="settings-subsec-body">
+        <div class="fg" style="margin-bottom:12px">
+          <label style="display:flex;align-items:center;gap:10px">
+            <label class="toggle-switch">
+              <input type="checkbox" id="notion-enabled-${orgId}" ${notion.enabled?'checked':''}>
+              <span class="toggle-slider"></span>
+            </label>
+            <span style="font-size:13px;font-weight:600">Notion連携を有効にする</span>
+          </label>
+        </div>
+        <div class="fg"><label>インテグレーショントークン（組織共通）</label>
+          <input class="fc" type="password" id="notion-token-${orgId}" value="${e(notion.token)}"
+            placeholder="secret_xxxxxxxxxxxxxxxxxxxx">
+          <div class="hint">Notion設定 → インテグレーション → 新規作成で取得。このDBに接続を忘れずに。</div>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:8px">タスクデータベース</div>
+        <div id="ndb-list-${orgId}">${dbsHtml}</div>
+        <button class="btn-add-item" onclick="addNotionDB('${orgId}')">＋ データベースを追加</button>
+      </div>
+    </div>
+
+    <!-- Sheets -->
+    <div class="settings-subsec open" id="subsec-sheets-${orgId}">
+      <div class="settings-subsec-head" onclick="toggleSubsec('subsec-sheets-${orgId}')">
+        <span>📊</span><span>Google スプレッドシート連携</span>
+        <span style="font-size:11px;color:#888;font-weight:400;margin-left:4px">${sheets.length}件のシート設定</span>
+        <span class="settings-subsec-chevron">▶</span>
+      </div>
+      <div class="settings-subsec-body">
+        <div id="sh-list-${orgId}">${sheetsHtml}</div>
+        <button class="btn-add-item" onclick="addSheet('${orgId}')">＋ スプレッドシートを追加</button>
+      </div>
+    </div>`;
+}
+
+function toggleSubsec(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+function toggleItemCard(id) {
+  document.getElementById(id)?.classList.toggle('open');
+}
+
+// ---- Add / Remove items ----
+function addNotionDB(orgId) {
+  state.settings.orgs[orgId].notion.dbs.push({ id:'', name:'' });
+  refreshOrgPanel(orgId);
+}
+function removeNotionDB(orgId, idx) {
+  state.settings.orgs[orgId].notion.dbs.splice(idx, 1);
+  refreshOrgPanel(orgId);
+}
+function addSheet(orgId) {
+  state.settings.orgs[orgId].sheets.push({
+    uid: 'sh_' + Date.now(), label:'', sheetsId:'', apiKey:'',
+    sheetName:'Sheet1', headerRow:2, c0:0, c1:1, c2:2, c3:3, c4:4
+  });
+  refreshOrgPanel(orgId);
+}
+function removeSheet(orgId, idx) {
+  state.settings.orgs[orgId].sheets.splice(idx, 1);
+  refreshOrgPanel(orgId);
+}
+function refreshOrgPanel(orgId) {
+  // collect current values before re-render
+  collectOrgSettings(orgId);
+  const meta = ORG_META[orgId];
+  const panel = document.getElementById('settings-panel-' + orgId);
+  if (panel) panel.innerHTML = buildOrgPanel(orgId, meta);
+  // refresh subsection count labels in tabs (re-render tabs)
+  renderSettingsOrgs();
+  // re-activate current tab without losing state
+  document.querySelectorAll('.settings-org-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('settings-panel-' + settingsOrgTab)?.classList.add('active');
+}
+
+// ---- Collect form values into state (before save / before re-render) ----
+function collectOrgSettings(orgId) {
+  const cfg = state.settings.orgs[orgId];
+  cfg.notion.enabled = document.getElementById('notion-enabled-' + orgId)?.checked || false;
+  cfg.notion.token   = document.getElementById('notion-token-'   + orgId)?.value.trim() || '';
+  cfg.notion.dbs = cfg.notion.dbs.map((db, i) => ({
+    name: document.getElementById(`ndb-name-${orgId}-${i}`)?.value.trim() || db.name,
+    id:   document.getElementById(`ndb-id-${orgId}-${i}`)?.value.trim()   || db.id
+  }));
+  cfg.sheets = cfg.sheets.map((sh, i) => ({
+    ...sh,
+    label:     document.getElementById(`sh-label-${orgId}-${i}`)?.value.trim()   || sh.label,
+    apiKey:    document.getElementById(`sh-apikey-${orgId}-${i}`)?.value.trim()  || sh.apiKey,
+    sheetsId:  document.getElementById(`sh-sid-${orgId}-${i}`)?.value.trim()     || sh.sheetsId,
+    sheetName: document.getElementById(`sh-sname-${orgId}-${i}`)?.value.trim()   || sh.sheetName,
+    headerRow: parseInt(document.getElementById(`sh-hrow-${orgId}-${i}`)?.value) || sh.headerRow,
+    c0: parseInt(document.getElementById(`sh-c0-${orgId}-${i}`)?.value) ?? sh.c0,
+    c1: parseInt(document.getElementById(`sh-c1-${orgId}-${i}`)?.value) ?? sh.c1,
+    c2: parseInt(document.getElementById(`sh-c2-${orgId}-${i}`)?.value) ?? sh.c2,
+    c3: parseInt(document.getElementById(`sh-c3-${orgId}-${i}`)?.value) ?? sh.c3,
+    c4: parseInt(document.getElementById(`sh-c4-${orgId}-${i}`)?.value) ?? sh.c4,
+  }));
+}
+
+function saveSettings() {
+  state.settings.notionProxy = document.getElementById('s-notion-proxy').value.trim();
+  for (const orgId of Object.keys(ORG_META)) collectOrgSettings(orgId);
+  localStorage.setItem('bj_settings', JSON.stringify(state.settings));
+  renderSettingsOrgs();
+  toast('設定を保存しました');
+}
+
+function saveProjects() { localStorage.setItem('bj_projects_v2', JSON.stringify(state.projects)); }
+function saveTasks() { localStorage.setItem('bj_tasks_v1', JSON.stringify(state.tasks)); }
+function saveActuals() { localStorage.setItem('bj_okr_actuals', JSON.stringify(state.actuals)); }
+
+// ================== TABS ==================
+let activeTab = 'dashboard';
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    activeTab = tab;
+    if (tab === 'dashboard') renderDashboard();
+    if (tab === 'okr') renderOKR();
+    if (tab === 'projects') renderProjects();
+    if (tab === 'tasks') renderTasks();
+    if (tab === 'monitor') renderMonitor();
+  });
+});
+
+// ================== DASHBOARD ==================
+function krAchRate(kr) {
+  const a = state.actuals[kr.id];
+  if (!a || a.actual === '' || a.actual === null || a.actual === undefined) return null;
+  const act = parseFloat(a.actual);
+  if (isNaN(act) || !kr.target) return null;
+  if (kr.lowerIsBetter) {
+    return Math.min(200, Math.round((kr.target / act) * 100));
+  }
+  return Math.min(200, Math.round((act / kr.target) * 100));
+}
+
+function orgAchRate(orgId) {
+  const org = OKR_DATA[orgId];
+  let total = 0, count = 0;
+  for (const obj of org.objectives) {
+    for (const kr of obj.krs) {
+      const r = krAchRate(kr);
+      if (r !== null) { total += r; count++; }
+    }
+  }
+  return count > 0 ? Math.round(total / count) : null;
+}
+
+function rateClass(r) {
+  if (r === null) return 'kbar-fill kn';
+  if (r >= 100) return 'kbar-fill ko';
+  if (r >= 70) return 'kbar-fill kn';
+  if (r >= 40) return 'kbar-fill kw';
+  return 'kbar-fill kd';
+}
+function rateTextClass(r) {
+  if (r === null) return '';
+  if (r >= 100) return 'ro';
+  if (r >= 70) return '';
+  if (r >= 40) return 'rw';
+  return 'rd';
+}
+
+function renderDashboard() {
+  const orgIds = ['hr','pr','corp','group'];
+  const orgCardsEl = document.getElementById('dash-org-cards');
+  orgCardsEl.innerHTML = orgIds.map(orgId => {
+    const meta = ORG_META[orgId];
+    const rate = orgAchRate(orgId);
+    const objCount = OKR_DATA[orgId].objectives.length;
+    const krCount = OKR_DATA[orgId].objectives.reduce((s,o)=>s+o.krs.length,0);
+    const dataKRs = OKR_DATA[orgId].objectives.reduce((s,o)=>s+o.krs.filter(kr=>state.actuals[kr.id]?.actual!==undefined&&state.actuals[kr.id]?.actual!=='').length,0);
+    const rateDisp = rate !== null ? rate + '%' : '—';
+    const fillW = rate !== null ? Math.min(100,rate) : 0;
+    return `<div class="org-summary-card" style="border-top-color:${meta.color}" onclick="switchToOKR('${orgId}')">
+      <div class="osc-head">
+        <div class="osc-icon" style="background:${meta.bg};color:${meta.color}">${meta.icon}</div>
+        <div><div class="osc-name">${meta.name}</div><div class="osc-obj-count">Objective ${objCount}個 / KR ${krCount}個</div></div>
+      </div>
+      <div class="osc-rate ${rateTextClass(rate)}">${rateDisp}</div>
+      <div class="osc-bar"><div class="${rateClass(rate)}" style="width:${fillW}%;background:${meta.color}"></div></div>
+      <div class="osc-krs">${dataKRs}/${krCount} KRにデータあり</div>
+    </div>`;
+  }).join('');
+
+  const active = state.projects.filter(p=>p.status==='active');
+  const warn = state.projects.filter(p=>p.status==='warning'||p.status==='delayed');
+  const done = state.projects.filter(p=>p.status==='completed');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const overdue = state.tasks.filter(t=>t.status!=='done'&&t.due&&new Date(t.due)<today);
+
+  document.getElementById('dash-stats').innerHTML = [
+    `<div class="stat-card"><div class="stat-num n-active">${state.projects.length}</div><div class="stat-lbl">総プロジェクト数</div></div>`,
+    `<div class="stat-card"><div class="stat-num n-active">${active.length}</div><div class="stat-lbl">進行中</div></div>`,
+    `<div class="stat-card"><div class="stat-num n-warn">${warn.length}</div><div class="stat-lbl">要注意・遅延</div></div>`,
+    `<div class="stat-card"><div class="stat-num n-done">${done.length}</div><div class="stat-lbl">完了</div></div>`
+  ].join('');
+
+  const activeProjEl = document.getElementById('dash-active-projects');
+  document.getElementById('active-proj-count').textContent = `${active.length}件`;
+  if (active.length === 0) {
+    activeProjEl.innerHTML = '<div class="empty" style="background:#fff;border-radius:12px;padding:30px">進行中のプロジェクトがありません</div>';
+  } else {
+    activeProjEl.innerHTML = active.slice(0,6).map(p => {
+      const meta = ORG_META[p.org] || { color:'#94a3b8', name:p.org||'' };
+      const prog = projectProgress(p);
+      const linkedKRNames = (p.linkedKRs||[]).map(id=>getKRById(id)?.name||id).slice(0,2);
+      return `<div class="mini-proj-card" style="border-left-color:${meta.color}">
+        <div class="mpc-name">${e(p.name)}</div>
+        <div class="mpc-meta">
+          <span style="background:${meta.bg||'#f0f0f0'};color:${meta.color};padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600">${meta.name}</span>
+          ${p.endDate?`<span>${p.endDate}</span>`:''}
+        </div>
+        ${linkedKRNames.length?`<div style="font-size:11px;color:#888;margin-bottom:6px">→ ${linkedKRNames.join('・')}</div>`:''}
+        <div class="mpc-prog"><div class="mpc-prog-fill" style="width:${prog}%;background:${meta.color}"></div></div>
+      </div>`;
+    }).join('');
+  }
+
+  const upcoming = [...state.tasks].filter(t=>t.status!=='done').sort((a,b)=>{
+    if (!a.due && !b.due) return 0;
+    if (!a.due) return 1;
+    if (!b.due) return -1;
+    return new Date(a.due)-new Date(b.due);
+  }).slice(0,8);
+  const taskEl = document.getElementById('dash-tasks');
+  if (upcoming.length === 0) {
+    taskEl.innerHTML = '<div class="tq-item"><span class="tq-title" style="color:#ccc">タスクがありません</span></div>';
+  } else {
+    taskEl.innerHTML = upcoming.map(t => {
+      const ov = t.due && new Date(t.due) < today;
+      const pColor = t.priority==='high'?'#ef4444':t.priority==='mid'?'#f59e0b':'#3b82f6';
+      return `<div class="tq-item">
+        <div class="tq-dot" style="background:${pColor}"></div>
+        <div class="tq-title">${e(t.title)}</div>
+        <div class="tq-due ${ov?'tq-ov':''}">${t.due?fmtDate(t.due)+(ov?' ⚠':''):''}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function switchToOKR(orgId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-tab="okr"]').classList.add('active');
+  document.getElementById('tab-okr').classList.add('active');
+  renderOKR(orgId);
+}
+
+// ================== OKR ==================
+let activeOrgTab = 'hr';
+function renderOKR(orgId) {
+  if (orgId) activeOrgTab = orgId;
+  const tabsEl = document.getElementById('okr-org-tabs');
+  tabsEl.innerHTML = Object.keys(OKR_DATA).map(id => {
+    const meta = ORG_META[id];
+    const rate = orgAchRate(id);
+    return `<button class="okr-org-btn ${id===activeOrgTab?'active':''}"
+      style="${id===activeOrgTab?`background:${meta.color};border-color:${meta.color}`:`border-color:${meta.color};color:${meta.color}`}"
+      onclick="selectOKROrg('${id}')">${meta.icon} ${meta.name}${rate!==null?' ('+rate+'%)':''}</button>`;
+  }).join('');
+
+  const orgData = OKR_DATA[activeOrgTab];
+  const meta = ORG_META[activeOrgTab];
+  const contentEl = document.getElementById('okr-content');
+  contentEl.innerHTML = `<div class="okr-accordion">${orgData.objectives.map((obj,i) => {
+    const projsForObj = state.projects.filter(p=>(p.linkedKRs||[]).some(krId=>obj.krs.some(kr=>kr.id===krId)));
+    const krRates = obj.krs.map(kr=>krAchRate(kr)).filter(r=>r!==null);
+    const avgRate = krRates.length ? Math.round(krRates.reduce((a,b)=>a+b,0)/krRates.length) : null;
+    return `<div class="obj-card" id="obj-card-${obj.id}">
+      <div class="obj-head" onclick="toggleObj('${obj.id}')">
+        <div class="obj-num" style="background:${meta.color}">${i+1}</div>
+        <div style="flex:1">
+          <div class="obj-name">${e(obj.name)}</div>
+          <div class="obj-desc">${e(obj.desc)}</div>
+        </div>
+        ${avgRate!==null?`<div style="font-size:14px;font-weight:700;margin-right:8px;${avgRate>=100?'color:#16a34a':avgRate>=70?'':avgRate>=40?'color:#d97706':'color:#dc2626'}">${avgRate}%</div>`:''}
+        <div class="obj-chevron">▶</div>
+      </div>
+      <div class="obj-body">
+        <div class="kr-list">
+          <div class="kr-header"><div>Key Result</div><div>目標</div><div>実績入力</div><div>進捗</div><div>達成率</div></div>
+          ${obj.krs.map(kr => {
+            const actual = state.actuals[kr.id]?.actual ?? '';
+            const rate = krAchRate(kr);
+            const fillW = rate !== null ? Math.min(100,rate) : 0;
+            return `<div class="kr-item">
+              <div class="kr-name">${e(kr.name)}${kr.note?`<div style="font-size:11px;color:#888;margin-top:2px">${e(kr.note)}</div>`:''}${kr.lowerIsBetter?'<div style="font-size:10px;color:#999">※低いほど良い</div>':''}</div>
+              <div class="kr-target">${kr.target !== null && kr.target !== undefined ? kr.target + ' ' + kr.unit : '—'}</div>
+              <div class="kr-actual-wrap">
+                <input class="kr-actual-input" type="number" value="${actual}" placeholder="実績"
+                  data-krid="${kr.id}" onchange="saveKRActual('${kr.id}',this.value)" oninput="liveUpdateKR('${kr.id}',this.value)">
+                <span class="kr-unit">${kr.unit}</span>
+              </div>
+              <div class="kr-bar-wrap">
+                <div class="kr-bar"><div class="${rateClass(rate)}" id="krbar-${kr.id}" style="width:${fillW}%"></div></div>
+              </div>
+              <div class="kr-rate ${rateTextClass(rate)}" id="krrate-${kr.id}">${rate!==null?rate+'%':'—'}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        ${projsForObj.length?`<div style="padding:0 20px 6px;font-size:12px;color:#888;font-weight:600">関連プロジェクト</div>
+        <div class="obj-projs">${projsForObj.map(p=>`<div class="obj-proj-badge" style="background:${(ORG_META[p.org]||{}).bg||'#f0f0f0'};color:${(ORG_META[p.org]||{}).color||'#444'}">${e(p.name)}</div>`).join('')}</div>`:''}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function selectOKROrg(orgId) {
+  activeOrgTab = orgId;
+  renderOKR();
+}
+
+function toggleObj(objId) {
+  const card = document.getElementById('obj-card-' + objId);
+  card.classList.toggle('open');
+}
+
+function saveKRActual(krId, val) {
+  state.actuals[krId] = { actual: val === '' ? '' : parseFloat(val), updatedAt: new Date().toISOString() };
+  saveActuals();
+  renderDashboard();
+}
+
+function liveUpdateKR(krId, val) {
+  const kr = getKRById(krId);
+  if (!kr) return;
+  const tmpActual = val === '' ? null : parseFloat(val);
+  let rate = null;
+  if (tmpActual !== null && !isNaN(tmpActual) && kr.target) {
+    if (kr.lowerIsBetter) rate = Math.min(200, Math.round((kr.target/tmpActual)*100));
+    else rate = Math.min(200, Math.round((tmpActual/kr.target)*100));
+  }
+  const barEl = document.getElementById('krbar-' + krId);
+  const rateEl = document.getElementById('krrate-' + krId);
+  if (barEl) { barEl.style.width = (rate!==null?Math.min(100,rate):0)+'%'; barEl.className = rateClass(rate); }
+  if (rateEl) { rateEl.textContent = rate!==null?rate+'%':'—'; rateEl.className = 'kr-rate '+rateTextClass(rate); }
+}
+
+function exportOKR() {
+  let text = '2026年度 OKRサマリー\n\n';
+  for (const orgId of Object.keys(OKR_DATA)) {
+    const meta = ORG_META[orgId];
+    text += `【${meta.name}】\n`;
+    for (const obj of OKR_DATA[orgId].objectives) {
+      text += `  ◎ ${obj.name}\n`;
+      for (const kr of obj.krs) {
+        const a = state.actuals[kr.id];
+        const rate = krAchRate(kr);
+        text += `    KR: ${kr.name} | 目標:${kr.target}${kr.unit} | 実績:${a?.actual??'—'} | 達成率:${rate!==null?rate+'%':'未入力'}\n`;
+      }
+    }
+    text += '\n';
+  }
+  navigator.clipboard.writeText(text).then(() => toast('OKRサマリーをクリップボードにコピーしました'));
+}
+
+// ================== PROJECTS ==================
+let editProjId = null;
+let projOrgFilter = 'all';
+
+function renderProjects() {
+  const projs = state.projects.filter(p => projOrgFilter === 'all' || p.org === projOrgFilter);
+  const active = projs.filter(p=>p.status==='active').length;
+  const warn = projs.filter(p=>p.status==='warning').length;
+  const delayed = projs.filter(p=>p.status==='delayed').length;
+  const done = projs.filter(p=>p.status==='completed').length;
+  document.getElementById('proj-summary').innerHTML = [
+    `<div class="summary-item"><div class="num n-total">${projs.length}</div><div class="lbl">総プロジェクト</div></div>`,
+    `<div class="summary-item"><div class="num n-active">${active}</div><div class="lbl">進行中</div></div>`,
+    `<div class="summary-item"><div class="num n-warn">${warn+delayed}</div><div class="lbl">要注意・遅延</div></div>`,
+    `<div class="summary-item"><div class="num n-done">${done}</div><div class="lbl">完了</div></div>`
+  ].join('');
+
+  const filterEl = document.getElementById('proj-org-filter');
+  filterEl.innerHTML = [
+    `<button class="fb ${projOrgFilter==='all'?'active':''}" onclick="setProjFilter('all')">すべて</button>`,
+    ...Object.entries(ORG_META).map(([id,m]) => `<button class="fb ${projOrgFilter===id?'active':''}" onclick="setProjFilter('${id}')" style="${projOrgFilter===id?`background:${m.color};border-color:${m.color}`:`border-color:${m.color};color:${m.color}`}">${m.icon} ${m.name}</button>`)
+  ].join('');
+
+  const grid = document.getElementById('project-grid');
+  if (projs.length === 0) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1;background:#fff;border-radius:12px;padding:40px">プロジェクトがありません。「プロジェクトを追加」から登録してください。</div>';
+    return;
+  }
+  const today = new Date(); today.setHours(0,0,0,0);
+  grid.innerHTML = projs.map(p => {
+    const meta = ORG_META[p.org] || { color:'#94a3b8', name:p.org||'—', bg:'#f0f0f0' };
+    const prog = projectProgress(p);
+    const ms = (p.milestones||[]);
+    const msHtml = ms.length ? `<div class="ms-list-view">${ms.slice(0,3).map(m => {
+      const cls = m.done?'ms-done-c':new Date(m.date)<today?'ms-late':'ms-up';
+      return `<div class="ms-item ${cls}"><div class="ms-dot"></div><span class="ms-n">${e(m.name)}</span><span class="ms-d">${m.date||''}</span></div>`;
+    }).join('')}</div>` : '';
+    const linkedKRs = (p.linkedKRs||[]).map(id=>getKRById(id)).filter(Boolean);
+    const krHtml = linkedKRs.length ? `<div class="proj-krs-wrap">${linkedKRs.slice(0,3).map(kr=>{
+      const m2 = ORG_META[kr.orgId]||{color:'#888',bg:'#eee'};
+      return `<span class="kr-link-badge" style="background:${m2.bg};color:${m2.color}">→ ${e(kr.name)}</span>`;
+    }).join('')}${linkedKRs.length>3?`<span style="font-size:11px;color:#888">+${linkedKRs.length-3}</span>`:''}</div>` : '';
+    return `<div class="proj-card s-${p.status}">
+      <div class="proj-card-head">
+        <div>
+          <div class="proj-name">${e(p.name)}</div>
+          <span class="proj-org-lbl" style="background:${meta.color}">${meta.name}</span>
+        </div>
+        <div class="proj-acts">
+          ${p.notionUrl?`<a class="btn-icon" href="${e(p.notionUrl)}" target="_blank" title="Notionで開く">📝</a>`:''}
+          <button class="btn-icon" onclick="openProjModal('${p.id}')" title="編集">✏️</button>
+          <button class="btn-icon" onclick="deleteProject('${p.id}')" title="削除">🗑</button>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="sbadge s-${p.status}">${{active:'進行中',warning:'要注意',delayed:'遅延',completed:'完了'}[p.status]||p.status}</span>
+        ${p.startDate&&p.endDate?`<span class="date-range">${p.startDate} → ${p.endDate}</span>`:''}
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-label"><span>進捗</span><span>${prog}%</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${prog}%"></div></div>
+      </div>
+      ${krHtml}${msHtml}
+      ${p.notionUrl?`<a href="${e(p.notionUrl)}" target="_blank" class="btn-notion">📝 Notionで開く</a>`:''}
+    </div>`;
+  }).join('');
+}
+
+function setProjFilter(orgId) {
+  projOrgFilter = orgId;
+  renderProjects();
+}
+
+function projectProgress(p) {
+  if (p.status === 'completed') return 100;
+  const ms = p.milestones || [];
+  if (!ms.length) {
+    if (!p.startDate || !p.endDate) return 0;
+    const start = new Date(p.startDate), end = new Date(p.endDate), now = new Date();
+    const total = end - start, elapsed = now - start;
+    if (total <= 0) return 0;
+    return Math.min(100, Math.max(0, Math.round((elapsed/total)*100)));
+  }
+  return Math.round((ms.filter(m=>m.done).length / ms.length) * 100);
+}
+
+function openProjModal(id) {
+  editProjId = id || null;
+  const p = id ? state.projects.find(x=>x.id===id) : null;
+  document.getElementById('proj-modal-title').textContent = p ? 'プロジェクトを編集' : 'プロジェクトを追加';
+  document.getElementById('pm-name').value = p?.name || '';
+  document.getElementById('pm-org').value = p?.org || '';
+  document.getElementById('pm-status').value = p?.status || 'active';
+  document.getElementById('pm-start').value = p?.startDate || '';
+  document.getElementById('pm-end').value = p?.endDate || '';
+  document.getElementById('pm-notion').value = p?.notionUrl || '';
+  document.getElementById('pm-desc').value = p?.description || '';
+  updateKRCheckboxes(p?.linkedKRs || []);
+  const msList = document.getElementById('ms-list');
+  msList.innerHTML = '';
+  (p?.milestones||[]).forEach(m => addMsRow(m));
+  document.getElementById('proj-modal').classList.add('open');
+}
+
+function closeProjModal() {
+  document.getElementById('proj-modal').classList.remove('open');
+  editProjId = null;
+}
+
+function updateKRCheckboxes(selectedKRs) {
+  const orgId = document.getElementById('pm-org').value;
+  const list = document.getElementById('kr-checkbox-list');
+  if (!orgId) {
+    list.innerHTML = '<div style="color:#888;font-size:13px">組織を選択するとKRが表示されます</div>';
+    return;
+  }
+  const checked = selectedKRs || Array.from(list.querySelectorAll('input[type=checkbox]:checked')).map(i=>i.value);
+  const orgData = OKR_DATA[orgId];
+  if (!orgData) { list.innerHTML = ''; return; }
+  list.innerHTML = orgData.objectives.map(obj => `
+    <div class="kr-checkbox-org-label">${e(obj.name)}</div>
+    ${obj.krs.map(kr => `<label class="kr-checkbox-item">
+      <input type="checkbox" value="${kr.id}" ${checked.includes(kr.id)?'checked':''}> ${e(kr.name)} <span style="color:#888;font-size:11px">（目標:${kr.target}${kr.unit}）</span>
+    </label>`).join('')}
+  `).join('');
+}
+
+function addMsRow(ms) {
+  const div = document.createElement('div');
+  div.className = 'ms-edit-item';
+  div.innerHTML = `<input type="text" placeholder="マイルストーン名" value="${ms?.name||''}">
+    <input type="date" value="${ms?.date||''}">
+    <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" ${ms?.done?'checked':''}> 完了</label>
+    <button class="btn-rm-ms" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('ms-list').appendChild(div);
+}
+
+function saveProject() {
+  const name = document.getElementById('pm-name').value.trim();
+  if (!name) { toast('プロジェクト名を入力してください'); return; }
+  const linkedKRs = Array.from(document.getElementById('kr-checkbox-list').querySelectorAll('input[type=checkbox]:checked')).map(i=>i.value);
+  const milestones = Array.from(document.getElementById('ms-list').querySelectorAll('.ms-edit-item')).map(row => {
+    const inputs = row.querySelectorAll('input');
+    return { id: 'ms_' + Date.now() + Math.random(), name: inputs[0].value, date: inputs[1].value, done: inputs[2].checked };
+  }).filter(m=>m.name);
+  const proj = {
+    id: editProjId || 'p_' + Date.now(),
+    name,
+    org: document.getElementById('pm-org').value,
+    status: document.getElementById('pm-status').value,
+    startDate: document.getElementById('pm-start').value,
+    endDate: document.getElementById('pm-end').value,
+    notionUrl: document.getElementById('pm-notion').value.trim(),
+    description: document.getElementById('pm-desc').value.trim(),
+    linkedKRs,
+    milestones,
+    createdAt: editProjId ? (state.projects.find(p=>p.id===editProjId)?.createdAt||new Date().toISOString()) : new Date().toISOString()
+  };
+  if (editProjId) {
+    const idx = state.projects.findIndex(p=>p.id===editProjId);
+    if (idx >= 0) state.projects[idx] = proj;
+  } else {
+    state.projects.push(proj);
+  }
+  saveProjects();
+  closeProjModal();
+  renderProjects();
+  renderDashboard();
+  toast(editProjId ? 'プロジェクトを更新しました' : 'プロジェクトを追加しました');
+}
+
+function deleteProject(id) {
+  if (!confirm('このプロジェクトを削除しますか？')) return;
+  state.projects = state.projects.filter(p=>p.id!==id);
+  saveProjects();
+  renderProjects();
+  renderDashboard();
+  toast('削除しました');
+}
+
+// ================== TASKS ==================
+let taskFilter = 'all';
+function setTF(el, f) {
+  document.querySelectorAll('[data-tf]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); taskFilter = f; renderTasks();
+}
+
+function addTask() {
+  const title = document.getElementById('t-title').value.trim();
+  if (!title) return;
+  const due = document.getElementById('t-due').value;
+  const priority = document.getElementById('t-priority').value;
+  const projId = document.getElementById('t-proj-sel').value;
+  const tags = document.getElementById('t-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const projName = projId ? (state.projects.find(p=>p.id===projId)?.name||'') : '';
+  state.tasks.push({ id:'t_'+Date.now(), title, due, priority, category: projName, tags, status:'todo', createdAt: new Date().toISOString() });
+  saveTasks();
+  document.getElementById('t-title').value=''; document.getElementById('t-due').value=''; document.getElementById('t-tags').value='';
+  renderTasks();
+}
+
+function renderTasks() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const q = document.getElementById('t-search').value.toLowerCase();
+  let tasks = state.tasks.filter(t => {
+    if (q && !t.title.toLowerCase().includes(q)) return false;
+    if (taskFilter === 'high' && t.priority !== 'high') return false;
+    if (taskFilter === 'overdue' && (t.status==='done' || !t.due || new Date(t.due)>=today)) return false;
+    return true;
+  });
+  ['todo','doing','done'].forEach(st => {
+    const list = tasks.filter(t=>t.status===st);
+    document.getElementById('cnt-'+st).textContent = list.length;
+    document.getElementById('list-'+st).innerHTML = list.length ? list.map(t => {
+      const ov = t.due && new Date(t.due)<today && t.status!=='done';
+      const priCls = {high:'ph',mid:'pm',low:'pl'}[t.priority]||'pm';
+      const priLbl = {high:'高',mid:'中',low:'低'}[t.priority]||t.priority;
+      const nextSt = {todo:'doing',doing:'done',done:'todo'}[t.status];
+      const nextLbl = {todo:'対応中へ',doing:'完了へ',done:'戻す'}[t.status];
+      return `<div class="tcard ${t.status==='done'?'done-card':''}">
+        <div class="ttop">
+          <div class="ttitle">${e(t.title)}</div>
+          <div class="tacts">
+            <button class="btn-st" onclick="moveTask('${t.id}','${nextSt}')">${nextLbl}</button>
+            <button class="btn-dl" onclick="delTask('${t.id}')">✕</button>
+          </div>
+        </div>
+        <div class="tmeta">
+          <span class="badge ${priCls}">${priLbl}</span>
+          ${t.category?`<span class="badge bc">${e(t.category)}</span>`:''}
+          ${(t.tags||[]).map(tg=>`<span class="badge bt">${e(tg)}</span>`).join('')}
+          ${t.due?`<span class="bdue ${ov?'ov'  :''}">${ov?'⚠ ':''  }${fmtDate(t.due)}</span>`:''}
+        </div>
+      </div>`;
+    }).join('') : '<div class="empty">タスクなし</div>';
+  });
+  // Update project select
+  const sel = document.getElementById('t-proj-sel');
+  const curVal = sel.value;
+  sel.innerHTML = '<option value="">プロジェクト</option>' + state.projects.map(p=>`<option value="${p.id}" ${p.id===curVal?'selected':''}>${e(p.name)}</option>`).join('');
+}
+
+function moveTask(id, st) {
+  const t = state.tasks.find(x=>x.id===id);
+  if (t) { t.status = st; saveTasks(); renderTasks(); }
+}
+
+function delTask(id) {
+  state.tasks = state.tasks.filter(t=>t.id!==id);
+  saveTasks(); renderTasks();
+}
+
+// ================== MONITOR ==================
+let monTab = 'okr-mon';
+function setMonTab(el, tab) {
+  document.querySelectorAll('.mon-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mon-tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mt-'+tab).classList.add('active');
+  monTab = tab;
+}
+
+function renderMonitor() {
+  renderOKRMonitor();
+  renderSheetsRaw();
+}
+
+function renderOKRMonitor() {
+  const el = document.getElementById('mon-okr-content');
+  el.innerHTML = Object.keys(OKR_DATA).map(orgId => {
+    const meta = ORG_META[orgId];
+    const orgData = OKR_DATA[orgId];
+    return `<div class="org-sec">
+      <div class="org-sec-title" style="background:${meta.color}">${meta.icon} ${meta.name}</div>
+      <div class="org-body">
+        ${orgData.objectives.map(obj => {
+          const krRates = obj.krs.map(kr=>krAchRate(kr)).filter(r=>r!==null);
+          const avgRate = krRates.length ? Math.round(krRates.reduce((a,b)=>a+b,0)/krRates.length) : null;
+          const fillW = avgRate !== null ? Math.min(100,avgRate) : 0;
+          return `<div class="kpi-sec">
+            <div class="kpi-head">
+              <div class="kpi-name">${e(obj.name)}</div>
+              <div class="kpi-totals">${e(obj.desc)}</div>
+              ${avgRate!==null?`<div class="kpi-rate ${rateTextClass(avgRate)}">${avgRate}%</div>`:`<div class="kpi-rate" style="color:#ccc">未入力</div>`}
+            </div>
+            <div class="kpi-bar-wrap"><div class="kbar"><div class="${rateClass(avgRate)}" style="width:${fillW}%"></div></div></div>
+            <div class="proj-rows">
+              ${obj.krs.map(kr => {
+                const a = state.actuals[kr.id];
+                const rate = krAchRate(kr);
+                const fillW2 = rate !== null ? Math.min(100,rate) : 0;
+                const linkedProjs = state.projects.filter(p=>(p.linkedKRs||[]).includes(kr.id));
+                return `<div class="proj-row">
+                  <div class="pr-name">${e(kr.name)}</div>
+                  <div class="pr-tgt">${kr.target!==null&&kr.target!==undefined?kr.target+' '+kr.unit:'—'}</div>
+                  <div class="pr-act">${a?.actual!==undefined&&a?.actual!==''?a.actual+' '+kr.unit:'—'}</div>
+                  <div class="pr-bar"><div class="pr-bar-fill" style="width:${fillW2}%"></div></div>
+                  <div class="pr-rate ${rateTextClass(rate)}">${rate!==null?rate+'%':'—'}</div>
+                </div>
+                ${linkedProjs.length?`<div style="padding:2px 0 6px 16px;font-size:11px;color:#888">関連PJ: ${linkedProjs.map(p=>e(p.name)).join('・')}</div>`:''}`;
+              }).join('')}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function fetchSheets() {
+  const orgs = state.settings.orgs;
+  const allSheets = [];
+  for (const [orgId, cfg] of Object.entries(orgs)) {
+    for (const sh of cfg.sheets) {
+      if (sh.sheetsId && sh.apiKey) allSheets.push({ orgId, sh });
+    }
+  }
+  if (!allSheets.length) {
+    toast('設定で各組織のスプレッドシートを登録してください');
+    document.querySelector('[data-tab="settings"]').click();
+    return;
+  }
+  const btn = document.getElementById('btn-refresh');
+  btn.classList.add('loading'); btn.textContent = '🔄 取得中...';
+  let totalRows = 0, errors = [];
+  state.sheetsData = {};
+
+  await Promise.all(allSheets.map(async ({ orgId, sh }) => {
+    try {
+      const range = encodeURIComponent(`${sh.sheetName}!A${sh.headerRow}:Z1000`);
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sh.sheetsId}/values/${range}?key=${sh.apiKey}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`${res.status}`);
+      const data = await res.json();
+      const rows = data.values || [];
+      const key = `${orgId}__${sh.uid||sh.sheetsId}`;
+      state.sheetsData[key] = { orgId, label: sh.label||sh.sheetName, rows, sh };
+      totalRows += rows.length;
+    } catch(err) {
+      errors.push(`${ORG_META[orgId].name}「${sh.label||sh.sheetName}」: ${err.message}`);
+    }
+  }));
+
+  renderSheetsRaw();
+  renderOKRMonitor();
+  if (errors.length) toast(`⚠ ${errors.length}件のエラーがありました`);
+  else toast(`✅ 計${totalRows}行を取得しました`);
+  btn.classList.remove('loading'); btn.textContent = '🔄 データを更新';
+}
+
+function renderSheetsRaw() {
+  const el = document.getElementById('mon-sheets-content');
+  const allEntries = Object.values(state.sheetsData || {});
+  if (!allEntries.length) {
+    el.innerHTML = `<div class="no-cfg">シートデータがありません。<br>設定で各組織のスプレッドシートを登録後、「データを更新」を押してください。<br><a onclick="document.querySelector('[data-tab=settings]').click()">⚙ 設定を開く</a></div>`;
+    return;
+  }
+
+  // Group by orgId
+  const byOrg = {};
+  for (const entry of allEntries) {
+    if (!byOrg[entry.orgId]) byOrg[entry.orgId] = [];
+    byOrg[entry.orgId].push(entry);
+  }
+
+  el.innerHTML = Object.entries(byOrg).map(([orgId, entries]) => {
+    const meta = ORG_META[orgId] || { name: orgId, color:'#1a1a2e' };
+    const sheetsHtml = entries.map(({ label, rows, sh }) => {
+      const kpis = {};
+      rows.forEach(row => {
+        const kpi  = (row[sh.c0]||'').trim();
+        const proj = (row[sh.c1]||'').trim();
+        const unit = (row[sh.c2]||'').trim();
+        const tgt  = parseFloat(row[sh.c3]);
+        const act  = parseFloat(row[sh.c4]);
+        if (!kpi) return;
+        if (!kpis[kpi]) kpis[kpi] = { unit, projects:[], totalTgt:0, totalAct:0 };
+        if (proj) kpis[kpi].projects.push({ proj, unit, tgt, act });
+        if (!isNaN(tgt)) kpis[kpi].totalTgt += tgt;
+        if (!isNaN(act)) kpis[kpi].totalAct += act;
+      });
+      return `
+        <div style="padding:10px 18px 4px;font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #f0f0f0">
+          📊 ${e(label)} <span style="font-weight:400">(${rows.length}行)</span>
+        </div>
+        ${Object.entries(kpis).map(([kpi, data]) => {
+          const rate = data.totalTgt>0 ? Math.round((data.totalAct/data.totalTgt)*100) : null;
+          const fillW = rate!==null ? Math.min(100,rate) : 0;
+          return `<div class="kpi-sec">
+            <div class="kpi-head">
+              <div class="kpi-name">${e(kpi)}</div>
+              <div class="kpi-totals">目標:${isNaN(data.totalTgt)?'—':data.totalTgt.toLocaleString()} ${e(data.unit)} / 実績:${isNaN(data.totalAct)?'—':data.totalAct.toLocaleString()} ${e(data.unit)}</div>
+              ${rate!==null?`<div class="kpi-rate ${rateTextClass(rate)}">${rate}%</div>`:`<div class="kpi-rate" style="color:#ccc">—</div>`}
+            </div>
+            <div class="kpi-bar-wrap"><div class="kbar"><div class="${rateClass(rate)}" style="width:${fillW}%"></div></div></div>
+            <div class="proj-rows">
+              ${data.projects.map(pr => {
+                const r2 = pr.tgt>0 ? Math.min(100,Math.round((pr.act/pr.tgt)*100)) : null;
+                return `<div class="proj-row">
+                  <div class="pr-name">${e(pr.proj)}</div>
+                  <div class="pr-tgt">${isNaN(pr.tgt)?'—':pr.tgt.toLocaleString()} ${e(pr.unit)}</div>
+                  <div class="pr-act">${isNaN(pr.act)?'—':pr.act.toLocaleString()}</div>
+                  <div class="pr-bar"><div class="pr-bar-fill" style="width:${r2||0}%"></div></div>
+                  <div class="pr-rate ${rateTextClass(r2)}">${r2!==null?r2+'%':'—'}</div>
+                </div>`;
+              }).join('')}
+            </div>
+          </div>`;
+        }).join('')}`;
+    }).join('');
+
+    return `<div class="org-sec">
+      <div class="org-sec-title" style="background:${meta.color}">${meta.icon||''} ${meta.name}</div>
+      <div class="org-body">${sheetsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+// ================== SETTINGS ==================
+function saveSettings() {
+  const notion = {};
+  for (const orgId of Object.keys(ORG_META)) {
+    notion[orgId] = {
+      enabled:  document.getElementById('notion-enabled-' + orgId)?.checked || false,
+      token:    document.getElementById('notion-token-'   + orgId)?.value.trim() || '',
+      dbId:     document.getElementById('notion-dbid-'    + orgId)?.value.trim() || '',
+      dbName:   document.getElementById('notion-dbname-'  + orgId)?.value.trim() || ''
+    };
+  }
+  state.settings = {
+    ...state.settings,
+    sheetsId:    document.getElementById('s-sheets-id').value.trim(),
+    apiKey:      document.getElementById('s-api-key').value.trim(),
+    sheetName:   document.getElementById('s-sheet-name').value.trim() || 'KPI',
+    headerRow:   parseInt(document.getElementById('s-header-row').value)||2,
+    c0: parseInt(document.getElementById('s-c0').value)||0,
+    c1: parseInt(document.getElementById('s-c1').value)||1,
+    c2: parseInt(document.getElementById('s-c2').value)||2,
+    c3: parseInt(document.getElementById('s-c3').value)||3,
+    c4: parseInt(document.getElementById('s-c4').value)||4,
+    c5: parseInt(document.getElementById('s-c5').value)||5,
+    notionProxy: document.getElementById('s-notion-proxy').value.trim(),
+    notion
+  };
+  localStorage.setItem('bj_settings', JSON.stringify(state.settings));
+  renderNotionOrgSettings();
+  toast('設定を保存しました');
+}
+
+function exportData() {
+  const data = { projects: state.projects, tasks: state.tasks, actuals: state.actuals };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bj_pm_data.json'; a.click();
+}
+
+function importDataClick() { document.getElementById('import-file').click(); }
+
+function importData(evt) {
+  const file = evt.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.projects) state.projects = data.projects;
+      if (data.tasks) state.tasks = data.tasks;
+      if (data.actuals) state.actuals = data.actuals;
+      saveProjects(); saveTasks(); saveActuals();
+      renderDashboard(); toast('データをインポートしました');
+    } catch(err) { toast('インポートに失敗しました'); }
+  };
+  reader.readAsText(file);
+}
+
+function clearAllData() {
+  if (!confirm('すべてのデータ（プロジェクト・タスク・KR実績）を削除しますか？この操作は取り消せません。')) return;
+  state.projects=[]; state.tasks=[]; state.actuals={};
+  saveProjects(); saveTasks(); saveActuals();
+  renderDashboard(); toast('データを削除しました');
+}
+
+// ================== UTILS ==================
+function e(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const dt = new Date(d); if (isNaN(dt)) return d;
+  return `${dt.getFullYear()}/${String(dt.getMonth()+1).padStart(2,'0')}/${String(dt.getDate()).padStart(2,'0')}`;
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast'); el.textContent = msg;
+  el.classList.add('show'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// Close modal on overlay click
+document.getElementById('proj-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeProjModal();
+});
+
+// ================== INIT ==================
+loadState();
+renderDashboard();
+renderOKR();
+</script>
+</body>
+</html>

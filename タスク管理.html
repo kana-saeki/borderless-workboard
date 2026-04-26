@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>タスク管理</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif;background:#f0f2f5;color:#1a1a2e;min-height:100vh}
+header{background:#1a1a2e;padding:0 20px;height:52px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+header h1{font-size:16px;font-weight:700;color:#fff}
+.page{max-width:1100px;margin:0 auto;padding:24px 16px}
+.add-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:24px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.add-title{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.8px;margin-bottom:14px}
+.add-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.add-row input,.add-row select{flex:1;min-width:120px;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;transition:border-color .2s}
+.add-row input:focus,.add-row select:focus{border-color:#4a90e2;background:#fff}
+.btn-add{padding:9px 22px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.btn-add:hover{background:#2d2d4e}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.fb{padding:6px 14px;border:1.5px solid #ddd;border-radius:20px;background:#fff;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s}
+.fb:hover{border-color:#4a90e2;color:#4a90e2}
+.fb.active{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
+.fsearch{padding:6px 12px;border:1.5px solid #ddd;border-radius:20px;font-size:13px;font-family:inherit;outline:none;width:180px;margin-left:auto;transition:border-color .2s}
+.fsearch:focus{border-color:#4a90e2}
+.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.col{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #f0f0f0}
+.col-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
+.dot{width:10px;height:10px;border-radius:50%}
+.col-todo .dot{background:#94a3b8}.col-doing .dot{background:#f59e0b}.col-done .dot{background:#22c55e}
+.cnt{background:#f0f2f5;border-radius:12px;padding:2px 8px;font-size:12px;color:#666;font-weight:600}
+.tlist{display:flex;flex-direction:column;gap:10px;min-height:60px}
+.tcard{border:1.5px solid #eee;border-radius:10px;padding:12px 14px;background:#fafafa;transition:box-shadow .15s,transform .1s;cursor:default}
+.tcard:hover{box-shadow:0 4px 12px rgba(0,0,0,.1);transform:translateY(-1px)}
+.tcard.done{opacity:.6}
+.ttop{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.ttitle{font-size:14px;font-weight:600;line-height:1.4;word-break:break-word;flex:1}
+.done .ttitle{text-decoration:line-through;color:#aaa}
+.tacts{display:flex;gap:4px;flex-shrink:0}
+.btn-next{border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;background:#e8f4fd;color:#1a6fb5}
+.btn-next:hover{background:#d0eaf8}
+.btn-del{border:none;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;font-family:inherit;font-weight:600;background:#fee2e2;color:#dc2626}
+.btn-del:hover{background:#fecaca}
+.tmeta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;align-items:center}
+.badge{font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;white-space:nowrap}
+.ph{background:#fee2e2;color:#dc2626}.pm{background:#fef3c7;color:#d97706}.pl{background:#e0f2fe;color:#0284c7}
+.bc{background:#ede9fe;color:#7c3aed}.bt{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0}
+.bdue{font-size:11px;color:#888}.bdue.ov{color:#dc2626;font-weight:600}
+.empty{text-align:center;color:#ccc;font-size:13px;padding:20px 0}
+@media(max-width:700px){.kanban{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>📋 タスク管理</h1></header>
+<div class="page">
+  <div class="add-card">
+    <div class="add-title">新しいタスク</div>
+    <div class="add-row">
+      <input type="text" id="t-title" placeholder="タスク名 *" style="flex:3">
+      <input type="date" id="t-due">
+      <select id="t-pri"><option value="high">🔴 高</option><option value="mid" selected>🟡 中</option><option value="low">🔵 低</option></select>
+      <input type="text" id="t-cat" placeholder="カテゴリ">
+      <input type="text" id="t-tags" placeholder="タグ（カンマ区切り）">
+      <button class="btn-add" onclick="addTask()">＋ 追加</button>
+    </div>
+  </div>
+
+  <div class="filter-row">
+    <button class="fb active" data-f="all" onclick="setF(this,'all')">すべて</button>
+    <button class="fb" data-f="high" onclick="setF(this,'high')">🔴 高優先度</button>
+    <button class="fb" data-f="overdue" onclick="setF(this,'overdue')">⏰ 期限超過</button>
+    <input type="text" class="fsearch" id="search" placeholder="🔍 キーワード検索" oninput="render()">
+  </div>
+
+  <div class="kanban">
+    <div class="col col-todo">
+      <div class="col-head"><div class="col-title"><div class="dot"></div>未着手</div><span class="cnt" id="c-todo">0</span></div>
+      <div class="tlist" id="l-todo"></div>
+    </div>
+    <div class="col col-doing">
+      <div class="col-head"><div class="col-title"><div class="dot"></div>対応中</div><span class="cnt" id="c-doing">0</span></div>
+      <div class="tlist" id="l-doing"></div>
+    </div>
+    <div class="col col-done">
+      <div class="col-head"><div class="col-title"><div class="dot"></div>完了</div><span class="cnt" id="c-done">0</span></div>
+      <div class="tlist" id="l-done"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem('tasks_v1')||'[]');
+let filter = 'all';
+const save = () => localStorage.setItem('tasks_v1', JSON.stringify(tasks));
+const e = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmtD = d => { if(!d) return ''; const dt=new Date(d); return `${dt.getFullYear()}/${String(dt.getMonth()+1).padStart(2,'0')}/${String(dt.getDate()).padStart(2,'0')}`; };
+
+function addTask() {
+  const title = document.getElementById('t-title').value.trim();
+  if (!title) { document.getElementById('t-title').focus(); return; }
+  tasks.push({
+    id: 't_'+Date.now(),
+    title,
+    due: document.getElementById('t-due').value,
+    priority: document.getElementById('t-pri').value,
+    category: document.getElementById('t-cat').value.trim(),
+    tags: document.getElementById('t-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+    status: 'todo',
+    createdAt: new Date().toISOString()
+  });
+  save();
+  document.getElementById('t-title').value='';
+  document.getElementById('t-due').value='';
+  document.getElementById('t-cat').value='';
+  document.getElementById('t-tags').value='';
+  render();
+}
+
+function setF(el, f) {
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); filter=f; render();
+}
+
+function render() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const q = document.getElementById('search').value.toLowerCase();
+  const filtered = tasks.filter(t => {
+    if (q && !t.title.toLowerCase().includes(q) && !(t.category||'').toLowerCase().includes(q)) return false;
+    if (filter==='high' && t.priority!=='high') return false;
+    if (filter==='overdue' && (t.status==='done'||!t.due||new Date(t.due)>=today)) return false;
+    return true;
+  });
+  ['todo','doing','done'].forEach(st => {
+    const list = filtered.filter(t=>t.status===st);
+    document.getElementById('c-'+st).textContent = list.length;
+    document.getElementById('l-'+st).innerHTML = list.length ? list.map(t => {
+      const ov = t.due && new Date(t.due)<today && t.status!=='done';
+      const pCls = {high:'ph',mid:'pm',low:'pl'}[t.priority]||'pm';
+      const pLbl = {high:'高',mid:'中',low:'低'}[t.priority];
+      const nxt = {todo:'対応中へ',doing:'完了へ',done:'戻す'}[t.status];
+      const nxtSt = {todo:'doing',doing:'done',done:'todo'}[t.status];
+      return `<div class="tcard ${t.status==='done'?'done':''}">
+        <div class="ttop">
+          <div class="ttitle">${e(t.title)}</div>
+          <div class="tacts">
+            <button class="btn-next" onclick="move('${t.id}','${nxtSt}')">${nxt}</button>
+            <button class="btn-del" onclick="del('${t.id}')">✕</button>
+          </div>
+        </div>
+        <div class="tmeta">
+          <span class="badge ${pCls}">${pLbl}</span>
+          ${t.category?`<span class="badge bc">${e(t.category)}</span>`:''}
+          ${(t.tags||[]).map(tg=>`<span class="badge bt">${e(tg)}</span>`).join('')}
+          ${t.due?`<span class="bdue ${ov?'ov':''}">${ov?'⚠ ':''}${fmtD(t.due)}</span>`:''}
+        </div>
+      </div>`;
+    }).join('') : '<div class="empty">タスクなし</div>';
+  });
+}
+
+function move(id, st) { const t=tasks.find(x=>x.id===id); if(t){t.status=st;save();render();} }
+function del(id) { tasks=tasks.filter(t=>t.id!==id); save(); render(); }
+
+document.getElementById('t-title').addEventListener('keydown', e => { if(e.key==='Enter') addTask(); });
+render();
+</script>
+</body>
+</html>

@@ -284,7 +284,259 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
 .toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px)}
 
 .ro{color:#16a34a}.rw{color:#d97706}.rd{color:#dc2626}
-@media(max-width:800px){.dash-grid,.stats-row,.summary-bar{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.kr-item{grid-template-columns:1fr 100px;}.kr-item>*:nth-child(n+3){display:none}}
+/* Weekly Report */
+.weekly-week-nav{display:flex;align-items:center;gap:12px;margin-bottom:20px;background:#fff;border-radius:12px;padding:14px 20px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.week-nav-btn{border:none;background:#f0f2f5;border-radius:8px;width:36px;height:36px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0}
+.week-nav-btn:hover{background:#e0e0e0}
+.week-label{font-size:16px;font-weight:700;flex:1;text-align:center}
+.week-today-btn{padding:6px 14px;border:1.5px solid #ddd;border-radius:8px;background:#fff;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.week-today-btn:hover{border-color:#1a1a2e;background:#1a1a2e;color:#fff}
+.weekly-org-tabs{display:flex;gap:0;border-bottom:2px solid #e0e0e0;background:#fff;border-radius:12px 12px 0 0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.weekly-org-tab{padding:12px 20px;border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.weekly-org-tab:hover{color:#1a1a2e;background:#f8f8f8}
+.weekly-org-tab.active{color:#1a1a2e;border-bottom-color:var(--org-color,#1a1a2e)}
+.weekly-org-panel{display:none;background:#fff;border-radius:0 0 12px 12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.weekly-org-panel.active{display:block}
+.weekly-section{margin-bottom:20px}
+.weekly-section-label{font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.weekly-textarea{width:100%;padding:12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;background:#fafafa;outline:none;resize:vertical;min-height:90px;transition:border-color .2s;line-height:1.7}
+.weekly-textarea:focus{border-color:#4a90e2;background:#fff}
+.action-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.action-row{display:flex;gap:8px;align-items:center;background:#f9f9f9;border:1.5px solid #eee;border-radius:8px;padding:8px 12px;transition:opacity .2s}
+.action-row.done-action{opacity:.5}
+.action-check{width:16px;height:16px;cursor:pointer;accent-color:#10b981;flex-shrink:0}
+.action-text{flex:2;min-width:0;padding:5px 8px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:#fff}
+.action-text:focus{border-color:#4a90e2}
+.action-assignee{width:90px;padding:5px 8px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:#fff}
+.action-due{width:130px;padding:5px 8px;border:1px solid #e0e0e0;border-radius:6px;font-size:13px;font-family:inherit;outline:none;background:#fff}
+.action-rm{border:none;background:#fee2e2;color:#dc2626;border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s}
+.action-rm:hover{background:#fecaca}
+.btn-add-action{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;border:1.5px dashed #ccc;background:transparent;font-size:13px;color:#888;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-add-action:hover{border-color:#4a90e2;color:#4a90e2;background:#f0f6ff}
+.prev-actions-box{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;margin-bottom:20px}
+.prev-actions-title{font-size:12px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.prev-action-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #fde68a;font-size:13px}
+.prev-action-item:last-child{border-bottom:none}
+.weekly-save-bar{display:flex;gap:10px;align-items:center;padding-top:16px;border-top:1px solid #f0f0f0;margin-top:4px}
+.weekly-save-status{font-size:12px;color:#aaa}
+.minutes-list{margin-top:32px}
+.minutes-list-title{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.minutes-item{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:10px;cursor:pointer;transition:box-shadow .15s,transform .1s}
+.minutes-item:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);transform:translateY(-1px)}
+.minutes-item-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.minutes-date{font-size:14px;font-weight:700;color:#1a1a2e}
+.minutes-orgs{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.minutes-org-badge{font-size:11px;padding:2px 10px;border-radius:10px;font-weight:600;color:#fff}
+.minutes-empty{text-align:center;color:#ccc;font-size:13px;padding:40px 0}
+/* 事業 Tab */
+.biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:28px}
+.biz-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 1px 6px rgba(0,0,0,.08);border-top:4px solid #ccc;cursor:pointer;transition:box-shadow .2s,transform .15s;position:relative}
+.biz-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.12);transform:translateY(-2px)}
+.biz-card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.biz-card-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.biz-card-name{font-size:15px;font-weight:700;line-height:1.3}
+.biz-card-stats{display:flex;gap:12px;margin-bottom:12px}
+.biz-stat{text-align:center}
+.biz-stat-num{font-size:20px;font-weight:800;line-height:1}
+.biz-stat-lbl{font-size:11px;color:#888;margin-top:2px}
+.biz-card-bar{height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden}
+.biz-card-fill{height:100%;border-radius:3px;transition:width .5s}
+.biz-card-acts{position:absolute;top:10px;right:10px;display:flex;gap:4px;opacity:0;transition:opacity .2s}
+.biz-card:hover .biz-card-acts{opacity:1}
+.biz-act-btn{border:none;background:rgba(255,255,255,.9);border-radius:6px;width:26px;height:26px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.biz-act-btn:hover{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+/* Business detail view */
+.biz-detail-back{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.biz-back-btn{padding:7px 14px;border:1.5px solid #ddd;border-radius:8px;background:#fff;font-size:13px;cursor:pointer;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:5px}
+.biz-back-btn:hover{border-color:#1a1a2e;background:#1a1a2e;color:#fff}
+.biz-detail-title{display:flex;align-items:center;gap:12px;flex:1}
+.biz-detail-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.biz-detail-name{font-size:22px;font-weight:800}
+.biz-section-title{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+/* Biz modal */
+.biz-color-options{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.biz-color-opt{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s}
+.biz-color-opt.selected{border-color:#1a1a2e;transform:scale(1.2)}
+/* Gantt Task List */
+.gantt-wrap{overflow-x:auto;border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);background:#fff;border:1px solid #eee}
+.gantt-table{border-collapse:collapse;white-space:nowrap;font-size:13px;min-width:100%}
+.gantt-table th,.gantt-table td{border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+.gt-hd1 th{background:#1a1a2e;color:rgba(255,255,255,.75);font-size:11px;font-weight:700;text-align:center;height:26px;padding:0 4px}
+.gt-hd2 th{background:#f8f9fb;font-size:11px;color:#666;font-weight:600;text-align:center;height:30px;border-bottom:2px solid #ddd;padding:0 2px}
+.gt-fixed{position:sticky;z-index:5;background:#fff}
+.gt-row-0 .gt-fixed{background:#f8f9fb}
+.gt-row-1 .gt-fixed{background:#fff}
+.gt-row-2 .gt-fixed{background:#fdfdfd}
+.gantt-table tbody tr:hover .gt-fixed{background:#eef4ff!important}
+.gantt-table tbody tr:hover td{background:#fafcff!important}
+.gt-col-kr{left:0;width:86px;min-width:86px;padding:4px 6px!important;font-size:11px}
+.gt-col-pj{left:86px;width:100px;min-width:100px;padding:4px 6px!important}
+.gt-col-impact{left:186px;width:110px;min-width:110px;padding:4px 6px!important;font-size:11px}
+.gt-col-pjowner{left:296px;width:72px;min-width:72px;padding:4px 5px!important;font-size:11px;text-align:center}
+.gt-col-pjst{left:368px;width:64px;min-width:64px;padding:4px 4px!important;font-size:11px;text-align:center}
+.gt-col-task{left:432px;width:240px;min-width:240px;padding:4px 5px!important;box-shadow:4px 0 8px -3px rgba(0,0,0,.12)}
+.gt-impact-lbl{font-size:11px;color:#6366f1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;line-height:1.4;font-weight:500}
+.gt-proj-cont{border-top:1px solid #f5f5f7!important;border-right:1px solid #f0f0f0!important;background:inherit!important}
+.gt-task-indent{padding-left:20px!important}
+.gt-anc-title{font-size:11px;color:#c8c8c8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;line-height:1.3;font-weight:400}
+.gt-kr-lbl{font-size:10px;color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;line-height:1.4}
+.gt-pj-lbl{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;color:#444;line-height:1.4}
+.gt-scrl-cell{padding:4px 6px;font-size:12px;text-align:center;white-space:nowrap;vertical-align:middle}
+.gt-scrl-hd{background:#f8f9fb;font-size:11px;color:#666;font-weight:600;text-align:center;height:30px;border-bottom:2px solid #ddd;padding:0 4px;white-space:nowrap}
+.biz-d-okr-item{background:#f8f9fb;border-radius:10px;padding:14px 16px;margin-bottom:8px}
+.biz-d-okr-head{display:flex;align-items:center;gap:10px}
+/* ── タスク一覧 2ペインレイアウト ── */
+.task-layout{display:flex;min-height:calc(100vh - 130px);background:#f8f9fb;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.biz-sidebar{width:196px;flex-shrink:0;background:#fff;border-right:1px solid #eef0f4;display:flex;flex-direction:column}
+.biz-sidebar-hd{padding:14px 12px 10px;border-bottom:1px solid #f0f0f0}
+.biz-sidebar-title{font-size:13px;font-weight:700;color:#374151;margin-bottom:8px}
+.biz-sidebar-search{width:100%;box-sizing:border-box;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px;font-size:12px;outline:none;color:#374151}
+.biz-sidebar-search:focus{border-color:#6366f1;box-shadow:0 0 0 2px rgba(99,102,241,.1)}
+.biz-sidebar-list{flex:1;overflow-y:auto;padding:6px 8px}
+.biz-sidebar-item{display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:pointer;font-size:13px;border-radius:8px;margin-bottom:2px;transition:background .12s;user-select:none}
+.biz-sidebar-item:hover{background:#f5f7ff}
+.biz-sidebar-item.active{background:#eff6ff;color:#1d4ed8;font-weight:700}
+.biz-sidebar-icon{font-size:15px;flex-shrink:0;width:20px;text-align:center}
+.biz-sidebar-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.3}
+.biz-sidebar-cnt{font-size:10px;background:#e5e7eb;color:#6b7280;border-radius:10px;padding:1px 6px;flex-shrink:0}
+.biz-sidebar-item.active .biz-sidebar-cnt{background:#dbeafe;color:#1d4ed8}
+.biz-sidebar-sep{height:1px;background:#f0f0f0;margin:6px 4px}
+.biz-sidebar-footer{padding:10px 12px;border-top:1px solid #f0f0f0}
+.biz-drag-handle{font-size:13px;color:#d1d5db;cursor:grab;flex-shrink:0;line-height:1;margin-right:-2px;user-select:none}
+.biz-sidebar-item:hover .biz-drag-handle{color:#9ca3af}
+.biz-sidebar-item.biz-drag-over-top{border-top:2px solid #6366f1}
+.biz-sidebar-item.biz-drag-over-bot{border-bottom:2px solid #6366f1}
+.task-main-panel{flex:1;min-width:0;display:flex;flex-direction:column;background:#fff}
+.task-biz-banner{padding:12px 18px;border-bottom:1px solid #eef0f4;display:flex;align-items:center;gap:14px;background:#fafbff}
+.task-biz-banner-rate{text-align:right;flex-shrink:0}
+.task-biz-banner-bar{width:90px;height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:4px;margin-left:auto}
+/* ダッシュボード 事業KR グリッド */
+.dash-biz-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.gt-date-cell{width:28px;min-width:28px;max-width:28px;text-align:center;padding:3px 0!important;vertical-align:middle}
+/* ── タスク リストビュー ── */
+.tl-view-toggle{display:flex;gap:3px;margin-left:auto}
+.tl-toggle-btn{padding:5px 12px;border:1px solid #e0e0e0;background:#fff;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;color:#666;transition:all .15s;font-weight:500}
+.tl-toggle-btn:hover{border-color:#6366f1;color:#6366f1}
+.tl-toggle-btn.active{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.tl-list-wrap{flex:1;overflow-y:auto;background:#fff}
+.tl-col-hd{display:flex;align-items:center;padding:6px 16px;background:#f8f9fb;border-bottom:2px solid #e5e7eb;font-size:11px;color:#9ca3af;font-weight:600;position:sticky;top:0;z-index:3}
+.tl-col-hd-name{flex:1}
+.tl-col-hd-meta{display:flex;gap:0;align-items:center;flex-shrink:0}
+.tl-col-hd-assignee{width:72px;text-align:right;padding-right:4px}
+.tl-col-hd-due{width:80px;text-align:right;padding-right:4px}
+.tl-col-hd-pri{width:52px;text-align:center}
+.tl-col-hd-acts{width:56px}
+.tl-section{border-bottom:1px solid #f0f0f0}
+.tl-section-hd{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#fafbff;position:sticky;top:34px;z-index:2;cursor:pointer;user-select:none;border-bottom:1px solid #eef0f4}
+.tl-section-hd:hover{background:#f0f4ff}
+.tl-section-chevron{font-size:9px;color:#94a3b8;transition:transform .15s;width:12px;text-align:center;flex-shrink:0}
+.tl-section-chevron.open{transform:rotate(90deg)}
+.tl-section-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.tl-section-name{font-size:13px;font-weight:700;color:#1a1a2e;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl-section-meta{font-size:11px;color:#94a3b8;flex-shrink:0}
+.tl-section-add{padding:3px 9px;border:1px dashed #c7d2fe;background:transparent;border-radius:5px;font-size:11px;color:#6366f1;cursor:pointer;font-family:inherit;transition:all .15s;flex-shrink:0}
+.tl-section-add:hover{background:#eff6ff;border-color:#6366f1}
+.gt-pj-add-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:#94a3b8;font-size:14px;line-height:1;cursor:pointer;font-family:inherit;transition:all .15s;flex-shrink:0;padding:0;margin-left:4px}
+.gt-pj-add-btn:hover{background:#e0e7ff;color:#6366f1}
+.tl-task-row{display:flex;align-items:center;gap:0;padding:0 14px;border-bottom:1px solid #f8f9fb;min-height:38px;cursor:default;transition:background .1s}
+.tl-task-row:hover{background:#f9fafb}
+.tl-task-row.level-1{padding-left:38px;background:#fdfdfe}
+.tl-task-row.level-1:hover{background:#f5f7ff}
+.tl-status-btn{width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;background:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .15s;margin-right:10px}
+.tl-status-btn.doing{border-color:#3b82f6;background:#eff6ff;color:#3b82f6}
+.tl-status-btn.done{border-color:#22c55e;background:#22c55e;color:#fff}
+.tl-status-btn.hold{border-color:#f59e0b;background:#fef3c7;color:#b45309}
+.tl-task-expand{width:20px;height:20px;border:none;background:transparent;cursor:pointer;font-size:9px;color:#94a3b8;padding:0;flex-shrink:0;border-radius:3px;margin-right:2px}
+.tl-task-expand:hover{background:#f0f0f0;color:#374151}
+.tl-task-name{flex:1;font-size:13px;color:#1a1a2e;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.4;padding:2px 0}
+.tl-task-name.done{text-decoration:line-through;color:#9ca3af}
+.tl-task-meta{display:flex;align-items:center;gap:0;flex-shrink:0}
+.tl-assignee{font-size:11px;color:#6b7280;width:72px;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:4px}
+.tl-due{font-size:11px;color:#6b7280;width:80px;text-align:right;white-space:nowrap;padding-right:4px}
+.tl-due.overdue{color:#ef4444;font-weight:600}
+.tl-priority{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:600;white-space:nowrap;width:52px;text-align:center;box-sizing:border-box}
+.tl-priority.high{background:#fee2e2;color:#dc2626}
+.tl-priority.mid{background:#fff3cd;color:#b45309}
+.tl-priority.low{background:#eff6ff;color:#1d4ed8}
+.tl-act{width:22px;height:22px;border:none;background:transparent;cursor:pointer;color:#d1d5db;font-size:12px;border-radius:4px;padding:0;flex-shrink:0;transition:all .1s;display:flex;align-items:center;justify-content:center}
+.tl-act:hover{background:#f0f0f0;color:#374151}
+.tl-add-row{display:flex;align-items:center;gap:8px;padding:7px 14px;color:#b0b8c8;font-size:12px;cursor:pointer;transition:background .1s;border-bottom:1px solid #f8f9fb}
+.tl-add-row:hover{background:#f5f7ff;color:#3b82f6}
+.tl-add-row.subtask{padding-left:38px}
+.tl-add-row-icon{width:18px;height:18px;border-radius:50%;border:1.5px dashed #d1d5db;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;line-height:1}
+.tl-add-row:hover .tl-add-row-icon{border-color:#3b82f6;color:#3b82f6}
+/* ── ガント/リスト共通 プロジェクトセクション行 ── */
+.gt-proj-hd-row td{background:#fafbff!important;padding:0!important;border-bottom:1px solid #e0e6f0!important}
+.gt-proj-hd-inner{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;user-select:none}
+.gt-proj-hd-inner:hover{background:#eff3ff}
+.gt-proj-chevron{font-size:9px;color:#94a3b8;transition:transform .15s;display:inline-block;width:12px;text-align:center}
+.gt-proj-chevron.open{transform:rotate(90deg)}
+.gt-add-task-tr td{color:#b8c0cc;font-size:12px;padding:5px 14px!important;cursor:pointer;border-bottom:1px solid #f0f0f0!important}
+.gt-add-task-tr:hover td{background:#f5f7ff!important;color:#3b82f6!important}
+.gt-add-sub-tr td{color:#b8c0cc;font-size:12px;padding:5px 14px 5px 56px!important;cursor:pointer;border-bottom:1px solid #f0f0f0!important}
+.gt-add-sub-tr:hover td{background:#f5f7ff!important;color:#3b82f6!important}
+.gt-date-hd{font-size:10px;color:#999}
+.gt-date-hd.wknd{color:#ddd;background:#fafafa!important}
+.gt-date-hd.gt-today-hd{background:#fff8e1!important;color:#d97706;font-weight:700}
+.gt-bar{height:20px;border-radius:0;position:relative;overflow:visible;transition:filter .12s,box-shadow .12s;user-select:none}
+.gt-bar.bar-s{border-radius:6px 0 0 6px;margin-left:1px}
+.gt-bar.bar-e{border-radius:0 6px 6px 0;margin-right:1px}
+.gt-bar.bar-se{border-radius:6px;margin:0 1px}
+.gt-bar.st-todo{background:linear-gradient(135deg,#94a3b8,#7b8fa6)}
+.gt-bar.st-doing{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.gt-bar.st-done{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.gt-bar.st-hold{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.gt-bar:hover{filter:brightness(1.1);box-shadow:0 2px 8px rgba(0,0,0,.22)}
+.gt-bar.gt-bar-dragging{opacity:.8;box-shadow:0 4px 16px rgba(0,0,0,.3)!important;filter:brightness(1.08)!important;z-index:10}
+/* リサイズハンドル */
+.gt-bar-hdl{position:absolute;top:0;bottom:0;width:10px;display:flex;align-items:center;justify-content:center;z-index:3;cursor:ew-resize}
+.gt-bar-hdl-l{left:-1px;border-radius:6px 0 0 6px}
+.gt-bar-hdl-r{right:-1px;border-radius:0 6px 6px 0}
+.gt-bar-hdl::after{content:'';display:block;width:2px;height:11px;background:rgba(255,255,255,.6);border-radius:1px;box-shadow:3px 0 0 rgba(255,255,255,.6)}
+.gt-bar-hdl:hover::after{background:rgba(255,255,255,.95);box-shadow:3px 0 0 rgba(255,255,255,.95)}
+/* 移動ターゲット（バー中央）*/
+.gt-bar-mid{position:absolute;top:0;left:9px;right:9px;bottom:0;cursor:grab}
+.gt-bar-mid:active{cursor:grabbing}
+.gt-bar-se .gt-bar-mid{left:10px;right:10px}
+#gantt-drag-tooltip{display:none;position:fixed;background:#1a1a2e;color:#fff;padding:4px 10px;border-radius:6px;font-size:12px;pointer-events:none;z-index:9999;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.gt-row-0[draggable=true]:hover td,.gt-row-1[draggable=true]:hover td{cursor:grab}
+tr.gt-row-drag-over td{background:#e0e7ff!important;border-top:2px solid #6366f1!important}
+.gt-proj-hd-row[draggable=true]{cursor:default}
+tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f1!important}
+.gt-today-cell{background:#fffde7!important}
+.gt-wknd-cell{background:#fafafa!important}
+.gt-row-0{background:#f8f9fb}
+.gt-row-1{background:#fff}
+.gt-row-2{background:#fdfdfd}
+.gt-title-cell{display:flex;align-items:center;gap:4px}
+.gt-expand{border:none;background:none;cursor:pointer;width:18px;height:18px;border-radius:3px;font-size:10px;color:#bbb;padding:0;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.gt-expand:hover{background:#e0e0e0;color:#333}
+.gt-lvl{font-size:9px;padding:1px 4px;border-radius:3px;font-weight:700;flex-shrink:0;line-height:1.5}
+.lvl-0{background:#1a1a2e;color:#fff}
+.lvl-1{background:#e2e8f0;color:#475569}
+.lvl-2{background:#f1f5f9;color:#94a3b8;border:1px solid #e2e8f0}
+.gt-title-txt{flex:1;overflow:hidden;text-overflow:ellipsis;max-width:130px;font-size:13px;font-weight:600}
+.gt-title-txt.lt-0{font-weight:700}
+.gt-act{border:none;background:none;cursor:pointer;padding:2px 4px;border-radius:3px;font-size:11px;color:#ccc;transition:all .15s}
+.gt-act:hover{background:#f0f0f0;color:#555}
+.gs-badge{font-size:11px;padding:2px 6px;border-radius:8px;font-weight:600;white-space:nowrap;display:inline-block}
+.gs-todo{background:#f0f2f5;color:#666}
+.gs-doing{background:#dbeafe;color:#1d4ed8}
+.gs-done{background:#dcfce7;color:#15803d}
+.gs-hold{background:#fef3c7;color:#b45309}
+.gantt-ctrl{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.gt-nav{display:flex;align-items:center;gap:2px;background:#fff;border-radius:8px;padding:4px 8px;border:1.5px solid #e0e0e0}
+.gt-nav-btn{border:none;background:none;cursor:pointer;padding:4px 10px;border-radius:6px;font-size:13px;color:#555;font-family:inherit;transition:background .15s}
+.gt-nav-btn:hover{background:#f0f2f5}
+.gt-nav-lbl{font-size:13px;font-weight:600;color:#333;white-space:nowrap;min-width:140px;text-align:center}
+.gt-filter{padding:7px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff}
+.gt-filter:focus{border-color:#4a90e2}
+.bom-kr-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.bom-kr-row .fc{padding:7px 10px;font-size:13px}
+.bom-kr-row label{display:flex;align-items:center;gap:4px;font-size:12px;color:#555;white-space:nowrap;cursor:pointer}
+.bom-kr-row label input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:#4a90e2}
+.biz-okr-empty{background:#fff;border-radius:14px;padding:48px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-top:16px}
+@media(max-width:800px){.dash-grid,.stats-row,.summary-bar{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.project-grid{grid-template-columns:1fr}.kr-item{grid-template-columns:1fr 100px;}.kr-item>*:nth-child(n+3){display:none}.action-row{flex-wrap:wrap}.action-assignee,.action-due{width:100%}}
 </style>
 </head>
 <body>
@@ -293,20 +545,25 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
   <div class="header-inner">
     <h1>🌏 BJ プロジェクト管理</h1>
     <nav class="tab-nav">
-      <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
-      <button class="tab-btn" data-tab="okr">OKR</button>
-      <button class="tab-btn" data-tab="projects">プロジェクト</button>
-      <button class="tab-btn" data-tab="tasks">タスク</button>
-      <button class="tab-btn" data-tab="monitor">モニタリング</button>
-      <button class="tab-btn" data-tab="settings">⚙ 設定</button>
+      <!-- <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button> -->
+      <!-- 他タブは要件確定後に再表示予定 -->
+      <!-- <button class="tab-btn" data-tab="biz">📦 事業</button> -->
+      <!-- <button class="tab-btn" data-tab="okr">OKR</button> -->
+      <!-- <button class="tab-btn" data-tab="weekly">📅 週次報告</button> -->
+      <!-- <button class="tab-btn" data-tab="projects">プロジェクト</button> -->
+      <button class="tab-btn" data-tab="gantt">📋 タスク一覧</button>
+      <!-- <button class="tab-btn" data-tab="monitor">モニタリング</button> -->
+      <!-- <button class="tab-btn" data-tab="settings">⚙ 設定</button> -->
     </nav>
   </div>
 </header>
 
 <!-- DASHBOARD TAB -->
-<div id="tab-dashboard" class="tab-content active">
+<div id="tab-dashboard" class="tab-content">
   <div class="page">
+    <div style="font-size:13px;color:#888;margin-bottom:10px;font-weight:600">🏢 ボーダレスグループ 全事業 KR達成状況</div>
     <div class="dash-grid" id="dash-org-cards"></div>
+    <div class="dash-biz-grid" id="dash-biz-cards" style="display:none"></div>
     <div class="stats-row" id="dash-stats"></div>
     <div class="dash-section">
       <div class="section-title">🚀 進行中のプロジェクト <span id="active-proj-count"></span></div>
@@ -315,6 +572,56 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
     <div class="dash-section">
       <div class="section-title">📋 直近のタスク（期限順）</div>
       <div class="task-quick-list" id="dash-tasks"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BIZ TAB -->
+<div id="tab-biz" class="tab-content">
+  <div class="page">
+    <!-- LIST VIEW -->
+    <div id="biz-list-view">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-size:20px;font-weight:800;margin-bottom:4px">事業一覧</div>
+          <div style="font-size:13px;color:#888">各事業のプロジェクト状況を確認できます。クリックで詳細表示。</div>
+        </div>
+        <button class="btn-primary" onclick="openBizModal(null)">＋ 事業を追加</button>
+      </div>
+      <div class="biz-grid" id="biz-grid"></div>
+    </div>
+    <!-- DETAIL VIEW -->
+    <div id="biz-detail-view" style="display:none">
+      <div class="biz-detail-back">
+        <button class="biz-back-btn" onclick="closeBizDetail()">← 事業一覧</button>
+        <div class="biz-detail-title">
+          <div class="biz-detail-icon" id="biz-d-icon"></div>
+          <div class="biz-detail-name" id="biz-d-name"></div>
+        </div>
+        <button class="btn-primary" style="margin-left:auto" onclick="openProjModalForBiz()">＋ プロジェクトを追加</button>
+      </div>
+      <div class="biz-section-title">🎯 OKR進捗</div>
+      <div id="biz-d-okr" style="margin-bottom:28px"></div>
+      <div class="biz-section-title">🚀 プロジェクト</div>
+      <div class="project-grid" id="biz-proj-grid" style="margin-bottom:28px"></div>
+      <div class="biz-section-title">📋 タスク・ガントチャート
+        <span style="font-size:12px;font-weight:500;color:#888">この事業のプロジェクトに紐づくタスク</span>
+      </div>
+      <div class="gantt-ctrl" style="margin-bottom:12px">
+        <div class="gt-nav">
+          <button class="gt-nav-btn" onclick="shiftBizGantt(-7)">◀</button>
+          <span class="gt-nav-lbl" id="biz-gt-nav-lbl">-</span>
+          <button class="gt-nav-btn" onclick="shiftBizGantt(7)">▶</button>
+          <button class="gt-nav-btn" style="font-size:11px;color:#888;border-left:1px solid #eee;margin-left:4px" onclick="resetBizGantt()">今日</button>
+        </div>
+        <button class="btn-primary" style="font-size:13px;padding:7px 14px" onclick="openGanttModal(null,null)">＋ タスクを追加</button>
+      </div>
+      <div class="gantt-wrap">
+        <table class="gantt-table" id="biz-gantt-table">
+          <thead id="biz-gantt-thead"></thead>
+          <tbody id="biz-gantt-tbody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -331,6 +638,17 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
     </div>
     <div class="okr-org-tabs" id="okr-org-tabs"></div>
     <div id="okr-content"></div>
+    <!-- Business OKR section -->
+    <div style="margin-top:36px;border-top:2px solid #f0f0f0;padding-top:28px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:18px;font-weight:800">📦 事業OKR</div>
+          <div style="font-size:13px;color:#888">各事業のObjective・KRを自由に設定・管理できます</div>
+        </div>
+      </div>
+      <div class="okr-org-tabs" id="biz-okr-tabs"></div>
+      <div id="biz-okr-content"></div>
+    </div>
   </div>
 </div>
 
@@ -343,34 +661,6 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
       <button class="btn-primary" onclick="openProjModal()">＋ プロジェクトを追加</button>
     </div>
     <div class="project-grid" id="project-grid"></div>
-  </div>
-</div>
-
-<!-- TASKS TAB -->
-<div id="tab-tasks" class="tab-content">
-  <div class="page">
-    <div class="add-card">
-      <div class="add-card-title">新しいタスク</div>
-      <div class="frow-t">
-        <input type="text" id="t-title" placeholder="タスク名" style="flex:2">
-        <input type="date" id="t-due">
-        <select id="t-priority"><option value="high">高</option><option value="mid" selected>中</option><option value="low">低</option></select>
-        <select id="t-proj-sel"><option value="">プロジェクト</option></select>
-        <input type="text" id="t-tags" placeholder="タグ (カンマ区切り)">
-        <button class="btn-primary" onclick="addTask()" style="flex-shrink:0">追加</button>
-      </div>
-    </div>
-    <div class="filters-row">
-      <button class="fb active" data-tf="all" onclick="setTF(this,'all')">すべて</button>
-      <button class="fb" data-tf="high" onclick="setTF(this,'high')">🔴 高優先度</button>
-      <button class="fb" data-tf="overdue" onclick="setTF(this,'overdue')">⏰ 期限超過</button>
-      <input type="text" class="fsearch" id="t-search" placeholder="🔍 検索" oninput="renderTasks()">
-    </div>
-    <div class="columns">
-      <div class="column col-todo"><div class="col-head"><div class="col-title"><div class="cdot"></div>未着手</div><span class="ccnt" id="cnt-todo">0</span></div><div class="tlist" id="list-todo"></div></div>
-      <div class="column col-doing"><div class="col-head"><div class="col-title"><div class="cdot"></div>対応中</div><span class="ccnt" id="cnt-doing">0</span></div><div class="tlist" id="list-doing"></div></div>
-      <div class="column col-done"><div class="col-head"><div class="col-title"><div class="cdot"></div>完了</div><span class="ccnt" id="cnt-done">0</span></div><div class="tlist" id="list-done"></div></div>
-    </div>
   </div>
 </div>
 
@@ -439,19 +729,201 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
   </div>
 </div>
 
+<!-- WEEKLY REPORT TAB -->
+<div id="tab-weekly" class="tab-content">
+  <div class="page">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+      <div>
+        <div style="font-size:20px;font-weight:800;margin-bottom:4px">週次報告</div>
+        <div style="font-size:13px;color:#888">組織リーダーから代表への週次サマリー・相談・アクション管理</div>
+      </div>
+    </div>
+    <div class="weekly-week-nav">
+      <button class="week-nav-btn" onclick="prevWeek()">◀</button>
+      <div class="week-label" id="week-label">-</div>
+      <button class="week-nav-btn" onclick="nextWeek()">▶</button>
+      <button class="week-today-btn" onclick="thisWeek()">今週に戻る</button>
+    </div>
+    <div class="weekly-org-tabs" id="weekly-org-tabs"></div>
+    <div id="weekly-org-panels"></div>
+    <div class="minutes-list">
+      <div class="minutes-list-title">📚 議事録一覧 <span style="font-size:13px;font-weight:500;color:#888">クリックで表示</span></div>
+      <div id="weekly-minutes-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GANTT / TASK LIST TAB -->
+<div id="tab-gantt" class="tab-content active">
+  <div class="page" style="padding:0;background:transparent;box-shadow:none">
+    <div class="task-layout">
+      <!-- ── 左サイドバー: 事業一覧 ── -->
+      <div class="biz-sidebar">
+        <div class="biz-sidebar-hd">
+          <div class="biz-sidebar-title">📋 タスク一覧</div>
+          <input type="text" class="biz-sidebar-search" id="biz-sidebar-search"
+            placeholder="🔍 事業を検索..." oninput="renderBizSidebar()">
+        </div>
+        <div class="biz-sidebar-list" id="biz-sidebar-list"></div>
+        <div class="biz-sidebar-footer">
+          <button class="btn-cancel" style="width:100%;font-size:12px;padding:6px 0" onclick="openBizModal(null)">＋ 事業を追加</button>
+        </div>
+      </div>
+
+      <!-- ── 右メインパネル ── -->
+      <div class="task-main-panel">
+        <!-- 選択した事業のKRバナー -->
+        <div id="task-biz-banner" style="display:none"></div>
+
+        <!-- コントロールバー -->
+        <div class="gantt-ctrl" style="padding:8px 14px;border-bottom:1px solid #eef0f4;flex-wrap:wrap;gap:6px">
+          <button class="btn-primary" onclick="openGanttModalForBiz()" style="font-size:12px;padding:6px 12px">＋ タスクを追加</button>
+          <button class="btn-cancel" onclick="openProjModalForCurrentBiz()" style="font-size:12px;padding:6px 12px">＋ PJ追加</button>
+          <select class="gt-filter" id="gt-proj-filter" onchange="renderTaskView()">
+            <option value="all">すべてのプロジェクト</option>
+          </select>
+          <select class="gt-filter" id="gt-st-filter" onchange="renderTaskView()">
+            <option value="all">すべてのステータス</option>
+            <option value="todo">未着手</option>
+            <option value="doing">進行中</option>
+            <option value="done">完了</option>
+            <option value="hold">保留</option>
+          </select>
+          <!-- ガントのナビ（ガント表示時のみ表示） -->
+          <div class="gt-nav" id="gt-nav-bar" style="display:none">
+            <button class="gt-nav-btn" onclick="shiftGantt(-7)">◀</button>
+            <span class="gt-nav-lbl" id="gt-nav-lbl">-</span>
+            <button class="gt-nav-btn" onclick="shiftGantt(7)">▶</button>
+            <button class="gt-nav-btn" style="font-size:11px;color:#888;border-left:1px solid #eee;margin-left:4px" onclick="resetGanttView()">今日</button>
+          </div>
+          <!-- ビュー切り替え -->
+          <div class="tl-view-toggle">
+            <button class="tl-toggle-btn active" id="tl-toggle-list" onclick="setTaskView('list')">☰ リスト</button>
+            <button class="tl-toggle-btn" id="tl-toggle-gantt" onclick="setTaskView('gantt')">📅 ガント</button>
+          </div>
+        </div>
+
+        <!-- リストビュー（デフォルト表示） -->
+        <div id="task-list-view" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+          <div class="tl-list-wrap" id="tl-list-wrap"></div>
+        </div>
+
+        <!-- ガントビュー（切り替え時に表示） -->
+        <div id="task-gantt-view" style="flex:1;display:none">
+          <div class="gantt-wrap" style="height:100%">
+            <table class="gantt-table" id="gantt-table">
+              <thead id="gantt-thead"></thead>
+              <tbody id="gantt-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUSINESS MODAL -->
+<div class="modal-overlay" id="biz-modal">
+  <div class="modal" style="max-width:440px">
+    <h2 id="bm-title">事業を追加</h2>
+    <div class="fg"><label>事業名 *</label><input class="fc" id="bm-name" placeholder="事業名"></div>
+    <div class="frow">
+      <div class="fg"><label>アイコン（絵文字）</label><input class="fc" id="bm-icon" placeholder="🌿" style="font-size:20px;text-align:center" maxlength="2"></div>
+      <div class="fg"><label>説明</label><input class="fc" id="bm-desc" placeholder="事業の概要"></div>
+    </div>
+    <div class="fg">
+      <label>カラー</label>
+      <div class="biz-color-options" id="bm-colors"></div>
+      <input type="hidden" id="bm-color" value="#ec4899">
+    </div>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeBizModal()">キャンセル</button>
+      <button class="btn-primary" onclick="saveBiz()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- BIZ OKR OBJECTIVE MODAL -->
+<div class="modal-overlay" id="biz-okr-obj-modal">
+  <div class="modal" style="max-width:640px">
+    <h2 id="bom-title">Objectiveを追加</h2>
+    <div class="fg">
+      <label>Objective名 *</label>
+      <input class="fc" id="bom-name" placeholder="達成したい目標を入力">
+    </div>
+    <div class="fg">
+      <label>説明（任意）</label>
+      <input class="fc" id="bom-desc" placeholder="この目標について">
+    </div>
+    <div class="fg">
+      <label style="margin-bottom:8px;display:block">Key Results <span style="font-weight:400;color:#aaa;font-size:11px">（目標値・単位を設定）</span></label>
+      <div id="bom-kr-list"></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeBizObjModal()">キャンセル</button>
+      <button class="btn-primary" onclick="saveBizObj()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- GANTT TASK MODAL -->
+<div class="modal-overlay" id="gantt-modal">
+  <div class="modal" style="max-width:520px">
+    <h2 id="gm-title">タスクを追加</h2>
+    <!-- コンテキストバナー（子タスク作成時に表示） -->
+    <div id="gm-context-banner" style="display:none;background:#f0f7ff;border:1px solid #c7dff7;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1e40af">
+      <div id="gm-context-text"></div>
+    </div>
+    <div class="fg"><label>タスク名 *</label><input class="fc" id="gm-name" placeholder="タスク名を入力"></div>
+    <!-- プロジェクト連携（タスク or 編集時のみ表示） -->
+    <div class="fg" id="gm-proj-row">
+      <label>プロジェクト <span style="color:#e11d48;font-size:11px">*</span></label>
+      <select class="fc" id="gm-proj"><option value="">プロジェクトを選択</option></select>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>ステータス</label>
+        <select class="fc" id="gm-status">
+          <option value="todo">未着手</option>
+          <option value="doing">進行中</option>
+          <option value="done">完了</option>
+          <option value="hold">保留</option>
+        </select>
+      </div>
+      <div class="fg"><label>優先度</label>
+        <select class="fc" id="gm-priority">
+          <option value="mid">中</option>
+          <option value="high">高</option>
+          <option value="low">低</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>担当者</label><input class="fc" id="gm-assignee" placeholder="担当者名"></div>
+    <div class="frow">
+      <div class="fg"><label>開始予定日</label><input class="fc" type="date" id="gm-start"></div>
+      <div class="fg"><label>終了予定日</label><input class="fc" type="date" id="gm-end"></div>
+    </div>
+    <div class="fg"><label>工数目安</label><input class="fc" id="gm-hours" placeholder="例: 2h, 30m, 1d"></div>
+    <div class="fg"><label>備考</label><textarea class="fc" id="gm-note" rows="2" placeholder="メモ・補足"></textarea></div>
+    <!-- 隠しフィールド -->
+    <input type="hidden" id="gm-level" value="0">
+    <input type="hidden" id="gm-parent" value="">
+    <input type="hidden" id="gm-proj-inherited" value="">
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="closeGanttModal()">キャンセル</button>
+      <button class="btn-primary" onclick="saveGanttTask()">保存</button>
+    </div>
+  </div>
+</div>
+
 <!-- PROJECT MODAL -->
 <div class="modal-overlay" id="proj-modal">
   <div class="modal">
     <h2 id="proj-modal-title">プロジェクトを追加</h2>
     <div class="fg"><label>プロジェクト名 *</label><input class="fc" id="pm-name" placeholder="プロジェクト名"></div>
     <div class="frow">
-      <div class="fg"><label>組織 *</label>
-        <select class="fc" id="pm-org" onchange="updateKRCheckboxes()">
-          <option value="">選択してください</option>
-          <option value="hr">HRスタジオ</option>
-          <option value="pr">PRスタジオ</option>
-          <option value="corp">コーポレート</option>
-          <option value="group">グループ経営強化</option>
+      <div class="fg"><label>事業</label>
+        <select class="fc" id="pm-biz" onchange="updateKRCheckboxes()">
+          <option value="">事業なし</option>
         </select>
       </div>
       <div class="fg"><label>ステータス</label>
@@ -463,12 +935,17 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
         </select>
       </div>
     </div>
+    <div class="fg"><label>PJオーナー</label><input class="fc" id="pm-owner" placeholder="担当者名（例: 佐伯）"></div>
+    <div class="fg">
+      <label>インパクト数値 <span style="font-weight:400;color:#888;font-size:11px">— このプロジェクトの成功の定義</span></label>
+      <input class="fc" id="pm-impact" placeholder="例：月商500万円達成、新規顧客50件獲得">
+    </div>
     <div class="frow">
       <div class="fg"><label>開始日</label><input class="fc" type="date" id="pm-start"></div>
       <div class="fg"><label>終了予定日</label><input class="fc" type="date" id="pm-end"></div>
     </div>
     <div class="fg"><label>貢献するKey Result（複数選択可）</label>
-      <div class="kr-checkbox-list" id="kr-checkbox-list"><div style="color:#888;font-size:13px">組織を選択するとKRが表示されます</div></div>
+      <div class="kr-checkbox-list" id="kr-checkbox-list"><div style="color:#888;font-size:13px">組織または事業を選択するとKRが表示されます</div></div>
     </div>
     <div class="fg"><label>NotionページURL</label><input class="fc" id="pm-notion" placeholder="https://www.notion.so/..."></div>
     <div class="fg"><label>説明</label><textarea class="fc" id="pm-desc" rows="3" placeholder="プロジェクトの概要"></textarea></div>
@@ -493,6 +970,8 @@ const ORG_META = {
   corp:  { name:'コーポレート',   color:'#f59e0b', icon:'🏢', bg:'rgba(245,158,11,.1)' },
   group: { name:'グループ経営強化', color:'#8b5cf6', icon:'🌐', bg:'rgba(139,92,246,.1)' }
 };
+
+// DEFAULT_BUSINESSES removed — users add their own from scratch
 
 const OKR_DATA = {
   hr: {
@@ -619,6 +1098,15 @@ function allKRs() {
       }
     }
   }
+  // Include business OKR KRs
+  for (const bizId of Object.keys(state.bizOkrData || {})) {
+    const biz = state.businesses.find(b => b.id === bizId);
+    for (const obj of (state.bizOkrData[bizId]?.objectives || [])) {
+      for (const kr of obj.krs) {
+        list.push({ ...kr, bizId, orgName: biz?.name || bizId, objId: obj.id, objName: obj.name });
+      }
+    }
+  }
   return list;
 }
 
@@ -642,6 +1130,8 @@ let state = {
   projects: [],
   tasks: [],
   actuals: {},
+  businesses: [],
+  bizOkrData: {},  // { [bizId]: { objectives: [{id, name, desc, krs:[...]}] } }
   settings: { notionProxy: '', orgs: defaultOrgSettings() },
   sheetsData: {}   // { orgId_sheetUid: rows[] }
 };
@@ -650,6 +1140,10 @@ function loadState() {
   try { state.projects = JSON.parse(localStorage.getItem('bj_projects_v2') || '[]'); } catch(e){}
   try { state.tasks    = JSON.parse(localStorage.getItem('bj_tasks_v1')    || '[]'); } catch(e){}
   try { state.actuals  = JSON.parse(localStorage.getItem('bj_okr_actuals') || '{}'); } catch(e){}
+  try {
+    const saved = JSON.parse(localStorage.getItem('bj_businesses_v1')||'null');
+    state.businesses = saved || [];
+  } catch(ex){ state.businesses = []; }
   try {
     const saved = JSON.parse(localStorage.getItem('bj_settings') || '{}');
     const defaults = defaultOrgSettings();
@@ -871,9 +1365,21 @@ function saveSettings() {
 function saveProjects() { localStorage.setItem('bj_projects_v2', JSON.stringify(state.projects)); }
 function saveTasks() { localStorage.setItem('bj_tasks_v1', JSON.stringify(state.tasks)); }
 function saveActuals() { localStorage.setItem('bj_okr_actuals', JSON.stringify(state.actuals)); }
+function saveBusinesses(){ localStorage.setItem('bj_businesses_v1', JSON.stringify(state.businesses)); }
+
+function loadBizOkr() {
+  try { state.bizOkrData = JSON.parse(localStorage.getItem('bj_biz_okr_v1') || '{}'); } catch(e){}
+}
+function saveBizOkr() {
+  localStorage.setItem('bj_biz_okr_v1', JSON.stringify(state.bizOkrData));
+}
+function getBizOkrData(bizId) {
+  if (!state.bizOkrData[bizId]) state.bizOkrData[bizId] = { objectives: [] };
+  return state.bizOkrData[bizId];
+}
 
 // ================== TABS ==================
-let activeTab = 'dashboard';
+let activeTab = 'gantt';
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -887,6 +1393,9 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (tab === 'projects') renderProjects();
     if (tab === 'tasks') renderTasks();
     if (tab === 'monitor') renderMonitor();
+    if (tab === 'weekly') renderWeekly();
+    if (tab === 'gantt') renderTaskView();
+    if (tab === 'biz') renderBiz();
   });
 });
 
@@ -951,6 +1460,34 @@ function renderDashboard() {
     </div>`;
   }).join('');
 
+  // ユーザー追加事業のKRカード
+  const bizCardsEl = document.getElementById('dash-biz-cards');
+  if(bizCardsEl){
+    const bizWithOkr = state.businesses.filter(b=>state.bizOkrData[b.id]?.objectives?.length);
+    if(bizWithOkr.length){
+      bizCardsEl.style.display='';
+      bizCardsEl.innerHTML = bizWithOkr.map(biz=>{
+        const rate = bizAchRate(biz.id);
+        const data = state.bizOkrData[biz.id];
+        const objCount = data.objectives.length;
+        const krCount  = data.objectives.reduce((s,o)=>s+o.krs.length,0);
+        const rateDisp = rate!==null ? rate+'%' : '—';
+        const fillW    = rate!==null ? Math.min(100,rate) : 0;
+        return `<div class="org-summary-card" style="border-top-color:${biz.color}" onclick="selectBizSidebar('${biz.id}');selectTab('gantt')">
+          <div class="osc-head">
+            <div class="osc-icon" style="background:${biz.color}22;color:${biz.color}">${biz.icon||'📦'}</div>
+            <div><div class="osc-name">${e(biz.name)}</div><div class="osc-obj-count">Objective ${objCount}個 / KR ${krCount}個</div></div>
+          </div>
+          <div class="osc-rate ${rateTextClass(rate)}">${rateDisp}</div>
+          <div class="osc-bar"><div class="${rateClass(rate)}" style="width:${fillW}%;background:${biz.color}"></div></div>
+          <div class="osc-krs">${krCount}個のKR</div>
+        </div>`;
+      }).join('');
+    } else {
+      bizCardsEl.style.display='none';
+    }
+  }
+
   const active = state.projects.filter(p=>p.status==='active');
   const warn = state.projects.filter(p=>p.status==='warning'||p.status==='delayed');
   const done = state.projects.filter(p=>p.status==='completed');
@@ -970,7 +1507,7 @@ function renderDashboard() {
     activeProjEl.innerHTML = '<div class="empty" style="background:#fff;border-radius:12px;padding:30px">進行中のプロジェクトがありません</div>';
   } else {
     activeProjEl.innerHTML = active.slice(0,6).map(p => {
-      const meta = ORG_META[p.org] || { color:'#94a3b8', name:p.org||'' };
+      const meta = ORG_META[p.org] || getMetaForTab(p.businessId) || { color:'#94a3b8', name:'', bg:'#f0f0f0' };
       const prog = projectProgress(p);
       const linkedKRNames = (p.linkedKRs||[]).map(id=>getKRById(id)?.name||id).slice(0,2);
       return `<div class="mini-proj-card" style="border-left-color:${meta.color}">
@@ -1072,6 +1609,7 @@ function renderOKR(orgId) {
       </div>
     </div>`;
   }).join('')}</div>`;
+  renderBizOKR();
 }
 
 function selectOKROrg(orgId) {
@@ -1104,6 +1642,206 @@ function liveUpdateKR(krId, val) {
   if (barEl) { barEl.style.width = (rate!==null?Math.min(100,rate):0)+'%'; barEl.className = rateClass(rate); }
   if (rateEl) { rateEl.textContent = rate!==null?rate+'%':'—'; rateEl.className = 'kr-rate '+rateTextClass(rate); }
 }
+
+// ================== BUSINESS OKR ==================
+let activeBizOkrTab = null;
+let bizOkrEditingObjId = null;
+let bizOkrEditingBizId = null;
+let bizOkrEditingKRs = [];
+
+function renderBizOKR() {
+  const tabsEl = document.getElementById('biz-okr-tabs');
+  const contentEl = document.getElementById('biz-okr-content');
+  if (!tabsEl || !contentEl) return;
+  if (!state.businesses.length) {
+    tabsEl.innerHTML = '';
+    contentEl.innerHTML = '<div class="biz-okr-empty"><div style="color:#ccc;font-size:14px;margin-bottom:4px">事業が登録されていません</div><div style="font-size:12px;color:#ddd">「📦 事業」タブから事業を追加してください</div></div>';
+    return;
+  }
+  if (!activeBizOkrTab || !state.businesses.find(b => b.id === activeBizOkrTab)) {
+    activeBizOkrTab = state.businesses[0].id;
+  }
+  tabsEl.innerHTML = state.businesses.map(b =>
+    `<button class="okr-org-btn ${b.id===activeBizOkrTab?'active':''}"
+      style="${b.id===activeBizOkrTab?`background:${b.color};border-color:${b.color}`:`border-color:${b.color};color:${b.color}`}"
+      onclick="selectBizOkrTab('${b.id}')">${b.icon||'📦'} ${e(b.name)}</button>`
+  ).join('');
+  renderBizOKRContent(activeBizOkrTab);
+}
+
+function selectBizOkrTab(bizId) {
+  activeBizOkrTab = bizId;
+  const tabs = document.querySelectorAll('#biz-okr-tabs .okr-org-btn');
+  tabs.forEach(btn => {
+    const biz = state.businesses.find(b => b.id === bizId);
+    if (btn.getAttribute('onclick') === `selectBizOkrTab('${bizId}')`) {
+      btn.classList.add('active');
+      if (biz) { btn.style.background = biz.color; btn.style.borderColor = biz.color; btn.style.color = '#fff'; }
+    } else {
+      btn.classList.remove('active');
+      const otherBizId = btn.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+      const otherBiz = state.businesses.find(b => b.id === otherBizId);
+      if (otherBiz) { btn.style.background = ''; btn.style.borderColor = otherBiz.color; btn.style.color = otherBiz.color; }
+    }
+  });
+  renderBizOKRContent(bizId);
+}
+
+function renderBizOKRContent(bizId) {
+  const biz = state.businesses.find(b => b.id === bizId);
+  if (!biz) return;
+  const contentEl = document.getElementById('biz-okr-content');
+  if (!contentEl) return;
+  const data = getBizOkrData(bizId);
+
+  if (!data.objectives.length) {
+    contentEl.innerHTML = `<div class="biz-okr-empty">
+      <div style="font-size:32px;margin-bottom:12px">${biz.icon||'📦'}</div>
+      <div style="font-size:15px;font-weight:700;color:#555;margin-bottom:4px">${e(biz.name)} のOKRはまだ設定されていません</div>
+      <div style="font-size:13px;color:#aaa;margin-bottom:20px">Objectiveを追加して目標とKey Resultを設定しましょう</div>
+      <button class="btn-primary" onclick="openBizObjModal('${bizId}',null)">＋ Objectiveを追加</button>
+    </div>`;
+    return;
+  }
+
+  contentEl.innerHTML = `
+    <div class="okr-accordion" style="margin-top:16px">
+      ${data.objectives.map((obj, i) => {
+        const krRates = obj.krs.map(kr => krAchRate(kr)).filter(r => r !== null);
+        const avgRate = krRates.length ? Math.round(krRates.reduce((a,b)=>a+b,0)/krRates.length) : null;
+        return `<div class="obj-card" id="biz-obj-card-${obj.id}">
+          <div class="obj-head" onclick="toggleBizObj('${obj.id}')">
+            <div class="obj-num" style="background:${biz.color}">${i+1}</div>
+            <div style="flex:1">
+              <div class="obj-name">${e(obj.name)}</div>
+              ${obj.desc?`<div class="obj-desc">${e(obj.desc)}</div>`:''}
+            </div>
+            ${avgRate!==null?`<div style="font-size:14px;font-weight:700;margin-right:8px">${avgRate}%</div>`:''}
+            <button class="btn-icon" style="margin-right:4px" onclick="event.stopPropagation();openBizObjModal('${bizId}','${obj.id}')" title="編集">✎</button>
+            <button class="btn-icon" style="color:#ef4444;margin-right:6px" onclick="event.stopPropagation();deleteBizObj('${bizId}','${obj.id}')" title="削除">✕</button>
+            <div class="obj-chevron">▶</div>
+          </div>
+          <div class="obj-body">
+            <div class="kr-list">
+              <div class="kr-header"><div>Key Result</div><div>目標</div><div>実績入力</div><div>進捗</div><div>達成率</div></div>
+              ${obj.krs.length ? obj.krs.map(kr => {
+                const actual = state.actuals[kr.id]?.actual ?? '';
+                const rate = krAchRate(kr);
+                const fillW = rate !== null ? Math.min(100,rate) : 0;
+                return `<div class="kr-item">
+                  <div class="kr-name">${e(kr.name)}${kr.lowerIsBetter?'<div style="font-size:10px;color:#999">※低いほど良い</div>':''}</div>
+                  <div class="kr-target">${kr.target!==null&&kr.target!==undefined?kr.target+' '+e(kr.unit||''):'—'}</div>
+                  <div class="kr-actual-wrap">
+                    <input class="kr-actual-input" type="number" value="${actual}" placeholder="実績"
+                      onchange="saveKRActual('${kr.id}',this.value)" oninput="liveUpdateKR('${kr.id}',this.value)">
+                    <span class="kr-unit">${e(kr.unit||'')}</span>
+                  </div>
+                  <div class="kr-bar-wrap">
+                    <div class="kr-bar"><div class="${rateClass(rate)}" id="krbar-${kr.id}" style="width:${fillW}%"></div></div>
+                  </div>
+                  <div class="kr-rate ${rateTextClass(rate)}" id="krrate-${kr.id}">${rate!==null?rate+'%':'—'}</div>
+                </div>`;
+              }).join('') : '<div style="padding:12px 0;color:#ccc;font-size:13px;text-align:center">KRがありません。Objectiveを編集してKRを追加してください。</div>'}
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="margin-top:14px">
+      <button class="btn-primary" onclick="openBizObjModal('${bizId}',null)">＋ Objectiveを追加</button>
+    </div>`;
+}
+
+function toggleBizObj(objId) {
+  document.getElementById('biz-obj-card-' + objId)?.classList.toggle('open');
+}
+
+function openBizObjModal(bizId, objId) {
+  bizOkrEditingBizId = bizId;
+  bizOkrEditingObjId = objId;
+  const modal = document.getElementById('biz-okr-obj-modal');
+  if (!modal) return;
+  if (objId) {
+    const obj = getBizOkrData(bizId).objectives.find(o => o.id === objId);
+    if (!obj) return;
+    document.getElementById('bom-title').textContent = 'Objectiveを編集';
+    document.getElementById('bom-name').value = obj.name;
+    document.getElementById('bom-desc').value = obj.desc || '';
+    bizOkrEditingKRs = obj.krs.map(kr => ({...kr}));
+  } else {
+    document.getElementById('bom-title').textContent = 'Objectiveを追加';
+    document.getElementById('bom-name').value = '';
+    document.getElementById('bom-desc').value = '';
+    bizOkrEditingKRs = [];
+  }
+  renderBomKRs();
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('bom-name').focus(), 50);
+}
+
+function closeBizObjModal() {
+  document.getElementById('biz-okr-obj-modal')?.classList.remove('open');
+  bizOkrEditingBizId = null;
+  bizOkrEditingObjId = null;
+  bizOkrEditingKRs = [];
+}
+
+function renderBomKRs() {
+  const list = document.getElementById('bom-kr-list');
+  if (!list) return;
+  list.innerHTML = bizOkrEditingKRs.map((kr, i) => `
+    <div class="bom-kr-row">
+      <input class="fc" style="flex:3;min-width:120px" value="${e(kr.name)}" placeholder="KR名（例：売上高）"
+        oninput="bizOkrEditingKRs[${i}].name=this.value">
+      <input class="fc" style="width:80px" type="number" value="${kr.target??''}" placeholder="目標値"
+        oninput="bizOkrEditingKRs[${i}].target=this.value===''?null:parseFloat(this.value)">
+      <input class="fc" style="width:64px" value="${e(kr.unit||'')}" placeholder="単位"
+        oninput="bizOkrEditingKRs[${i}].unit=this.value">
+      <label><input type="checkbox" ${kr.lowerIsBetter?'checked':''} onchange="bizOkrEditingKRs[${i}].lowerIsBetter=this.checked">低いほど良</label>
+      <button class="btn-rm-ms" onclick="removeBomKR(${i})" title="削除">✕</button>
+    </div>`).join('') +
+    `<button class="btn-add-ms" style="margin-top:8px" onclick="addBomKR()">＋ KRを追加</button>`;
+}
+
+function addBomKR() {
+  bizOkrEditingKRs.push({ id:'kr_'+Date.now()+'_'+Math.random().toString(36).slice(2,7), name:'', target:null, unit:'', lowerIsBetter:false });
+  renderBomKRs();
+}
+
+function removeBomKR(idx) {
+  bizOkrEditingKRs.splice(idx, 1);
+  renderBomKRs();
+}
+
+function saveBizObj() {
+  const name = document.getElementById('bom-name').value.trim();
+  if (!name) { document.getElementById('bom-name').focus(); return; }
+  const desc = document.getElementById('bom-desc').value.trim();
+  const data = getBizOkrData(bizOkrEditingBizId);
+  if (bizOkrEditingObjId) {
+    const idx = data.objectives.findIndex(o => o.id === bizOkrEditingObjId);
+    if (idx !== -1) data.objectives[idx] = { ...data.objectives[idx], name, desc, krs: bizOkrEditingKRs };
+  } else {
+    data.objectives.push({ id:'obj_'+Date.now(), name, desc, krs: bizOkrEditingKRs });
+  }
+  saveBizOkr();
+  closeBizObjModal();
+  activeBizOkrTab = bizOkrEditingBizId;
+  renderBizOKR();
+  toast('Objectiveを保存しました');
+}
+
+function deleteBizObj(bizId, objId) {
+  if (!confirm('このObjectiveを削除しますか？')) return;
+  const data = getBizOkrData(bizId);
+  data.objectives = data.objectives.filter(o => o.id !== objId);
+  saveBizOkr();
+  renderBizOKRContent(bizId);
+  toast('Objectiveを削除しました');
+}
+
+// Close biz OKR modal on overlay click
+document.getElementById('biz-okr-obj-modal').addEventListener('click', function(ev){ if(ev.target===this) closeBizObjModal(); });
 
 function exportOKR() {
   let text = '2026年度 OKRサマリー\n\n';
@@ -1153,7 +1891,7 @@ function renderProjects() {
   }
   const today = new Date(); today.setHours(0,0,0,0);
   grid.innerHTML = projs.map(p => {
-    const meta = ORG_META[p.org] || { color:'#94a3b8', name:p.org||'—', bg:'#f0f0f0' };
+    const meta = ORG_META[p.org] || getMetaForTab(p.businessId) || { color:'#94a3b8', name:'—', bg:'#f0f0f0' };
     const prog = projectProgress(p);
     const ms = (p.milestones||[]);
     const msHtml = ms.length ? `<div class="ms-list-view">${ms.slice(0,3).map(m => {
@@ -1162,7 +1900,7 @@ function renderProjects() {
     }).join('')}</div>` : '';
     const linkedKRs = (p.linkedKRs||[]).map(id=>getKRById(id)).filter(Boolean);
     const krHtml = linkedKRs.length ? `<div class="proj-krs-wrap">${linkedKRs.slice(0,3).map(kr=>{
-      const m2 = ORG_META[kr.orgId]||{color:'#888',bg:'#eee'};
+      const m2 = ORG_META[kr.orgId] || getMetaForTab(kr.bizId) || {color:'#888',bg:'#eee'};
       return `<span class="kr-link-badge" style="background:${m2.bg};color:${m2.color}">→ ${e(kr.name)}</span>`;
     }).join('')}${linkedKRs.length>3?`<span style="font-size:11px;color:#888">+${linkedKRs.length-3}</span>`:''}</div>` : '';
     return `<div class="proj-card s-${p.status}">
@@ -1214,12 +1952,20 @@ function openProjModal(id) {
   const p = id ? state.projects.find(x=>x.id===id) : null;
   document.getElementById('proj-modal-title').textContent = p ? 'プロジェクトを編集' : 'プロジェクトを追加';
   document.getElementById('pm-name').value = p?.name || '';
-  document.getElementById('pm-org').value = p?.org || '';
   document.getElementById('pm-status').value = p?.status || 'active';
   document.getElementById('pm-start').value = p?.startDate || '';
   document.getElementById('pm-end').value = p?.endDate || '';
   document.getElementById('pm-notion').value = p?.notionUrl || '';
+  document.getElementById('pm-impact').value = p?.impactMetric || '';
   document.getElementById('pm-desc').value = p?.description || '';
+  document.getElementById('pm-owner').value = p?.owner || '';
+  const pmBiz = document.getElementById('pm-biz');
+  if(pmBiz){
+    const orgOpts = Object.entries(ORG_META).map(([id,m])=>`<option value="${id}">${m.icon} ${m.name}</option>`).join('');
+    const bizOpts = state.businesses.map(b=>`<option value="${b.id}">${b.icon||'📦'} ${e(b.name)}</option>`).join('');
+    pmBiz.innerHTML = '<option value="">事業なし</option>' + orgOpts + bizOpts;
+    pmBiz.value = p ? (p.businessId || p.org || '') : '';
+  }
   updateKRCheckboxes(p?.linkedKRs || []);
   const msList = document.getElementById('ms-list');
   msList.innerHTML = '';
@@ -1233,21 +1979,38 @@ function closeProjModal() {
 }
 
 function updateKRCheckboxes(selectedKRs) {
-  const orgId = document.getElementById('pm-org').value;
+  const selId = document.getElementById('pm-biz')?.value || '';
   const list = document.getElementById('kr-checkbox-list');
-  if (!orgId) {
-    list.innerHTML = '<div style="color:#888;font-size:13px">組織を選択するとKRが表示されます</div>';
-    return;
-  }
   const checked = selectedKRs || Array.from(list.querySelectorAll('input[type=checkbox]:checked')).map(i=>i.value);
-  const orgData = OKR_DATA[orgId];
-  if (!orgData) { list.innerHTML = ''; return; }
-  list.innerHTML = orgData.objectives.map(obj => `
-    <div class="kr-checkbox-org-label">${e(obj.name)}</div>
-    ${obj.krs.map(kr => `<label class="kr-checkbox-item">
-      <input type="checkbox" value="${kr.id}" ${checked.includes(kr.id)?'checked':''}> ${e(kr.name)} <span style="color:#888;font-size:11px">（目標:${kr.target}${kr.unit}）</span>
-    </label>`).join('')}
-  `).join('');
+  let html = '';
+
+  // Built-in org OKRs
+  if (selId && OKR_DATA[selId]) {
+    const orgMeta = ORG_META[selId];
+    html += `<div class="kr-checkbox-org-label">${orgMeta.icon} ${orgMeta.name}</div>`;
+    html += OKR_DATA[selId].objectives.map(obj => `
+      <div class="kr-checkbox-org-label" style="font-size:10px;margin-left:8px;color:#999;margin-top:4px">${e(obj.name)}</div>
+      ${obj.krs.map(kr => `<label class="kr-checkbox-item">
+        <input type="checkbox" value="${kr.id}" ${checked.includes(kr.id)?'checked':''}> ${e(kr.name)}<span style="color:#888;font-size:11px"> （目標:${kr.target}${kr.unit}）</span>
+      </label>`).join('')}`).join('');
+  }
+
+  // User business OKRs
+  if (selId && state.bizOkrData[selId]) {
+    const biz = state.businesses.find(b=>b.id===selId);
+    const bizOkr = state.bizOkrData[selId];
+    if (biz && bizOkr.objectives.length) {
+      if (html) html += `<div style="border-top:1px solid #eee;margin:8px 0"></div>`;
+      html += `<div class="kr-checkbox-org-label">${biz.icon||'📦'} ${biz.name}</div>`;
+      html += bizOkr.objectives.map(obj => `
+        <div class="kr-checkbox-org-label" style="font-size:10px;margin-left:8px;color:#999;margin-top:4px">${e(obj.name)}</div>
+        ${obj.krs.map(kr => `<label class="kr-checkbox-item">
+          <input type="checkbox" value="${kr.id}" ${checked.includes(kr.id)?'checked':''}> ${e(kr.name)}${kr.target!==null?`<span style="color:#888;font-size:11px"> （目標:${kr.target}${kr.unit||''}）</span>`:''}
+        </label>`).join('')}`).join('');
+    }
+  }
+
+  list.innerHTML = html || '<div style="color:#888;font-size:13px">事業を選択するとKRが表示されます</div>';
 }
 
 function addMsRow(ms) {
@@ -1268,15 +2031,19 @@ function saveProject() {
     const inputs = row.querySelectorAll('input');
     return { id: 'ms_' + Date.now() + Math.random(), name: inputs[0].value, date: inputs[1].value, done: inputs[2].checked };
   }).filter(m=>m.name);
+  const selBiz = document.getElementById('pm-biz')?.value || '';
   const proj = {
     id: editProjId || 'p_' + Date.now(),
     name,
-    org: document.getElementById('pm-org').value,
+    org: ORG_META[selBiz] ? selBiz : '',
     status: document.getElementById('pm-status').value,
     startDate: document.getElementById('pm-start').value,
     endDate: document.getElementById('pm-end').value,
     notionUrl: document.getElementById('pm-notion').value.trim(),
+    impactMetric: document.getElementById('pm-impact')?.value.trim()||'',
     description: document.getElementById('pm-desc').value.trim(),
+    owner: document.getElementById('pm-owner')?.value.trim()||'',
+    businessId: !ORG_META[selBiz] ? selBiz : '',
     linkedKRs,
     milestones,
     createdAt: editProjId ? (state.projects.find(p=>p.id===editProjId)?.createdAt||new Date().toISOString()) : new Date().toISOString()
@@ -1291,6 +2058,9 @@ function saveProject() {
   closeProjModal();
   renderProjects();
   renderDashboard();
+  // タスク一覧も即時更新（タブが開いていれば反映）
+  if (document.getElementById('tab-gantt')?.classList.contains('active')) renderTaskView();
+  else { renderBizSidebar && renderBizSidebar(); }
   toast(editProjId ? 'プロジェクトを更新しました' : 'プロジェクトを追加しました');
 }
 
@@ -1300,6 +2070,7 @@ function deleteProject(id) {
   saveProjects();
   renderProjects();
   renderDashboard();
+  if (document.getElementById('tab-gantt')?.classList.contains('active')) renderTaskView();
   toast('削除しました');
 }
 
@@ -1610,8 +2381,15 @@ function e(str) {
 
 function fmtDate(d) {
   if (!d) return '';
-  const dt = new Date(d); if (isNaN(dt)) return d;
-  return `${dt.getFullYear()}/${String(dt.getMonth()+1).padStart(2,'0')}/${String(dt.getDate()).padStart(2,'0')}`;
+  const dt = new Date(d + 'T00:00:00'); if (isNaN(dt)) return d;
+  return `${dt.getMonth()+1}/${dt.getDate()}`;
+}
+
+function addDays(dateStr, days) {
+  if (!dateStr) return dateStr;
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + days);
+  return d.toISOString().slice(0, 10);
 }
 
 let toastTimer;
@@ -1626,10 +2404,1636 @@ document.getElementById('proj-modal').addEventListener('click', function(e) {
   if (e.target === this) closeProjModal();
 });
 
+// ================== WEEKLY REPORTS ==================
+let weeklyReports = {};
+let currentWeekDate = getMondayOfWeek(new Date());
+let weeklyOrgTab = 'hr';
+
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function getWeekKey(monday) {
+  return monday.toISOString().slice(0, 10);
+}
+
+function getWeekLabel(monday) {
+  const end = new Date(monday.getTime() + 6 * 86400000);
+  const fmt = d => `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+  return `${fmt(monday)}（月）〜 ${fmt(end)}（日）`;
+}
+
+function loadWeeklyReports() {
+  try { weeklyReports = JSON.parse(localStorage.getItem('bj_weekly_v1') || '{}'); } catch(ex) {}
+}
+
+function saveWeeklyReports() {
+  localStorage.setItem('bj_weekly_v1', JSON.stringify(weeklyReports));
+}
+
+function getWeekData(weekKey, orgId) {
+  if (!weeklyReports[weekKey]) weeklyReports[weekKey] = {};
+  if (!weeklyReports[weekKey][orgId]) {
+    weeklyReports[weekKey][orgId] = { summary: '', agenda: '', actions: [], savedAt: null };
+  }
+  return weeklyReports[weekKey][orgId];
+}
+
+function getMetaForTab(id) {
+  if (ORG_META[id]) return ORG_META[id];
+  const biz = state.businesses.find(b => b.id === id);
+  if (biz) return { name: biz.name, icon: biz.icon||'📦', color: biz.color };
+  return null;
+}
+
+function renderWeekly() {
+  const weekKey = getWeekKey(currentWeekDate);
+  const labelEl = document.getElementById('week-label');
+  if (labelEl) labelEl.textContent = getWeekLabel(currentWeekDate);
+
+  const tabsEl = document.getElementById('weekly-org-tabs');
+  if (!tabsEl) return;
+
+  // Combine 4 orgs + businesses
+  const allTabs = [
+    ...Object.entries(ORG_META).map(([id, meta]) => ({ id, meta })),
+    ...state.businesses.map(b => ({ id: b.id, meta: { name: b.name, icon: b.icon||'📦', color: b.color } }))
+  ];
+
+  // If current tab no longer exists (e.g. biz deleted), reset to 'hr'
+  if (!allTabs.find(t => t.id === weeklyOrgTab)) weeklyOrgTab = 'hr';
+
+  tabsEl.innerHTML = allTabs.map(({ id, meta }) => {
+    const data = weeklyReports[weekKey]?.[id];
+    const hasData = data && (data.summary || data.agenda || (data.actions && data.actions.length));
+    return `<button class="weekly-org-tab ${id===weeklyOrgTab?'active':''}"
+      style="--org-color:${meta.color}"
+      onclick="switchWeeklyOrg('${id}')">${meta.icon} ${meta.name}${hasData?` <span style="width:7px;height:7px;border-radius:50%;background:${meta.color};display:inline-block;margin-left:2px"></span>`:''}
+    </button>`;
+  }).join('');
+
+  const panelsEl = document.getElementById('weekly-org-panels');
+  panelsEl.innerHTML = allTabs.map(({ id, meta }) =>
+    `<div class="weekly-org-panel ${id===weeklyOrgTab?'active':''}" id="wpanel-${id}">
+       ${buildWeeklyPanel(weekKey, id, meta)}
+     </div>`
+  ).join('');
+
+  renderMinutesList();
+}
+
+function buildWeeklyPanel(weekKey, orgId, meta) {
+  const data = getWeekData(weekKey, orgId);
+  const prevMonday = new Date(currentWeekDate.getTime() - 7 * 86400000);
+  const prevKey = getWeekKey(prevMonday);
+  const prevData = weeklyReports[prevKey]?.[orgId];
+  const prevPending = prevData ? (prevData.actions || []).filter(a => !a.done) : [];
+
+  const actionsHtml = (data.actions || []).map((a, i) =>
+    `<div class="action-row ${a.done?'done-action':''}" id="arow-${orgId}-${i}">
+      <input type="checkbox" class="action-check" ${a.done?'checked':''}
+        onchange="toggleAction('${weekKey}','${orgId}',${i},this.checked)">
+      <input class="action-text" value="${e(a.text)}" placeholder="アクション内容"
+        oninput="updateAction('${weekKey}','${orgId}',${i},'text',this.value)">
+      <input class="action-assignee" value="${e(a.assignee||'')}" placeholder="担当者"
+        oninput="updateAction('${weekKey}','${orgId}',${i},'assignee',this.value)">
+      <input type="date" class="action-due" value="${a.dueDate||''}"
+        onchange="updateAction('${weekKey}','${orgId}',${i},'dueDate',this.value)">
+      <button class="action-rm" onclick="removeAction('${weekKey}','${orgId}',${i})" title="削除">✕</button>
+    </div>`
+  ).join('');
+
+  const prevHtml = prevPending.length > 0 ? `
+    <div class="prev-actions-box">
+      <div class="prev-actions-title">⚠️ 前週の未完了アクション（${getWeekLabel(prevMonday).slice(0,10)} 週）</div>
+      ${prevPending.map(a => `
+        <div class="prev-action-item">
+          <span style="flex:1">${e(a.text)}</span>
+          ${a.assignee?`<span style="font-size:11px;background:#fde68a;padding:2px 8px;border-radius:8px;color:#92400e">${e(a.assignee)}</span>`:''}
+          ${a.dueDate?`<span style="font-size:11px;color:#aaa">${fmtDate(a.dueDate)}</span>`:''}
+        </div>`).join('')}
+    </div>` : '';
+
+  const savedAt = data.savedAt
+    ? `最終保存: ${data.savedAt.slice(0,10)} ${data.savedAt.slice(11,16)}`
+    : '未保存';
+
+  return `
+    ${prevHtml}
+    <div class="weekly-section">
+      <div class="weekly-section-label" style="color:${meta.color}">📝 今週のサマリー</div>
+      <textarea class="weekly-textarea" id="ws-summary-${orgId}"
+        placeholder="今週の成果・進捗・状況を記入してください">${e(data.summary)}</textarea>
+    </div>
+    <div class="weekly-section">
+      <div class="weekly-section-label" style="color:${meta.color}">💬 相談事項・議題</div>
+      <textarea class="weekly-textarea" id="ws-agenda-${orgId}"
+        placeholder="代表への相談事項や議題を記入してください">${e(data.agenda)}</textarea>
+    </div>
+    <div class="weekly-section">
+      <div class="weekly-section-label" style="color:${meta.color}">✅ アクション・決定事項</div>
+      <div style="font-size:12px;color:#aaa;margin-bottom:8px">担当者・期限を設定できます。完了したらチェックを入れてください。</div>
+      <div class="action-list" id="action-list-${orgId}">${actionsHtml||'<div style="text-align:center;color:#ddd;font-size:13px;padding:12px 0">アクションなし</div>'}</div>
+      <button class="btn-add-action" onclick="addAction('${weekKey}','${orgId}')">＋ アクションを追加</button>
+    </div>
+    <div class="weekly-save-bar">
+      <button class="btn-primary" onclick="saveWeeklyPanel('${weekKey}','${orgId}')">💾 保存</button>
+      <span class="weekly-save-status" id="ws-status-${orgId}">${savedAt}</span>
+    </div>`;
+}
+
+function switchWeeklyOrg(id) {
+  weeklyOrgTab = id;
+  document.querySelectorAll('.weekly-org-tab').forEach(b =>
+    b.classList.toggle('active', b.dataset && b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${id}'`))
+  );
+  document.querySelectorAll('.weekly-org-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.weekly-org-tab').forEach(b => {
+    if (b.getAttribute('onclick') === `switchWeeklyOrg('${id}')`) b.classList.add('active');
+  });
+  document.querySelectorAll('.weekly-org-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('wpanel-' + id)?.classList.add('active');
+}
+
+function prevWeek() {
+  currentWeekDate = new Date(currentWeekDate.getTime() - 7 * 86400000);
+  renderWeekly();
+}
+
+function nextWeek() {
+  currentWeekDate = new Date(currentWeekDate.getTime() + 7 * 86400000);
+  renderWeekly();
+}
+
+function thisWeek() {
+  currentWeekDate = getMondayOfWeek(new Date());
+  renderWeekly();
+}
+
+function saveWeeklyPanel(weekKey, orgId) {
+  const data = getWeekData(weekKey, orgId);
+  const summaryEl = document.getElementById(`ws-summary-${orgId}`);
+  const agendaEl  = document.getElementById(`ws-agenda-${orgId}`);
+  if (summaryEl) data.summary = summaryEl.value;
+  if (agendaEl)  data.agenda  = agendaEl.value;
+  data.savedAt = new Date().toISOString();
+  saveWeeklyReports();
+  const statusEl = document.getElementById(`ws-status-${orgId}`);
+  if (statusEl) statusEl.textContent = `最終保存: ${data.savedAt.slice(0,10)} ${data.savedAt.slice(11,16)}`;
+  renderMinutesList();
+  const meta = getMetaForTab(orgId);
+  toast(`${meta?.name || orgId} の週次報告を保存しました`);
+}
+
+function collectWeeklyTextData(weekKey, orgId) {
+  const data = getWeekData(weekKey, orgId);
+  const summaryEl = document.getElementById(`ws-summary-${orgId}`);
+  const agendaEl  = document.getElementById(`ws-agenda-${orgId}`);
+  if (summaryEl) data.summary = summaryEl.value;
+  if (agendaEl)  data.agenda  = agendaEl.value;
+}
+
+function addAction(weekKey, orgId) {
+  collectWeeklyTextData(weekKey, orgId);
+  const data = getWeekData(weekKey, orgId);
+  data.actions.push({ id: 'a_'+Date.now(), text: '', assignee: '', dueDate: '', done: false });
+  saveWeeklyReports();
+  weeklyOrgTab = orgId;
+  renderWeekly();
+}
+
+function removeAction(weekKey, orgId, idx) {
+  collectWeeklyTextData(weekKey, orgId);
+  const data = getWeekData(weekKey, orgId);
+  data.actions.splice(idx, 1);
+  saveWeeklyReports();
+  weeklyOrgTab = orgId;
+  renderWeekly();
+}
+
+function toggleAction(weekKey, orgId, idx, checked) {
+  const data = getWeekData(weekKey, orgId);
+  if (data.actions[idx]) {
+    data.actions[idx].done = checked;
+    saveWeeklyReports();
+  }
+  const row = document.getElementById(`arow-${orgId}-${idx}`);
+  if (row) row.classList.toggle('done-action', checked);
+  renderMinutesList();
+}
+
+function updateAction(weekKey, orgId, idx, field, value) {
+  const data = getWeekData(weekKey, orgId);
+  if (data.actions[idx]) {
+    data.actions[idx][field] = value;
+    saveWeeklyReports();
+  }
+}
+
+function renderMinutesList() {
+  const el = document.getElementById('weekly-minutes-list');
+  if (!el) return;
+  const weeks = Object.keys(weeklyReports).sort().reverse();
+  if (!weeks.length) {
+    el.innerHTML = '<div class="minutes-empty">まだ記録がありません</div>';
+    return;
+  }
+  const currentKey = getWeekKey(currentWeekDate);
+  el.innerHTML = weeks.map(wk => {
+    const weekData = weeklyReports[wk];
+    const allKnownIds = [
+      ...Object.keys(ORG_META),
+      ...state.businesses.map(b => b.id)
+    ];
+    const idsWithData = allKnownIds.filter(id => {
+      const d = weekData[id];
+      return d && (d.summary || d.agenda || (d.actions && d.actions.length));
+    });
+    const startDate = new Date(wk + 'T00:00:00');
+    const endDate   = new Date(startDate.getTime() + 6 * 86400000);
+    const fmt = d => `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+    const label = `${fmt(startDate)} 〜 ${fmt(endDate)}`;
+    const isCurrent = wk === currentKey;
+    const orgBadges = idsWithData.map(id => {
+      const meta = getMetaForTab(id);
+      return meta ? `<span class="minutes-org-badge" style="background:${meta.color}">${meta.icon} ${meta.name}</span>` : '';
+    }).join('');
+    return `<div class="minutes-item" onclick="jumpToWeek('${wk}')">
+      <div class="minutes-item-head">
+        <div>
+          <div class="minutes-date">${label}${isCurrent?' <span style="font-size:11px;color:#10b981;font-weight:600;margin-left:6px">● 今週</span>':''}</div>
+          <div class="minutes-orgs" style="margin-top:6px">${orgBadges || '<span style="font-size:12px;color:#ccc">記録なし</span>'}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function jumpToWeek(weekKey) {
+  currentWeekDate = new Date(weekKey + 'T00:00:00');
+  renderWeekly();
+  document.getElementById('tab-weekly')?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ================== BUSINESSES ==================
+let currentBizId = null;
+let bizGanttViewStart = null;
+const BIZ_COLORS = ['#ec4899','#f59e0b','#8b5cf6','#10b981','#3b82f6','#f97316','#06b6d4','#ef4444','#84cc16','#14b8a6'];
+let editingBizId = null;
+
+function renderBiz() {
+  // Sync list/detail visibility
+  if(currentBizId){
+    document.getElementById('biz-list-view').style.display='none';
+    document.getElementById('biz-detail-view').style.display='block';
+    renderBizDetail(currentBizId);
+  } else {
+    document.getElementById('biz-list-view').style.display='block';
+    document.getElementById('biz-detail-view').style.display='none';
+    renderBizGrid();
+  }
+}
+
+function renderBizGrid(){
+  const grid = document.getElementById('biz-grid');
+  if(!grid) return;
+  if(!state.businesses.length){
+    grid.innerHTML='<div style="color:#ccc;text-align:center;padding:60px;font-size:14px">事業が登録されていません</div>';
+    return;
+  }
+  grid.innerHTML = state.businesses.map(biz=>{
+    const projs = state.projects.filter(p=>p.businessId===biz.id);
+    const active = projs.filter(p=>p.status==='active'||p.status==='warning').length;
+    const done   = projs.filter(p=>p.status==='completed').length;
+    const total  = projs.length;
+    const pct    = total ? Math.round(done/total*100) : 0;
+    const tasks  = ganttTasks.filter(t=> projs.some(p=>p.id===t.projectId));
+    const activeTasks = tasks.filter(t=>t.status==='doing').length;
+    return `<div class="biz-card" style="border-top-color:${biz.color}" onclick="openBizDetail('${biz.id}')">
+      <div class="biz-card-acts">
+        <button class="biz-act-btn" onclick="event.stopPropagation();openBizModal('${biz.id}')" title="編集">✎</button>
+        <button class="biz-act-btn" onclick="event.stopPropagation();deleteBiz('${biz.id}')" title="削除" style="color:#ef4444">✕</button>
+      </div>
+      <div class="biz-card-head">
+        <div class="biz-card-icon" style="background:${biz.color}22">${biz.icon||'📦'}</div>
+        <div class="biz-card-name">${e(biz.name)}</div>
+      </div>
+      <div class="biz-card-stats">
+        <div class="biz-stat"><div class="biz-stat-num" style="color:${biz.color}">${active}</div><div class="biz-stat-lbl">進行中PJ</div></div>
+        <div class="biz-stat"><div class="biz-stat-num" style="color:#22c55e">${done}</div><div class="biz-stat-lbl">完了PJ</div></div>
+        <div class="biz-stat"><div class="biz-stat-num" style="color:#3b82f6">${activeTasks}</div><div class="biz-stat-lbl">対応中タスク</div></div>
+      </div>
+      <div class="biz-card-bar"><div class="biz-card-fill" style="width:${pct}%;background:${biz.color}"></div></div>
+      <div style="font-size:11px;color:#aaa;margin-top:6px">プロジェクト ${total}件 / 完了率 ${pct}%</div>
+    </div>`;
+  }).join('');
+}
+
+function openBizDetail(bizId){
+  currentBizId = bizId;
+  bizGanttViewStart = ganttDefaultStart();
+  renderBiz();
+}
+
+function closeBizDetail(){
+  currentBizId = null;
+  renderBiz();
+}
+
+function selectTab(tabId){
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+  if(btn) btn.click();
+}
+
+function renderBizDetail(bizId){
+  const biz = state.businesses.find(b=>b.id===bizId);
+  if(!biz) return;
+  // Header
+  const iconEl = document.getElementById('biz-d-icon');
+  const nameEl = document.getElementById('biz-d-name');
+  if(iconEl){ iconEl.textContent=biz.icon||'📦'; iconEl.style.background=biz.color+'22'; }
+  if(nameEl){ nameEl.textContent=biz.name; nameEl.style.color=biz.color; }
+  // OKR
+  const okrEl = document.getElementById('biz-d-okr');
+  if(okrEl){
+    const bizOkr = getBizOkrData(bizId);
+    if(!bizOkr.objectives.length){
+      okrEl.innerHTML=`<div style="text-align:center;padding:16px;color:#ccc;font-size:13px">OKRが設定されていません。<button class="btn-cancel" style="margin-left:8px;font-size:12px;padding:4px 10px" onclick="selectTab('okr')">OKRタブで設定する</button></div>`;
+    } else {
+      okrEl.innerHTML = bizOkr.objectives.map((obj,i)=>{
+        const krRates = obj.krs.map(kr=>krAchRate(kr)).filter(r=>r!==null);
+        const avgRate = krRates.length ? Math.round(krRates.reduce((a,b)=>a+b,0)/krRates.length) : null;
+        const rateColor = avgRate===null?'#ccc':avgRate>=100?'#16a34a':avgRate>=70?'#1a1a2e':'#d97706';
+        return `<div class="biz-d-okr-item">
+          <div class="biz-d-okr-head">
+            <div class="obj-num" style="background:${biz.color};width:22px;height:22px;font-size:10px;flex-shrink:0">${i+1}</div>
+            <div style="flex:1;font-size:14px;font-weight:700">${e(obj.name)}</div>
+            ${avgRate!==null?`<div style="font-size:14px;font-weight:800;color:${rateColor}">${avgRate}%</div>`:'<div style="font-size:12px;color:#ccc">未入力</div>'}
+          </div>
+          <div style="height:6px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-top:8px">
+            <div style="height:100%;border-radius:3px;background:${biz.color};width:${avgRate!==null?Math.min(100,avgRate):0}%;transition:width .5s"></div>
+          </div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px">${obj.krs.length}件のKR</div>
+        </div>`;
+      }).join('');
+    }
+  }
+  // Projects
+  const projs = state.projects.filter(p=>p.businessId===bizId);
+  const projGrid = document.getElementById('biz-proj-grid');
+  if(projGrid){
+    if(!projs.length){
+      projGrid.innerHTML='<div style="color:#ccc;font-size:13px;padding:20px 0">プロジェクトがありません。「＋ プロジェクトを追加」から追加してください。</div>';
+    } else {
+      projGrid.innerHTML = projs.map(p=>{
+        const org = ORG_META[p.org];
+        const stCls={active:'s-active',warning:'s-warning',delayed:'s-delayed',completed:'s-completed'}[p.status]||'';
+        const stLbl={active:'進行中',warning:'要注意',delayed:'遅延',completed:'完了'}[p.status]||p.status;
+        const prog = Math.min(100,Math.max(0,p.progress||0));
+        return `<div class="proj-card ${stCls}" style="border-top-color:${biz.color}">
+          <div class="proj-card-head">
+            <div><div class="proj-name">${e(p.name)}</div>
+              <div class="proj-meta"><span class="sbadge ${stCls}">${stLbl}</span>
+                ${p.start||p.end?`<span class="date-range">${fmtDate(p.start)}〜${fmtDate(p.end)}</span>`:''}
+              </div>
+            </div>
+            <div class="proj-acts">
+              <button class="btn-icon" onclick="openProjModal('${p.id}')" title="編集">✎</button>
+            </div>
+          </div>
+          <div class="prog-wrap">
+            <div class="prog-label"><span>進捗</span><span>${prog}%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:${prog}%;background:${biz.color}"></div></div>
+          </div>
+          ${p.desc?`<div style="font-size:12px;color:#888;margin-top:4px">${e(p.desc)}</div>`:''}
+        </div>`;
+      }).join('');
+    }
+  }
+  // Gantt
+  renderBizGantt(bizId);
+}
+
+function openProjModalForBiz(){
+  openProjModal();
+  // Pre-select this business after modal opens
+  setTimeout(()=>{
+    const pmBiz = document.getElementById('pm-biz');
+    if(pmBiz) pmBiz.value = currentBizId||'';
+  },50);
+}
+
+// ── 事業KR達成率（ユーザー追加事業用） ──
+function bizAchRate(bizId) {
+  const data = state.bizOkrData[bizId];
+  if (!data || !data.objectives.length) return null;
+  const rates = [];
+  for (const obj of data.objectives)
+    for (const kr of obj.krs) { const r = krAchRate(kr); if (r !== null) rates.push(r); }
+  return rates.length ? Math.round(rates.reduce((a,b)=>a+b,0)/rates.length) : null;
+}
+
+// 事業に紐づくタスク数
+function getBizTaskCount(bizId) {
+  if (bizId === 'all') return ganttTasks.length;
+  const projIds = new Set(
+    state.projects.filter(p=>(p.businessId||p.org)===bizId).map(p=>p.id)
+  );
+  return ganttTasks.filter(t=>projIds.has(t.projectId)).length;
+}
+
+// サイドバー描画
+function renderBizSidebar() {
+  const list = document.getElementById('biz-sidebar-list');
+  if (!list) return;
+  const q = (document.getElementById('biz-sidebar-search')?.value||'').toLowerCase();
+
+  // 「すべて」は常に先頭に固定
+  const sortableItems = [
+    ...Object.entries(ORG_META).map(([id,m])=>({ id, name:m.name, icon:m.icon, color:m.color })),
+    ...state.businesses.map(b=>({ id:b.id, name:b.name, icon:b.icon||'📦', color:b.color }))
+  ];
+  // 保存済みの並び順を適用
+  const ordered = [];
+  for (const id of bizSidebarOrder) {
+    const item = sortableItems.find(x=>x.id===id);
+    if (item) ordered.push(item);
+  }
+  for (const item of sortableItems) {
+    if (!bizSidebarOrder.includes(item.id)) ordered.push(item);
+  }
+
+  const allItem = { id:'all', name:'すべて', icon:'🌐', color:'#6366f1' };
+  const filtered = [allItem, ...ordered.filter(item=>!q||item.name.toLowerCase().includes(q))];
+
+  list.innerHTML = filtered.map((item,i)=>{
+    const cnt = getBizTaskCount(item.id);
+    const isActive = ganttBizFilter===item.id;
+    const isAll = item.id === 'all';
+    const sep = (i===1 && filtered.length>1) ? '<div class="biz-sidebar-sep"></div>' : '';
+    const dragAttrs = isAll ? '' :
+      `draggable="true" ondragstart="bizDragStart(event,'${item.id}')" ondragover="bizDragOver(event,'${item.id}')" ondragleave="bizDragLeave(event)" ondrop="bizDrop(event,'${item.id}')" ondragend="bizDragEnd(event)"`;
+    const handle = isAll ? '' : `<span class="biz-drag-handle" title="ドラッグで並び替え">⠿</span>`;
+    return sep + `<div class="biz-sidebar-item${isActive?' active':''}" ${dragAttrs} onclick="if(!bizDragJustDone)selectBizSidebar('${item.id}')">
+      ${handle}
+      <span class="biz-sidebar-icon">${item.icon}</span>
+      <span class="biz-sidebar-name">${e(item.name)}</span>
+      ${cnt>0?`<span class="biz-sidebar-cnt">${cnt}</span>`:''}
+    </div>`;
+  }).join('');
+}
+
+// 事業選択
+function selectBizSidebar(id) {
+  ganttBizFilter = id;
+  renderBizSidebar();
+  renderTaskView();
+  // バナー更新
+  const banner = document.getElementById('task-biz-banner');
+  if (!banner) return;
+  if (id === 'all') { banner.style.display='none'; return; }
+
+  let meta, rate, objCount=0, krCount=0;
+  if (ORG_META[id]) {
+    meta = ORG_META[id];
+    rate = orgAchRate(id);
+    objCount = OKR_DATA[id].objectives.length;
+    krCount  = OKR_DATA[id].objectives.reduce((s,o)=>s+o.krs.length,0);
+  } else {
+    const biz = state.businesses.find(b=>b.id===id);
+    if (!biz) return;
+    meta = { name:biz.name, icon:biz.icon||'📦', color:biz.color, bg:biz.color+'22' };
+    rate = bizAchRate(id);
+    const data = getBizOkrData(id);
+    objCount = data.objectives.length;
+    krCount  = data.objectives.reduce((s,o)=>s+o.krs.length,0);
+  }
+  const rateDisp = rate!==null ? rate+'%' : '—';
+  const fillW = rate!==null ? Math.min(100,rate) : 0;
+  const rateColor = rate===null?'#aaa':rate>=100?'#16a34a':rate>=70?meta.color:'#d97706';
+  banner.style.display = '';
+  banner.innerHTML = `<div class="task-biz-banner" style="border-left:4px solid ${meta.color}">
+    <span style="font-size:22px">${meta.icon}</span>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:15px;font-weight:800;color:${meta.color};margin-bottom:2px">${e(meta.name)}</div>
+      <div style="font-size:11px;color:#888">Objective ${objCount}個 / KR ${krCount}個</div>
+    </div>
+    <div class="task-biz-banner-rate">
+      <div style="font-size:22px;font-weight:800;color:${rateColor}">${rateDisp}</div>
+      <div class="task-biz-banner-bar"><div style="height:100%;width:${fillW}%;background:${meta.color};border-radius:3px;transition:width .5s"></div></div>
+    </div>
+    ${!ORG_META[id]?`<button class="btn-cancel" style="font-size:12px;padding:6px 12px;margin-left:4px" onclick="openBizObjModal('${id}',null)">＋ KR追加</button>`:''}
+    <button class="btn-primary" style="font-size:12px;padding:6px 12px;margin-left:4px" onclick="openProjModalForCurrentBiz()">＋ PJ追加</button>
+  </div>`;
+}
+
+// 選択中の事業でPJモーダルを開く
+function openProjModalForCurrentBiz() {
+  openProjModal();
+  setTimeout(()=>{
+    const pmBiz = document.getElementById('pm-biz');
+    if (pmBiz && ganttBizFilter!=='all') {
+      pmBiz.value = ganttBizFilter;
+      updateKRCheckboxes([]);
+    }
+  },50);
+}
+
+// タスク追加（事業フィルターがある場合は自動で事業に紐づく）
+function openGanttModalForBiz() {
+  openGanttModal(null, null);
+  if (ganttBizFilter !== 'all') {
+    setTimeout(()=>{
+      const gp = document.getElementById('gm-proj');
+      if (!gp) return;
+      const bizProjs = state.projects.filter(p=>(p.businessId||p.org)===ganttBizFilter);
+      // 事業内のプロジェクトのみ表示（事業選択は不要なので選択肢を絞り込む）
+      gp.innerHTML = '<option value="">プロジェクトを選択</option>' +
+        bizProjs.map(p=>`<option value="${p.id}">${e(p.name)}</option>`).join('');
+      // 1プロジェクトなら自動選択して選択行を非表示
+      const projRow = document.getElementById('gm-proj-row');
+      if (bizProjs.length === 1) {
+        gp.value = bizProjs[0].id;
+        if (projRow) projRow.style.display = 'none';
+        // コンテキストバナーにプロジェクト名を表示
+        const banner = document.getElementById('gm-context-banner');
+        const bannerTxt = document.getElementById('gm-context-text');
+        if (banner && bannerTxt) {
+          bannerTxt.innerHTML = `📁 プロジェクト: <strong>${e(bizProjs[0].name)}</strong>`;
+          banner.style.display = '';
+        }
+      }
+    },30);
+  }
+}
+
+function renderBizGantt(bizId){
+  const dates = getBizGanttDates();
+  const today = new Date().toISOString().slice(0,10);
+  const projs = state.projects.filter(p=>p.businessId===bizId);
+  const projIds = new Set(projs.map(p=>p.id));
+
+  const s=new Date(bizGanttViewStart+'T00:00:00'),en=new Date(dates[dates.length-1]+'T00:00:00');
+  const fm=d=>`${d.getMonth()+1}/${d.getDate()}`;
+  const lbl=document.getElementById('biz-gt-nav-lbl');
+  if(lbl) lbl.textContent=`${s.getFullYear()} ${fm(s)} 〜 ${fm(en)}`;
+
+  const ordered = ganttFlatOrder().filter(t=>projIds.has(t.projectId));
+
+  const thead = document.getElementById('biz-gantt-thead');
+  const tbody = document.getElementById('biz-gantt-tbody');
+  if(!thead||!tbody) return;
+
+  thead.innerHTML = buildGanttHeader(dates, today);
+  if(!ordered.length){
+    tbody.innerHTML=`<tr><td colspan="${10+GANTT_DAYS}" style="text-align:center;color:#ccc;padding:32px;font-size:13px">このプロジェクトのタスクがありません。「＋ タスクを追加」からプロジェクトを紐付けて追加してください。</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = ordered.map(t => buildGanttRow(t, dates, today)).join('');
+}
+
+function getBizGanttDates(){
+  if(!bizGanttViewStart) bizGanttViewStart=ganttDefaultStart();
+  const arr=[], s=new Date(bizGanttViewStart+'T00:00:00');
+  for(let i=0;i<GANTT_DAYS;i++){const d=new Date(s.getTime()+i*86400000);arr.push(d.toISOString().slice(0,10));}
+  return arr;
+}
+
+function shiftBizGantt(days){
+  if(!bizGanttViewStart) bizGanttViewStart=ganttDefaultStart();
+  const d=new Date(bizGanttViewStart+'T00:00:00');
+  d.setDate(d.getDate()+days);
+  bizGanttViewStart=d.toISOString().slice(0,10);
+  if(currentBizId) renderBizGantt(currentBizId);
+}
+
+function resetBizGantt(){
+  bizGanttViewStart=ganttDefaultStart();
+  if(currentBizId) renderBizGantt(currentBizId);
+}
+
+function openBizModal(bizId){
+  editingBizId=bizId||null;
+  const modal=document.getElementById('biz-modal');
+  // Render color options
+  const colors=document.getElementById('bm-colors');
+  if(colors){
+    colors.innerHTML=BIZ_COLORS.map(c=>`<div class="biz-color-opt${c===(bizId?state.businesses.find(b=>b.id===bizId)?.color:BIZ_COLORS[0])?'selected':''}" style="background:${c}" onclick="selectBizColor('${c}',this)"></div>`).join('');
+  }
+  if(bizId){
+    const biz=state.businesses.find(b=>b.id===bizId);if(!biz)return;
+    document.getElementById('bm-title').textContent='事業を編集';
+    document.getElementById('bm-name').value=biz.name;
+    document.getElementById('bm-icon').value=biz.icon||'';
+    document.getElementById('bm-desc').value=biz.desc||'';
+    document.getElementById('bm-color').value=biz.color;
+    if(colors) colors.innerHTML=BIZ_COLORS.map(c=>`<div class="biz-color-opt${c===biz.color?' selected':''}" style="background:${c}" onclick="selectBizColor('${c}',this)"></div>`).join('');
+    document.getElementById('bm-color').value=biz.color;
+  } else {
+    document.getElementById('bm-title').textContent='事業を追加';
+    document.getElementById('bm-name').value='';
+    document.getElementById('bm-icon').value='📦';
+    document.getElementById('bm-desc').value='';
+    document.getElementById('bm-color').value=BIZ_COLORS[0];
+    if(colors) colors.innerHTML=BIZ_COLORS.map((c,i)=>`<div class="biz-color-opt${i===0?' selected':''}" style="background:${c}" onclick="selectBizColor('${c}',this)"></div>`).join('');
+  }
+  modal.classList.add('open');
+  setTimeout(()=>document.getElementById('bm-name').focus(),50);
+}
+
+function hexToRgb(hex){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return`rgb(${r}, ${g}, ${b})`;
+}
+
+function selectBizColor(color, el){
+  document.getElementById('bm-color').value=color;
+  document.querySelectorAll('.biz-color-opt').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function closeBizModal(){
+  document.getElementById('biz-modal').classList.remove('open');
+  editingBizId=null;
+}
+
+function saveBiz(){
+  const name=document.getElementById('bm-name').value.trim();
+  if(!name){document.getElementById('bm-name').focus();return;}
+  const data={
+    name,
+    icon:document.getElementById('bm-icon').value.trim()||'📦',
+    desc:document.getElementById('bm-desc').value.trim(),
+    color:document.getElementById('bm-color').value||BIZ_COLORS[0]
+  };
+  if(editingBizId){
+    const idx=state.businesses.findIndex(b=>b.id===editingBizId);
+    if(idx!==-1) Object.assign(state.businesses[idx],data);
+  } else {
+    state.businesses.push({id:'biz_'+Date.now(),...data});
+  }
+  saveBusinesses();
+  closeBizModal();
+  renderBiz();
+  toast('事業を保存しました');
+}
+
+function deleteBiz(bizId){
+  const biz=state.businesses.find(b=>b.id===bizId);
+  if(!biz) return;
+  if(!confirm(`「${biz.name}」を削除しますか？\n※プロジェクトの事業紐付けは解除されます。`)) return;
+  state.businesses=state.businesses.filter(b=>b.id!==bizId);
+  state.projects.forEach(p=>{if(p.businessId===bizId)p.businessId='';});
+  saveBusinesses();
+  saveProjects();
+  if(currentBizId===bizId) currentBizId=null;
+  renderBiz();
+  toast('事業を削除しました');
+}
+
+// Close biz modal on overlay click
+document.getElementById('biz-modal').addEventListener('click',function(ev){if(ev.target===this)closeBizModal();});
+
+// ================== GANTT TASK LIST ==================
+let ganttTasks = [];
+let ganttViewStart = null;
+const GANTT_DAYS = 56;
+let ganttEditId = null;
+let ganttCollapsed = new Set();
+let ganttBizFilter = 'all'; // 'all' or biz/org ID
+let ganttDrag = null; // {taskId, handle, startX, origStart, origEnd}
+let taskViewMode = 'list'; // 'list' or 'gantt'
+let tlCollapsed = new Set(); // collapsed project sections in list view
+let tlExpandedTasks = new Set(); // expanded tasks showing subtasks
+let bizSidebarOrder = []; // 事業サイドバーの並び順（IDの配列）
+let bizDragId = null; // ドラッグ中の事業ID
+let bizDragJustDone = false; // ドラッグ終了直後のクリック誤爆防止
+let taskDragId = null;
+let projDragId = null;
+let dndJustDone = false;
+
+const GANTT_ST = {
+  todo:  {label:'未着手', cls:'gs-todo'},
+  doing: {label:'進行中', cls:'gs-doing'},
+  done:  {label:'完了',   cls:'gs-done'},
+  hold:  {label:'保留',   cls:'gs-hold'}
+};
+const GANTT_LVL = ['大','中','小'];
+
+function loadGanttTasks() {
+  try { ganttTasks = JSON.parse(localStorage.getItem('bj_gantt_v1')||'[]'); } catch(ex){}
+  ganttViewStart = ganttDefaultStart();
+}
+
+function saveGanttTasks() {
+  localStorage.setItem('bj_gantt_v1', JSON.stringify(ganttTasks));
+}
+
+const GANTT_CELL_W = 28; // 1日あたりのガントセル幅(px)
+
+// ガントバーのHTMLを生成するヘルパー（初期描画・ドラッグ中更新の両方で使用）
+function buildBarHTML(d, task, isDragging) {
+  if (!task.startDate || !task.endDate || d < task.startDate || d > task.endDate) return '';
+  const isS = d === task.startDate, isE = d === task.endDate;
+  const bc = isS&&isE?'bar-se':isS?'bar-s':isE?'bar-e':'';
+  const draggingCls = isDragging ? ' gt-bar-dragging' : '';
+  const tt = `${task.startDate?fmtDate(task.startDate):'—'} → ${task.endDate?fmtDate(task.endDate):'—'}`;
+  let html = `<div class="gt-bar ${bc} st-${task.status}${draggingCls}" title="${e(tt)}">`;
+  // 左リサイズハンドル（開始セルのみ）
+  if (isS) html += `<div class="gt-bar-hdl gt-bar-hdl-l" onmousedown="ganttDragStart(event,'${task.id}','start')"></div>`;
+  // 移動ターゲット（バー中央）
+  html += `<div class="gt-bar-mid" onmousedown="ganttDragStart(event,'${task.id}','move')"></div>`;
+  // 右リサイズハンドル（終了セルのみ）
+  if (isE) html += `<div class="gt-bar-hdl gt-bar-hdl-r" onmousedown="ganttDragStart(event,'${task.id}','end')"></div>`;
+  html += '</div>';
+  return html;
+}
+
+let ganttDragRaf = null; // requestAnimationFrame ID
+
+function ganttDragStart(ev, taskId, handle) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  const task = ganttTasks.find(t => t.id === taskId);
+  if (!task) return;
+  ganttDrag = { taskId, handle, startX: ev.clientX, origStart: task.startDate||'', origEnd: task.endDate||'' };
+  document.body.style.userSelect = 'none';
+  // ドラッグ中スタイルを即時付与
+  const row = document.querySelector(`tr[data-tid="${taskId}"]`);
+  if (row) row.querySelectorAll('.gt-bar').forEach(b => b.classList.add('gt-bar-dragging'));
+}
+
+function updateGanttRowDates(task) {
+  const row = document.querySelector(`tr[data-tid="${task.id}"]`);
+  if (!row) return;
+  const startCell = row.querySelector('td[data-col="start"]');
+  const endCell   = row.querySelector('td[data-col="end"]');
+  if (startCell) startCell.textContent = task.startDate ? fmtDate(task.startDate) : '—';
+  if (endCell)   endCell.textContent   = task.endDate   ? fmtDate(task.endDate)   : '—';
+  // ガントバーセルをリアルタイム更新（RAF でスムーズに）
+  if (ganttDragRaf) cancelAnimationFrame(ganttDragRaf);
+  ganttDragRaf = requestAnimationFrame(() => {
+    const dates = ganttDates();
+    const today = new Date().toISOString().slice(0,10);
+    const dateCells = row.querySelectorAll('td.gt-date-cell');
+    dates.forEach((d, i) => {
+      const cell = dateCells[i];
+      if (!cell) return;
+      const dt = new Date(d+'T00:00:00'), day = dt.getDay();
+      const isT = d===today, isW = day===0||day===6;
+      cell.className = `gt-date-cell${isT?' gt-today-cell':''}${isW?' gt-wknd-cell':''}`;
+      cell.innerHTML = buildBarHTML(d, task, true);
+    });
+    ganttDragRaf = null;
+  });
+}
+
+function ganttDefaultStart() {
+  const mon = getMondayOfWeek(new Date());
+  const d = new Date(mon.getTime() - 14*86400000);
+  return d.toISOString().slice(0,10);
+}
+
+function shiftGantt(days) {
+  const d = new Date(ganttViewStart+'T00:00:00');
+  d.setDate(d.getDate()+days);
+  ganttViewStart = d.toISOString().slice(0,10);
+  renderGantt();
+}
+
+function resetGanttView() {
+  ganttViewStart = ganttDefaultStart();
+  renderGantt();
+}
+
+function ganttDates() {
+  const arr = [], start = new Date(ganttViewStart+'T00:00:00');
+  for(let i=0;i<GANTT_DAYS;i++){
+    const d = new Date(start.getTime()+i*86400000);
+    arr.push(d.toISOString().slice(0,10));
+  }
+  return arr;
+}
+
+function ganttHasChildren(id){ return ganttTasks.some(t=>t.parentId===id); }
+
+function ganttFlatOrder() {
+  const result = [];
+  function walk(tasks) {
+    tasks.sort((a,b)=>(a.order||0)-(b.order||0)).forEach(t=>{
+      result.push(t);
+      if(!ganttCollapsed.has(t.id)){
+        walk(ganttTasks.filter(c=>c.parentId===t.id));
+      }
+    });
+  }
+  walk(ganttTasks.filter(t=>!t.parentId));
+  return result;
+}
+
+// ===== Gantt helpers =====
+function getTaskAncestors(task) {
+  const result = [];
+  let cur = task;
+  while (cur && cur.parentId) {
+    const par = ganttTasks.find(t => t.id === cur.parentId);
+    if (par) { result.unshift(par); cur = par; } else break;
+  }
+  return result; // [root→...→directParent]
+}
+
+function getKRShort(proj) {
+  if (!proj) return '';
+  // 1. 明示的なKRリンク
+  if ((proj.linkedKRs||[]).length) {
+    const name = getKRById(proj.linkedKRs[0])?.name || '';
+    if (name) return name.length > 18 ? name.slice(0,16)+'…' : name;
+  }
+  // 2. フォールバック: 事業OKRの最初のKR
+  const bizId = proj.businessId;
+  if (bizId && state.bizOkrData?.[bizId]?.objectives?.length) {
+    const kr = state.bizOkrData[bizId].objectives[0]?.krs?.[0];
+    if (kr?.name) return kr.name.length > 18 ? kr.name.slice(0,16)+'…' : kr.name;
+  }
+  // 3. フォールバック: 組織OKRの最初のKR
+  const orgId = proj.org;
+  if (orgId && OKR_DATA[orgId]?.objectives?.length) {
+    const kr = OKR_DATA[orgId].objectives[0]?.krs?.[0];
+    if (kr?.name) return kr.name.length > 18 ? kr.name.slice(0,16)+'…' : kr.name;
+  }
+  return '';
+}
+
+function buildGanttHeader(dates, today, listOnly=false) {
+  const fixedCols = `
+    <th class="gt-fixed gt-col-kr" style="left:0;background:#f8f9fb">事業KR</th>
+    <th class="gt-fixed gt-col-pj" style="left:86px;background:#f8f9fb">プロジェクト</th>
+    <th class="gt-fixed gt-col-impact" style="left:186px;background:#f8f9fb">インパクト数値</th>
+    <th class="gt-fixed gt-col-pjowner" style="left:296px;background:#f8f9fb">オーナー</th>
+    <th class="gt-fixed gt-col-pjst" style="left:368px;background:#f8f9fb">PJ状況</th>
+    <th class="gt-fixed gt-col-task" style="left:432px;background:#f8f9fb;text-align:left;padding-left:8px!important">タスク名</th>
+    <th class="gt-scrl-hd" style="width:66px">担当者</th>
+    <th class="gt-scrl-hd" style="width:72px">ステータス</th>
+    <th class="gt-scrl-hd" style="width:80px">開始日</th>
+    <th class="gt-scrl-hd" style="width:80px">終了日</th>`;
+  if (listOnly) {
+    return `<tr class="gt-hd2">${fixedCols}</tr>`;
+  }
+  let mg=[], cur=null, cnt=0;
+  dates.forEach(d=>{const m=d.slice(0,7);if(m!==cur){if(cur)mg.push({m:cur,n:cnt});cur=m;cnt=1;}else cnt++;});
+  if(cur) mg.push({m:cur,n:cnt});
+  return `
+    <tr class="gt-hd1">
+      <th class="gt-fixed gt-col-kr" style="left:0">事業KR</th>
+      <th class="gt-fixed gt-col-pj" style="left:86px">PJ名</th>
+      <th class="gt-fixed gt-col-impact" style="left:186px">インパクト数値</th>
+      <th class="gt-fixed gt-col-pjowner" style="left:296px">PJオーナー</th>
+      <th class="gt-fixed gt-col-pjst" style="left:368px">PJステータス</th>
+      <th class="gt-fixed gt-col-task" style="left:432px;text-align:left;padding-left:8px!important">タスク名</th>
+      <th class="gt-scrl-hd" style="width:66px">担当者</th>
+      <th class="gt-scrl-hd" style="width:72px">ステータス</th>
+      <th class="gt-scrl-hd" style="width:80px">開始日</th>
+      <th class="gt-scrl-hd" style="width:80px">終了日</th>
+      ${mg.map(g=>{const[y,m]=g.m.split('-');return`<th class="gt-date-cell" colspan="${g.n}" title="${y}年${parseInt(m)}月">${parseInt(m)}月</th>`;}).join('')}
+    </tr>
+    <tr class="gt-hd2">
+      ${fixedCols}
+      ${dates.map(d=>{const dt=new Date(d+'T00:00:00'),day=dt.getDay();const w=day===0||day===6,t=d===today;return`<th class="gt-date-cell gt-date-hd${w?' wknd':''}${t?' gt-today-hd':''}">${dt.getDate()}</th>`;}).join('')}
+    </tr>`;
+}
+
+function buildGanttRow(task, dates, today, listOnly=false, showProjInfo=true) {
+  const proj = state.projects.find(p => p.id === task.projectId);
+  const hasCh = ganttHasChildren(task.id);
+  const isCol = listOnly ? !tlExpandedTasks.has(task.id) : ganttCollapsed.has(task.id);
+  const st = GANTT_ST[task.status]||GANTT_ST.todo;
+
+  const krStr   = getKRShort(proj);
+  const pjName  = proj ? proj.name : '—';
+  const pjOwner = proj?.owner || '—';
+  const pjStCls = {active:'s-active',warning:'s-warning',delayed:'s-delayed',completed:'s-completed'}[proj?.status]||'';
+  const pjStLbl = {active:'進行中',warning:'要注意',delayed:'遅延',completed:'完了'}[proj?.status]||'—';
+
+  const expandClick = listOnly
+    ? (hasCh ? `toggleTLTask('${task.id}')` : 'void 0')
+    : `toggleGanttCollapse('${task.id}')`;
+  const expandBtn = hasCh
+    ? `<button class="gt-expand" onclick="${expandClick}">${isCol?'▶':'▼'}</button>`
+    : `<span style="display:inline-block;width:18px;flex-shrink:0"></span>`;
+
+  const addChildBtn = task.level===0
+    ? `<button class="gt-act" onclick="openGanttModal(null,'${task.id}')" title="サブタスクを追加" style="color:#94a3b8">＋</button>`
+    : task.level===1 && task.parentId
+      ? `<button class="gt-act" onclick="openGanttModal(null,'${task.parentId}')" title="サブタスクを追加" style="color:#94a3b8">＋</button>`
+      : '';
+
+  // サブタスクはインデント表示
+  const indentStyle = task.level===1 ? 'padding-left:24px' : '';
+  // サブタスク行は薄い縦線でインデントを示す
+  const subPrefix = task.level===1
+    ? `<span style="display:inline-block;width:2px;height:16px;background:#e0e7ff;border-radius:1px;flex-shrink:0;margin-right:4px"></span>`
+    : '';
+
+  const taskCell = `<td class="gt-fixed gt-col-task" style="left:432px${task.level===1?';background:#fff':''}">
+    <div class="gt-title-cell" style="${indentStyle}">
+      ${subPrefix}${expandBtn}
+      <span class="gt-title-txt" title="${e(task.title)}" style="max-width:120px${task.status==='done'?';text-decoration:line-through;color:#9ca3af':''}">${e(task.title)}</span>
+      <button class="gt-act" onclick="openGanttModal('${task.id}',null)" title="編集">✎</button>
+      <button class="gt-act" style="color:#fca5a5" onclick="deleteGanttTask('${task.id}')" title="削除">✕</button>
+      ${addChildBtn}
+    </div></td>`;
+
+  const dateCells = listOnly ? '' : dates.map(d=>{
+    const dt=new Date(d+'T00:00:00'),day=dt.getDay();
+    const isT=d===today,isW=day===0||day===6;
+    const cls=`gt-date-cell${isT?' gt-today-cell':''}${isW?' gt-wknd-cell':''}`;
+    return`<td class="${cls}">${buildBarHTML(d,task,false)}</td>`;
+  }).join('');
+
+  const isDraggableRow = task.level === 0;
+  const rowDragAttrs = isDraggableRow
+    ? `draggable="true" ondragstart="taskDragStart(event,'${task.id}')" ondragover="taskDragOver(event,'${task.id}')" ondragleave="taskDragLeave(event)" ondrop="taskDrop(event,'${task.id}')" ondragend="taskDragEnd(event)"`
+    : '';
+  // プロジェクト情報セル：同一PJ内の最初の行のみ表示、以降は空白セル（Excelのセル結合風）
+  const projCells = showProjInfo ? `
+    <td class="gt-fixed gt-col-kr" style="left:0"><span class="gt-kr-lbl" title="${e(krStr)}">${e(krStr)||'—'}</span></td>
+    <td class="gt-fixed gt-col-pj" style="left:86px"><span class="gt-pj-lbl" title="${e(pjName)}">${e(pjName)}</span></td>
+    <td class="gt-fixed gt-col-impact" style="left:186px">${proj?.impactMetric?`<span class="gt-impact-lbl" title="${e(proj.impactMetric)}">${e(proj.impactMetric)}</span>`:''}</td>
+    <td class="gt-fixed gt-col-pjowner" style="left:296px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block">${e(pjOwner)}</span></td>
+    <td class="gt-fixed gt-col-pjst" style="left:368px"><span class="sbadge ${pjStCls}" style="font-size:10px;padding:1px 5px">${pjStLbl}</span></td>
+  ` : `
+    <td class="gt-fixed gt-col-kr gt-proj-cont" style="left:0"></td>
+    <td class="gt-fixed gt-col-pj gt-proj-cont" style="left:86px"></td>
+    <td class="gt-fixed gt-col-impact gt-proj-cont" style="left:186px"></td>
+    <td class="gt-fixed gt-col-pjowner gt-proj-cont" style="left:296px"></td>
+    <td class="gt-fixed gt-col-pjst gt-proj-cont" style="left:368px"></td>
+  `;
+  return `<tr class="gt-row-${task.level}" data-tid="${task.id}" ${rowDragAttrs}>
+    ${projCells}
+    ${taskCell}
+    <td class="gt-scrl-cell" style="width:66px">${e(task.assignee||'—')}</td>
+    <td class="gt-scrl-cell" style="width:72px"><span class="gs-badge ${st.cls}">${st.label}</span></td>
+    <td class="gt-scrl-cell" data-col="start" style="width:80px">${task.startDate?fmtDate(task.startDate):'—'}</td>
+    <td class="gt-scrl-cell" data-col="end" style="width:80px">${task.endDate?fmtDate(task.endDate):'—'}</td>
+    ${dateCells}
+  </tr>`;
+}
+
+// ── プロジェクトセクションヘッダー行（リスト/ガント共通） ──
+function buildProjHeaderRow(proj, colspan) {
+  const pjStCls = {active:'s-active',warning:'s-warning',delayed:'s-delayed',completed:'s-completed'}[proj.status]||'';
+  const pjStLbl = {active:'進行中',warning:'要注意',delayed:'遅延',completed:'完了'}[proj.status]||'計画中';
+  const pjColor = {active:'#3b82f6',warning:'#f59e0b',delayed:'#ef4444',completed:'#22c55e'}[proj.status]||'#94a3b8';
+  const isOpen  = !tlCollapsed.has(proj.id);
+  const taskCnt = ganttTasks.filter(t=>t.projectId===proj.id).length;
+  return `<tr class="gt-proj-hd-row" draggable="true"
+    ondragstart="projDragStart(event,'${proj.id}')"
+    ondragover="projDragOver(event,'${proj.id}')"
+    ondragleave="projDragLeave(event)"
+    ondrop="projDrop(event,'${proj.id}')"
+    ondragend="projDragEnd(event)">
+    <td colspan="${colspan}">
+      <div class="gt-proj-hd-inner" onclick="toggleTLSection('${proj.id}')">
+        <span class="gt-proj-chevron${isOpen?' open':''}">▶</span>
+        <span style="width:10px;height:10px;border-radius:3px;background:${pjColor};flex-shrink:0;display:inline-block"></span>
+        <span style="font-weight:700;font-size:13px;color:#1a1a2e">${e(proj.name)}</span>
+        <button class="gt-pj-add-btn" onclick="event.stopPropagation();openNewProjForBiz('${proj.businessId||proj.org||''}')" title="新規プロジェクトを追加">＋</button>
+        <span style="flex:1"></span>
+        ${proj.owner?`<span style="font-size:11px;color:#888">${e(proj.owner)}</span>`:''}
+        <span class="sbadge ${pjStCls}" style="font-size:10px;padding:1px 5px">${pjStLbl}</span>
+        <span style="font-size:11px;color:#94a3b8;margin:0 8px">${taskCnt}タスク</span>
+        <button class="tl-section-add" onclick="event.stopPropagation();openGanttModalWithProj('${proj.id}')">＋ タスク追加</button>
+        <button class="tl-section-add" onclick="event.stopPropagation();openProjModal('${proj.id}')" style="border-color:#e5e7eb;color:#6b7280;margin-left:4px">✎ PJ編集</button>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function buildAddTaskRow(projId, colspan) {
+  return `<tr class="gt-add-task-tr" onclick="openGanttModalWithProj('${projId}')">
+    <td colspan="${colspan}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:18px;height:18px;border-radius:50%;border:1.5px dashed #d1d5db;display:inline-flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0">＋</div>
+        <span>タスクを追加...</span>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function buildAddSubtaskRow(taskId, colspan) {
+  return `<tr class="gt-add-sub-tr" onclick="openGanttModal(null,'${taskId}')">
+    <td colspan="${colspan}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:16px;height:16px;border-radius:50%;border:1.5px dashed #d1d5db;display:inline-flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0">＋</div>
+        <span>サブタスクを追加...</span>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function renderGantt() {
+  const dates = ganttDates();
+  const today = new Date().toISOString().slice(0,10);
+
+  const s=new Date(ganttViewStart+'T00:00:00'),en=new Date(dates[dates.length-1]+'T00:00:00');
+  const fm=d=>`${d.getMonth()+1}/${d.getDate()}`;
+  const lbl=document.getElementById('gt-nav-lbl');
+  if(lbl) lbl.textContent=`${s.getFullYear()} ${fm(s)} 〜 ${fm(en)}`;
+
+  // プロジェクトフィルター: 事業が選ばれている場合はその事業のPJのみ表示
+  const pf=document.getElementById('gt-proj-filter');
+  if(pf){
+    const pv=pf.value;
+    const visibleProjs = ganttBizFilter==='all'
+      ? state.projects
+      : state.projects.filter(p=>(p.businessId||p.org)===ganttBizFilter);
+    pf.innerHTML='<option value="all">すべてのプロジェクト</option>'+
+      visibleProjs.map(p=>`<option value="${p.id}">${e(p.name)}</option>`).join('');
+    if(visibleProjs.find(p=>p.id===pv)) pf.value=pv;
+  }
+
+  const fProj=document.getElementById('gt-proj-filter')?.value||'all';
+  const fSt=document.getElementById('gt-st-filter')?.value||'all';
+
+  const ordered = ganttFlatOrder().filter(t=>{
+    // 事業フィルター
+    if(ganttBizFilter!=='all'){
+      const proj=state.projects.find(p=>p.id===t.projectId);
+      if(!proj) return false;
+      if((proj.businessId||proj.org)!==ganttBizFilter) return false;
+    }
+    if(fProj!=='all' && t.projectId!==fProj) return false;
+    if(fSt!=='all'   && t.status!==fSt)      return false;
+    return true;
+  });
+
+  const thead = document.getElementById('gantt-thead');
+  const tbody = document.getElementById('gantt-tbody');
+  if(!thead||!tbody) return;
+  thead.innerHTML = buildGanttHeader(dates, today);
+  if(!ordered.length){
+    tbody.innerHTML = `<tr><td colspan="${10+GANTT_DAYS}" style="text-align:center;color:#ccc;padding:48px 20px;font-size:14px">タスクがありません。「＋ タスクを追加」から追加してください。</td></tr>`;
+    return;
+  }
+  // プロジェクトごとにセクションヘッダー＋タスクをグループ化
+  const GCOLS = 10 + dates.length;
+  const projIds = [...new Set(ordered.map(t=>t.projectId).filter(Boolean))];
+  let rows = [];
+  for (const pid of projIds) {
+    const proj = state.projects.find(p=>p.id===pid);
+    if (!proj) continue;
+    rows.push(buildProjHeaderRow(proj, GCOLS));
+    if (!tlCollapsed.has(pid)) {
+      const projTasks = ordered.filter(t=>t.projectId===pid);
+      projTasks.forEach((t,idx) => rows.push(buildGanttRow(t, dates, today, false, idx===0)));
+      rows.push(buildAddTaskRow(pid, GCOLS));
+    }
+  }
+  // プロジェクト未設定タスク
+  ordered.filter(t=>!t.projectId).forEach(t=>rows.push(buildGanttRow(t,dates,today)));
+  tbody.innerHTML = rows.join('');
+}
+
+function toggleGanttCollapse(id){
+  if(ganttCollapsed.has(id)) ganttCollapsed.delete(id); else ganttCollapsed.add(id);
+  renderTaskView();
+}
+
+function updateGanttParentOptions(preselect){
+  const level = parseInt(document.getElementById('gm-level')?.value||'0');
+  const sel = document.getElementById('gm-parent');
+  if(!sel) return;
+  const parentLevel = level-1;
+  const valid = ganttTasks.filter(t=>t.level===parentLevel && t.id!==ganttEditId);
+  sel.innerHTML = '<option value="">なし（ルート）</option>'+
+    valid.map(t=>`<option value="${t.id}">${e(t.title)}</option>`).join('');
+  if(preselect) sel.value = preselect;
+}
+
+function openGanttModal(editId, parentId){
+  ganttEditId = editId||null;
+  const modal = document.getElementById('gantt-modal');
+  const lvlNames = ['タスク','サブタスク'];
+
+  // プロジェクト選択肢を補充
+  const gp = document.getElementById('gm-proj');
+  if(gp) gp.innerHTML = '<option value="">プロジェクトを選択</option>'+
+    state.projects.map(p=>`<option value="${p.id}">${e(p.name)}</option>`).join('');
+
+  const banner  = document.getElementById('gm-context-banner');
+  const bannerTxt = document.getElementById('gm-context-text');
+  const projRow = document.getElementById('gm-proj-row');
+
+  if(editId){
+    // ── 編集モード ──
+    const t = ganttTasks.find(x=>x.id===editId); if(!t) return;
+    document.getElementById('gm-title').textContent = `${lvlNames[Math.min(t.level,1)]}を編集`;
+    document.getElementById('gm-name').value = t.title;
+    document.getElementById('gm-level').value = t.level;
+    document.getElementById('gm-parent').value = t.parentId||'';
+    document.getElementById('gm-proj-inherited').value = '';
+    document.getElementById('gm-status').value = t.status;
+    document.getElementById('gm-priority').value = t.priority||'mid';
+    document.getElementById('gm-assignee').value = t.assignee||'';
+    document.getElementById('gm-start').value = t.startDate||'';
+    document.getElementById('gm-end').value = t.endDate||'';
+    document.getElementById('gm-hours').value = t.estimatedHours||'';
+    if(gp) gp.value = t.projectId||'';
+    document.getElementById('gm-note').value = t.note||'';
+    // 編集時はプロジェクト行を常に表示
+    if(projRow) projRow.style.display='';
+    if(banner) banner.style.display='none';
+
+    // 親コンテキストをバナー表示
+    if(t.parentId && banner && bannerTxt){
+      const ancestors = getTaskAncestors(t);
+      const chain = [...ancestors, t].map((x,i)=>`<span style="font-weight:${i===ancestors.length?700:400}">${lvlNames[x.level]}: ${e(x.title)}</span>`).join(' → ');
+      bannerTxt.innerHTML = chain;
+      banner.style.display='';
+    }
+
+  } else {
+    // ── 新規追加モード ──
+    document.getElementById('gm-name').value='';
+    document.getElementById('gm-status').value='todo';
+    document.getElementById('gm-priority').value='mid';
+    document.getElementById('gm-assignee').value='';
+    document.getElementById('gm-start').value='';
+    document.getElementById('gm-end').value='';
+    document.getElementById('gm-hours').value='';
+    document.getElementById('gm-note').value='';
+
+    if(parentId){
+      const par = ganttTasks.find(x=>x.id===parentId);
+      const newLv = Math.min((par?.level||0)+1, 1);
+      document.getElementById('gm-level').value = newLv;
+      document.getElementById('gm-parent').value = parentId;
+      document.getElementById('gm-title').textContent = `${lvlNames[newLv]}を追加`;
+
+      // プロジェクトは親から継承（選択肢を隠す）
+      const inheritedProjId = par?.projectId || '';
+      document.getElementById('gm-proj-inherited').value = inheritedProjId;
+      if(gp) gp.value = inheritedProjId;
+      if(projRow) projRow.style.display='none';
+
+      // コンテキストバナーを構築: 祖先チェーンを表示
+      if(banner && bannerTxt){
+        const ancestors = getTaskAncestors(par);
+        const chain = [...ancestors, par].map(x=>`<span>${lvlNames[x.level]}: ${e(x.title)}</span>`).join(' → ');
+        bannerTxt.innerHTML = `📎 親タスク &nbsp; ${chain}`;
+        banner.style.display='';
+      }
+    } else {
+      // タスクを追加
+      document.getElementById('gm-level').value = 0;
+      document.getElementById('gm-parent').value = '';
+      document.getElementById('gm-proj-inherited').value = '';
+      document.getElementById('gm-title').textContent = 'タスクを追加';
+      if(projRow) projRow.style.display='';
+      if(banner) banner.style.display='none';
+    }
+  }
+  modal.classList.add('open');
+  setTimeout(()=>document.getElementById('gm-name').focus(),50);
+}
+
+function closeGanttModal(){
+  document.getElementById('gantt-modal').classList.remove('open');
+  ganttEditId=null;
+}
+
+function saveGanttTask(){
+  const name=document.getElementById('gm-name').value.trim();
+  if(!name){document.getElementById('gm-name').focus();return;}
+  // プロジェクトID: 親から継承した場合はhiddenフィールドを優先
+  const inheritedProjId = document.getElementById('gm-proj-inherited')?.value || '';
+  const projId = inheritedProjId || document.getElementById('gm-proj').value || '';
+  const data={
+    title:name,
+    level:parseInt(document.getElementById('gm-level').value),
+    parentId:document.getElementById('gm-parent').value||null,
+    status:document.getElementById('gm-status').value,
+    priority:document.getElementById('gm-priority').value||'mid',
+    assignee:document.getElementById('gm-assignee').value.trim(),
+    startDate:document.getElementById('gm-start').value,
+    endDate:document.getElementById('gm-end').value,
+    estimatedHours:document.getElementById('gm-hours').value.trim(),
+    projectId:projId,
+    note:document.getElementById('gm-note').value.trim()
+  };
+  if(ganttEditId){
+    const idx=ganttTasks.findIndex(t=>t.id===ganttEditId);
+    if(idx!==-1) Object.assign(ganttTasks[idx],data);
+  } else {
+    const siblings=ganttTasks.filter(t=>t.parentId===(data.parentId||null));
+    ganttTasks.push({id:'gt_'+Date.now(),no:'',order:siblings.length,...data});
+    ganttRenumber();
+  }
+  // 親タスクのステータス・日付を自動同期
+  if (data.parentId) {
+    syncParentStatus(data.parentId);
+    syncParentDates(data.parentId);
+  }
+  saveGanttTasks();
+  closeGanttModal();
+  renderTaskView();
+  toast('タスクを保存しました');
+}
+
+function ganttRenumber(){
+  function num(list,prefix){
+    list.sort((a,b)=>(a.order||0)-(b.order||0)).forEach((t,i)=>{
+      t.no=prefix?`${prefix}-${i+1}`:`${i+1}`;
+      num(ganttTasks.filter(c=>c.parentId===t.id),t.no);
+    });
+  }
+  num(ganttTasks.filter(t=>!t.parentId),'');
+}
+
+function deleteGanttTask(id){
+  if(!confirm('このタスクを削除しますか？（子タスクも削除されます）')) return;
+  function rm(tid){ganttTasks=ganttTasks.filter(t=>t.id!==tid);ganttTasks.filter(t=>t.parentId===tid).forEach(c=>rm(c.id));}
+  rm(id);
+  saveGanttTasks();
+  renderTaskView();
+  toast('タスクを削除しました');
+}
+
+// ================== 事業サイドバー 並び替え ==================
+
+function saveBizOrder() {
+  localStorage.setItem('bj_biz_order_v1', JSON.stringify(bizSidebarOrder));
+}
+function loadBizOrder() {
+  try { bizSidebarOrder = JSON.parse(localStorage.getItem('bj_biz_order_v1')||'[]'); } catch(e) { bizSidebarOrder = []; }
+}
+
+function bizDragStart(ev, id) {
+  bizDragId = id;
+  ev.dataTransfer.setData('text/plain', id);
+  ev.dataTransfer.effectAllowed = 'move';
+  // 少し遅延させてから半透明に（DnD仕様でdragstart中は変更できない）
+  setTimeout(() => { ev.target.style.opacity = '0.45'; }, 0);
+}
+
+function bizDragOver(ev, id) {
+  if (!bizDragId || bizDragId === id) return;
+  ev.preventDefault();
+  ev.dataTransfer.dropEffect = 'move';
+  ev.currentTarget.classList.add('biz-drag-over-top');
+}
+
+function bizDragLeave(ev) {
+  ev.currentTarget.classList.remove('biz-drag-over-top');
+  ev.currentTarget.classList.remove('biz-drag-over-bot');
+}
+
+function bizDrop(ev, targetId) {
+  ev.preventDefault();
+  ev.currentTarget.classList.remove('biz-drag-over-top');
+  if (!bizDragId || bizDragId === targetId) { bizDragId = null; return; }
+
+  // 全事業IDの現在順を取得
+  const allBizIds = [
+    ...Object.keys(ORG_META),
+    ...state.businesses.map(b=>b.id)
+  ];
+  // 保存済み順を反映した現在の並び
+  const cur = [];
+  for (const id of bizSidebarOrder) { if (allBizIds.includes(id)) cur.push(id); }
+  for (const id of allBizIds) { if (!cur.includes(id)) cur.push(id); }
+
+  const fromIdx = cur.indexOf(bizDragId);
+  const toIdx   = cur.indexOf(targetId);
+  if (fromIdx !== -1 && toIdx !== -1) {
+    cur.splice(fromIdx, 1);
+    cur.splice(toIdx, 0, bizDragId);
+    bizSidebarOrder = cur;
+    saveBizOrder();
+  }
+  bizDragId = null;
+  renderBizSidebar();
+}
+
+function bizDragEnd(ev) {
+  ev.currentTarget.style.opacity = '';
+  ev.currentTarget.classList.remove('biz-drag-over-top');
+  bizDragId = null;
+  // ドラッグ直後のクリック誤爆を300ms間抑制
+  bizDragJustDone = true;
+  setTimeout(() => { bizDragJustDone = false; }, 300);
+}
+
+// ── タスク行 ドラッグ並び替え（リストビュー） ──
+function taskDragStart(ev, taskId) {
+  taskDragId = taskId;
+  ev.dataTransfer.setData('text/plain', taskId);
+  ev.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => {
+    const row = document.querySelector(`tr[data-tid="${taskId}"]`);
+    if (row) row.style.opacity = '0.4';
+  }, 0);
+}
+function taskDragOver(ev, taskId) {
+  if (!taskDragId || taskDragId === taskId) return;
+  const from = ganttTasks.find(t => t.id === taskDragId);
+  const to   = ganttTasks.find(t => t.id === taskId);
+  if (!from || !to || from.projectId !== to.projectId || (from.parentId||null) !== (to.parentId||null)) return;
+  ev.preventDefault();
+  ev.currentTarget.classList.add('gt-row-drag-over');
+}
+function taskDragLeave(ev) { ev.currentTarget.classList.remove('gt-row-drag-over'); }
+function taskDrop(ev, targetId) {
+  ev.preventDefault();
+  ev.currentTarget.classList.remove('gt-row-drag-over');
+  if (!taskDragId || taskDragId === targetId) { taskDragId = null; return; }
+  const from = ganttTasks.find(t => t.id === taskDragId);
+  const to   = ganttTasks.find(t => t.id === targetId);
+  if (!from || !to || from.projectId !== to.projectId || (from.parentId||null) !== (to.parentId||null)) { taskDragId = null; return; }
+  const siblings = ganttTasks.filter(t => t.projectId === from.projectId && (t.parentId||null) === (from.parentId||null));
+  const fi = siblings.findIndex(t => t.id === taskDragId);
+  const ti = siblings.findIndex(t => t.id === targetId);
+  if (fi !== -1 && ti !== -1) {
+    siblings.splice(fi, 1);
+    siblings.splice(ti, 0, from);
+    siblings.forEach((t, i) => { t.order = i; });
+  }
+  taskDragId = null;
+  dndJustDone = true; setTimeout(() => { dndJustDone = false; }, 300);
+  saveGanttTasks();
+  renderTaskView();
+}
+function taskDragEnd(ev) {
+  ev.currentTarget.style.opacity = '';
+  ev.currentTarget.classList.remove('gt-row-drag-over');
+  taskDragId = null;
+}
+
+// ── プロジェクト行 ドラッグ並び替え ──
+function projDragStart(ev, projId) {
+  projDragId = projId;
+  ev.dataTransfer.setData('text/plain', projId);
+  ev.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => { ev.target.closest('tr').style.opacity = '0.4'; }, 0);
+}
+function projDragOver(ev, projId) {
+  if (!projDragId || projDragId === projId) return;
+  ev.preventDefault();
+  ev.currentTarget.classList.add('gt-proj-drag-over');
+}
+function projDragLeave(ev) { ev.currentTarget.classList.remove('gt-proj-drag-over'); }
+function projDrop(ev, targetId) {
+  ev.preventDefault();
+  ev.currentTarget.classList.remove('gt-proj-drag-over');
+  if (!projDragId || projDragId === targetId) { projDragId = null; return; }
+  const fi = state.projects.findIndex(p => p.id === projDragId);
+  const ti = state.projects.findIndex(p => p.id === targetId);
+  if (fi !== -1 && ti !== -1) {
+    const [p] = state.projects.splice(fi, 1);
+    state.projects.splice(ti, 0, p);
+    saveProjects();
+  }
+  projDragId = null;
+  dndJustDone = true; setTimeout(() => { dndJustDone = false; }, 300);
+  renderTaskView();
+}
+function projDragEnd(ev) {
+  ev.currentTarget.style.opacity = '';
+  ev.currentTarget.classList.remove('gt-proj-drag-over');
+  projDragId = null;
+}
+
+// ================== TASK LIST VIEW ==================
+
+function setTaskView(mode) {
+  taskViewMode = mode;
+  const lv = document.getElementById('task-list-view');
+  const gv = document.getElementById('task-gantt-view');
+  const nb = document.getElementById('gt-nav-bar');
+  const tlBtn = document.getElementById('tl-toggle-list');
+  const gtBtn = document.getElementById('tl-toggle-gantt');
+  if (lv) lv.style.display = mode==='list' ? 'flex' : 'none';
+  if (gv) gv.style.display = mode==='gantt' ? 'block' : 'none';
+  if (nb) nb.style.display = mode==='gantt' ? '' : 'none';
+  if (tlBtn) tlBtn.classList.toggle('active', mode==='list');
+  if (gtBtn) gtBtn.classList.toggle('active', mode==='gantt');
+  if (mode==='list') renderTaskListView();
+  else renderGantt();
+}
+
+function renderTaskView() {
+  renderBizSidebar();
+  // バナーはselectBizSidebarが更新するが、初回はここでも呼ぶ
+  const banner = document.getElementById('task-biz-banner');
+  if (banner && ganttBizFilter==='all') banner.style.display='none';
+  // プロジェクトフィルター更新
+  const pf = document.getElementById('gt-proj-filter');
+  if (pf) {
+    const pv = pf.value;
+    const visibleProjs = ganttBizFilter==='all'
+      ? state.projects
+      : state.projects.filter(p=>(p.businessId||p.org)===ganttBizFilter);
+    pf.innerHTML = '<option value="all">すべてのプロジェクト</option>'+
+      visibleProjs.map(p=>`<option value="${p.id}">${e(p.name)}</option>`).join('');
+    if (visibleProjs.find(p=>p.id===pv)) pf.value=pv;
+  }
+  setTaskView(taskViewMode);
+}
+
+function renderTaskListView() {
+  const wrap = document.getElementById('tl-list-wrap');
+  if (!wrap) return;
+
+  const fSt   = document.getElementById('gt-st-filter')?.value||'all';
+  const fProj = document.getElementById('gt-proj-filter')?.value||'all';
+
+  const visibleProjs = ganttBizFilter==='all'
+    ? state.projects
+    : state.projects.filter(p=>(p.businessId||p.org)===ganttBizFilter);
+  const projs = fProj==='all' ? visibleProjs : visibleProjs.filter(p=>p.id===fProj);
+
+  if (!projs.length) {
+    wrap.innerHTML = `<div style="text-align:center;color:#ccc;padding:56px 20px;font-size:14px">
+      プロジェクトがありません。<br>
+      <span style="font-size:12px">「＋ PJ追加」からプロジェクトを作成してください</span><br><br>
+      <button class="btn-primary" onclick="openProjModal()" style="font-size:12px;margin-top:4px">＋ PJ追加</button>
+    </div>`;
+    return;
+  }
+
+  // ガントと同じテーブル構造（日付列なし）で描画
+  const LIST_COLS = 10;
+  let rows = [];
+
+  for (const proj of projs) {
+    rows.push(buildProjHeaderRow(proj, LIST_COLS));
+    if (!tlCollapsed.has(proj.id)) {
+      const rootTasks = ganttTasks.filter(t => t.projectId===proj.id && !t.parentId);
+      const filtered  = fSt==='all' ? rootTasks : rootTasks.filter(t=>t.status===fSt);
+      let isFirstTask = true;
+      for (const task of filtered) {
+        rows.push(buildGanttRow(task, [], '', true, isFirstTask));
+        isFirstTask = false;
+        if (tlExpandedTasks.has(task.id)) {
+          const children = ganttTasks.filter(c=>c.parentId===task.id);
+          const filtCh = fSt==='all' ? children : children.filter(c=>c.status===fSt);
+          filtCh.forEach(child => rows.push(buildGanttRow(child, [], '', true, false)));
+        }
+      }
+      rows.push(buildAddTaskRow(proj.id, LIST_COLS));
+    }
+  }
+
+  wrap.innerHTML = `<div style="overflow-x:auto">
+    <table class="gantt-table" style="min-width:100%">
+      <thead>${buildGanttHeader([],  '', true)}</thead>
+      <tbody>${rows.join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+function toggleTLSection(projId) {
+  if (tlCollapsed.has(projId)) tlCollapsed.delete(projId);
+  else tlCollapsed.add(projId);
+  if (taskViewMode==='list') renderTaskListView(); else renderGantt();
+}
+
+function toggleTLTask(taskId) {
+  if (tlExpandedTasks.has(taskId)) tlExpandedTasks.delete(taskId);
+  else tlExpandedTasks.add(taskId);
+  renderTaskListView();
+}
+
+function cycleTLStatus(taskId) {
+  const t = ganttTasks.find(x=>x.id===taskId);
+  if (!t) return;
+  const cycle = ['todo','doing','done','hold'];
+  const idx = cycle.indexOf(t.status);
+  t.status = cycle[(idx+1)%cycle.length];
+  // 親タスクのステータスを自動同期
+  if (t.parentId) syncParentStatus(t.parentId);
+  saveGanttTasks();
+  if (taskViewMode==='list') renderTaskListView();
+  else renderGantt();
+}
+
+function openGanttModalWithProj(projId) {
+  openGanttModal(null, null);
+  setTimeout(()=>{
+    const gp = document.getElementById('gm-proj');
+    if (gp) gp.value = projId;
+  }, 30);
+}
+
+// 事業を指定して新規プロジェクト作成モーダルを開く
+function openNewProjForBiz(bizId) {
+  openProjModal();
+  setTimeout(()=>{
+    const pmBiz = document.getElementById('pm-biz');
+    if (pmBiz && bizId) { pmBiz.value = bizId; updateKRCheckboxes([]); }
+  }, 50);
+}
+
+// サブタスクの開始日・終了日から親タスクの日付を自動同期する
+function syncParentDates(parentId) {
+  if (!parentId) return;
+  const parent = ganttTasks.find(t => t.id === parentId);
+  if (!parent) return;
+  const children = ganttTasks.filter(t => t.parentId === parentId);
+  if (!children.length) return;
+  const starts = children.filter(c => c.startDate).map(c => c.startDate);
+  const ends   = children.filter(c => c.endDate).map(c => c.endDate);
+  if (starts.length) parent.startDate = [...starts].sort()[0];           // 最も早い開始日
+  if (ends.length)   parent.endDate   = [...ends].sort().reverse()[0];   // 最も遅い終了日
+  // 祖先へ再帰的に伝播
+  if (parent.parentId) syncParentDates(parent.parentId);
+}
+
+// サブタスクの完了状態に応じて親タスクのステータスを自動同期する
+function syncParentStatus(parentId) {
+  if (!parentId) return;
+  const parent = ganttTasks.find(t => t.id === parentId);
+  if (!parent) return;
+  const children = ganttTasks.filter(t => t.parentId === parentId);
+  if (!children.length) return;
+  const allDone = children.every(c => c.status === 'done');
+  const anyActive = children.some(c => c.status === 'doing');
+  if (allDone) {
+    parent.status = 'done';
+  } else if (parent.status === 'done') {
+    // サブタスクが未完了なのに親が完了になっていたら進行中に戻す
+    parent.status = anyActive ? 'doing' : 'todo';
+  }
+  // 親の親も再帰的に同期
+  if (parent.parentId) syncParentStatus(parent.parentId);
+}
+
+// ── ガントバー ドラッグで日付変更 ──
+document.addEventListener('mousemove', function(ev) {
+  if (!ganttDrag) return;
+  const task = ganttTasks.find(t => t.id === ganttDrag.taskId);
+  if (!task) return;
+  const deltaDays = Math.round((ev.clientX - ganttDrag.startX) / GANTT_CELL_W);
+  if (ganttDrag.handle === 'move') {
+    task.startDate = addDays(ganttDrag.origStart, deltaDays);
+    task.endDate   = addDays(ganttDrag.origEnd,   deltaDays);
+  } else if (ganttDrag.handle === 'end') {
+    const ne = addDays(ganttDrag.origEnd, deltaDays);
+    if (ne >= task.startDate) task.endDate = ne;
+  } else if (ganttDrag.handle === 'start') {
+    const ns = addDays(ganttDrag.origStart, deltaDays);
+    if (ns <= task.endDate) task.startDate = ns;
+  }
+  updateGanttRowDates(task);
+  const tip = document.getElementById('gantt-drag-tooltip');
+  if (tip) {
+    tip.style.display = '';
+    tip.style.left = (ev.clientX + 14) + 'px';
+    tip.style.top  = (ev.clientY - 36) + 'px';
+    tip.textContent = `${task.startDate ? fmtDate(task.startDate) : '—'} → ${task.endDate ? fmtDate(task.endDate) : '—'}`;
+  }
+});
+document.addEventListener('mouseup', function() {
+  if (!ganttDrag) return;
+  document.body.style.userSelect = '';
+  const tip = document.getElementById('gantt-drag-tooltip');
+  if (tip) tip.style.display = 'none';
+  // ドラッグしたタスクの親の日付を自動同期
+  const draggedTask = ganttTasks.find(t => t.id === ganttDrag.taskId);
+  if (draggedTask?.parentId) syncParentDates(draggedTask.parentId);
+  saveGanttTasks();
+  ganttDrag = null;
+  renderGantt();
+});
+document.addEventListener('keydown', function(ev) {
+  if (ev.key === 'Escape' && ganttDrag) {
+    // Escape でドラッグキャンセル（元に戻す）
+    const task = ganttTasks.find(t => t.id === ganttDrag.taskId);
+    if (task) { task.startDate = ganttDrag.origStart; task.endDate = ganttDrag.origEnd; }
+    document.body.style.userSelect = '';
+    const tip = document.getElementById('gantt-drag-tooltip');
+    if (tip) tip.style.display = 'none';
+    ganttDrag = null;
+    renderGantt();
+  }
+});
+
+// Close gantt modal on overlay click
+document.getElementById('gantt-modal').addEventListener('click',function(ev){if(ev.target===this)closeGanttModal();});
+
 // ================== INIT ==================
 loadState();
-renderDashboard();
-renderOKR();
+loadBizOkr();
+loadWeeklyReports();
+loadGanttTasks();
+loadBizOrder();
+renderTaskView();
 </script>
+<div id="gantt-drag-tooltip"></div>
 </body>
 </html>

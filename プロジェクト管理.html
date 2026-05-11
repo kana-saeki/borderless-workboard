@@ -55,6 +55,56 @@ header h1{font-size:14px;font-weight:700;color:#fff;white-space:nowrap}
 .n-total{color:#1a1a2e}.n-active{color:#3b82f6}.n-warn{color:#f59e0b}.n-done{color:#22c55e}
 
 /* OKR Tab */
+.okr-section-tabs{display:flex;gap:0;margin-bottom:24px;background:#f0f2f5;border-radius:12px;padding:4px;width:fit-content}
+.okr-section-btn{padding:10px 32px;border:none;background:transparent;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:9px;transition:all .2s;color:#888}
+.okr-section-btn:hover{color:#444}
+.okr-section-btn.active{background:#fff;color:#1a1a2e;box-shadow:0 1px 6px rgba(0,0,0,.12)}
+/* View mode toggle */
+.view-mode-toggle{display:flex;gap:0;background:#f0f2f5;border-radius:8px;padding:3px;width:fit-content}
+.view-mode-btn{padding:5px 14px;border:none;background:transparent;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;border-radius:6px;transition:all .15s;color:#888;white-space:nowrap}
+.view-mode-btn:hover{color:#444}
+.view-mode-btn.active{background:#fff;color:#1a1a2e;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+/* Alignment Tree */
+.align-tree{display:flex;flex-direction:column;gap:16px;margin-top:4px}
+.align-obj-block{background:#fff;border-radius:14px;box-shadow:0 1px 6px rgba(0,0,0,.08);overflow:hidden}
+.align-obj-head{display:flex;align-items:center;gap:10px;padding:13px 18px;background:#f8f9fb;border-bottom:1px solid #eee}
+.align-obj-num{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.align-obj-name{font-size:14px;font-weight:700;flex:1}
+.align-kr-block{padding:12px 18px;border-bottom:1px solid #f5f5f5}
+.align-kr-block:last-child{border-bottom:none}
+.align-kr-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.align-kr-label{font-size:13px;font-weight:700;color:#333;flex:1;line-height:1.3}
+.align-kr-meta{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.align-kr-bar{height:4px;background:#f0f0f0;border-radius:2px;overflow:hidden;width:64px}
+.align-kr-fill{height:100%;border-radius:2px;transition:width .4s}
+.align-kr-rate{font-size:11px;font-weight:700;min-width:30px;text-align:right}
+.align-kr-target{font-size:11px;color:#888;padding:2px 7px;background:#f5f5f5;border-radius:10px;white-space:nowrap}
+.align-proj-list{margin-left:0;display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.align-proj-row{display:flex;gap:10px;padding:10px 12px;background:#f8faff;border-radius:10px;border-left:3px solid #e0e7ff}
+.align-proj-body{flex:1;min-width:0}
+.align-proj-name{font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:2px}
+.align-proj-sub{font-size:11px;color:#888;margin-bottom:5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.align-task-list{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.align-task-item{display:flex;align-items:center;gap:7px;font-size:12px;color:#555;padding:1px 0}
+.align-task-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.align-link-btn{font-size:11px;color:#4a90e2;border:1.5px dashed #93c5fd;background:transparent;border-radius:6px;padding:4px 10px;cursor:pointer;font-family:inherit;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.align-link-btn:hover{background:#eff6ff;border-color:#4a90e2}
+.align-empty-proj{font-size:12px;color:#bbb;padding:2px 0 8px;font-style:italic}
+/* Link Project Modal */
+.lpm-proj-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f5f5f5;cursor:pointer}
+.lpm-proj-item:last-child{border-bottom:none}
+.lpm-proj-item:hover{background:#fafafa}
+.lpm-proj-check{width:16px;height:16px;cursor:pointer;flex-shrink:0}
+.lpm-proj-info{flex:1}
+.lpm-proj-pname{font-size:13px;font-weight:600}
+.lpm-proj-pmeta{font-size:11px;color:#888;margin-top:1px}
+/* Biz KPI inline editing */
+.biz-kr-list .kr-item{grid-template-columns:1fr 110px 140px 100px 52px 56px}
+.biz-kr-list .kr-header{grid-template-columns:1fr 110px 140px 100px 52px 56px}
+.kr-action-btns{display:flex;gap:2px;justify-content:flex-end}
+.kr-edit-row,.kr-add-row{background:#f0f6ff;border-radius:8px;padding:10px 14px;border:1.5px solid #bfdbfe}
+.kr-edit-fields{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kgi-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px}
 .okr-org-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .okr-org-btn{padding:8px 18px;border-radius:24px;border:2px solid #e0e0e0;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
 .okr-org-btn:hover{border-color:#4a90e2;color:#4a90e2}
@@ -531,6 +581,13 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
 .gt-nav-lbl{font-size:13px;font-weight:600;color:#333;white-space:nowrap;min-width:140px;text-align:center}
 .gt-filter{padding:7px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:#fff}
 .gt-filter:focus{border-color:#4a90e2}
+.st-chip{padding:5px 11px;border-radius:16px;border:1.5px solid #e0e0e0;background:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:#aaa;transition:all .15s;white-space:nowrap}
+.st-chip:hover{border-color:#999;color:#666}
+.st-chip.active{color:#fff;border-color:transparent}
+.st-chip.active[data-st="todo"]{background:#94a3b8}
+.st-chip.active[data-st="doing"]{background:#3b82f6}
+.st-chip.active[data-st="done"]{background:#22c55e}
+.st-chip.active[data-st="hold"]{background:#f59e0b}
 .bom-kr-row{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
 .bom-kr-row .fc{padding:7px 10px;font-size:13px}
 .bom-kr-row label{display:flex;align-items:center;gap:4px;font-size:12px;color:#555;white-space:nowrap;cursor:pointer}
@@ -545,12 +602,10 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
   <div class="header-inner">
     <h1>🌏 BJ プロジェクト管理</h1>
     <nav class="tab-nav">
-      <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
-      <button class="tab-btn" data-tab="biz">📦 事業</button>
+      <button class="tab-btn active" data-tab="biz">📦 事業</button>
       <button class="tab-btn" data-tab="okr">OKR</button>
-      <button class="tab-btn" data-tab="weekly">📅 週次報告</button>
-      <button class="tab-btn" data-tab="projects">プロジェクト</button>
       <button class="tab-btn" data-tab="gantt">📋 タスク一覧</button>
+      <button class="tab-btn" data-tab="weekly">📅 週次報告</button>
       <button class="tab-btn" data-tab="monitor">モニタリング</button>
       <button class="tab-btn" data-tab="settings">⚙ 設定</button>
     </nav>
@@ -558,7 +613,7 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
 </header>
 
 <!-- DASHBOARD TAB -->
-<div id="tab-dashboard" class="tab-content active">
+<div id="tab-dashboard" class="tab-content">
   <div class="page">
     <div style="font-size:13px;color:#888;margin-bottom:10px;font-weight:600">🏢 ボーダレスグループ 全事業 KR達成状況</div>
     <div class="dash-grid" id="dash-org-cards"></div>
@@ -576,7 +631,7 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
 </div>
 
 <!-- BIZ TAB -->
-<div id="tab-biz" class="tab-content">
+<div id="tab-biz" class="tab-content active">
   <div class="page">
     <!-- LIST VIEW -->
     <div id="biz-list-view">
@@ -597,7 +652,8 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
           <div class="biz-detail-icon" id="biz-d-icon"></div>
           <div class="biz-detail-name" id="biz-d-name"></div>
         </div>
-        <button class="btn-primary" style="margin-left:auto" onclick="openProjModalForBiz()">＋ プロジェクトを追加</button>
+        <div id="biz-d-edit-acts" style="margin-left:auto;display:flex;gap:6px"></div>
+        <button class="btn-primary" onclick="openProjModalForBiz()">＋ プロジェクトを追加</button>
       </div>
       <div class="biz-section-title">🎯 OKR進捗</div>
       <div id="biz-d-okr" style="margin-bottom:28px"></div>
@@ -635,18 +691,32 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
       </div>
       <button class="btn-primary" onclick="exportOKR()">📊 OKRサマリーをコピー</button>
     </div>
-    <div class="okr-org-tabs" id="okr-org-tabs"></div>
-    <div id="okr-content"></div>
-    <!-- Business OKR section -->
-    <div style="margin-top:36px;border-top:2px solid #f0f0f0;padding-top:28px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-        <div>
-          <div style="font-size:18px;font-weight:800">📦 事業OKR</div>
-          <div style="font-size:13px;color:#888">各事業のObjective・KRを自由に設定・管理できます</div>
+    <!-- セクション大タブ -->
+    <div class="okr-section-tabs">
+      <button class="okr-section-btn active" data-section="studio" onclick="setOKRSection('studio')">🏢 スタジオ</button>
+      <button class="okr-section-btn" data-section="biz" onclick="setOKRSection('biz')">📦 事業</button>
+    </div>
+    <!-- スタジオセクション -->
+    <div id="okr-studio-section">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+        <div class="okr-org-tabs" id="okr-org-tabs" style="margin-bottom:0"></div>
+        <div class="view-mode-toggle">
+          <button class="view-mode-btn active" data-vm="studio-okr" onclick="setStudioView('okr')">📊 OKRビュー</button>
+          <button class="view-mode-btn" data-vm="studio-align" onclick="setStudioView('align')">🌳 アライメント</button>
         </div>
       </div>
-      <div class="okr-org-tabs" id="biz-okr-tabs"></div>
-      <div id="biz-okr-content"></div>
+      <div id="okr-content" style="margin-top:16px"></div>
+    </div>
+    <!-- 事業セクション -->
+    <div id="okr-biz-section" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+        <div class="okr-org-tabs" id="biz-okr-tabs" style="margin-bottom:0"></div>
+        <div class="view-mode-toggle">
+          <button class="view-mode-btn active" data-vm="biz-okr" onclick="setBizView('okr')">📊 OKRビュー</button>
+          <button class="view-mode-btn" data-vm="biz-align" onclick="setBizView('align')">🌳 アライメント</button>
+        </div>
+      </div>
+      <div id="biz-okr-content" style="margin-top:16px"></div>
     </div>
   </div>
 </div>
@@ -781,13 +851,15 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
           <select class="gt-filter" id="gt-proj-filter" onchange="renderTaskView()">
             <option value="all">すべてのプロジェクト</option>
           </select>
-          <select class="gt-filter" id="gt-st-filter" onchange="renderTaskView()">
-            <option value="all">すべてのステータス</option>
-            <option value="todo">未着手</option>
-            <option value="doing">進行中</option>
-            <option value="done">完了</option>
-            <option value="hold">保留</option>
+          <select class="gt-filter" id="gt-assignee-filter" onchange="renderTaskView()">
+            <option value="all">すべての担当者</option>
           </select>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+            <button class="st-chip active" data-st="todo"  onclick="toggleStFilter(this,'todo')">未着手</button>
+            <button class="st-chip active" data-st="doing" onclick="toggleStFilter(this,'doing')">進行中</button>
+            <button class="st-chip active" data-st="done"  onclick="toggleStFilter(this,'done')">完了</button>
+            <button class="st-chip active" data-st="hold"  onclick="toggleStFilter(this,'hold')">保留</button>
+          </div>
           <!-- ガントのナビ（ガント表示時のみ表示） -->
           <div class="gt-nav" id="gt-nav-bar" style="display:none">
             <button class="gt-nav-btn" onclick="shiftGantt(-7)">◀</button>
@@ -910,6 +982,19 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
     <div class="modal-acts">
       <button class="btn-cancel" onclick="closeGanttModal()">キャンセル</button>
       <button class="btn-primary" onclick="saveGanttTask()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- LINK PROJECT TO KR MODAL -->
+<div class="modal-overlay" id="link-proj-modal">
+  <div class="modal" style="max-width:440px">
+    <h2>プロジェクトを紐づける</h2>
+    <div style="font-size:12px;color:#888;margin-bottom:4px">KR</div>
+    <div id="lpm-kr-name" style="font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:16px;padding:8px 12px;background:#f8f9fb;border-radius:8px"></div>
+    <div id="lpm-proj-list" style="max-height:320px;overflow-y:auto"></div>
+    <div class="modal-acts" style="margin-top:16px">
+      <button class="btn-primary" onclick="closeLinkProjModal()">完了</button>
     </div>
   </div>
 </div>
@@ -1378,7 +1463,7 @@ function getBizOkrData(bizId) {
 }
 
 // ================== TABS ==================
-let activeTab = 'dashboard';
+let activeTab = 'biz';
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -1552,9 +1637,39 @@ function switchToOKR(orgId) {
 }
 
 // ================== OKR ==================
+let activeOKRSection = 'studio';
 let activeOrgTab = 'hr';
+let studioAlignMode = false;
+let bizAlignMode = false;
+let linkingKRId = null;
+
+function setStudioView(mode) {
+  studioAlignMode = mode === 'align';
+  document.querySelectorAll('[data-vm^="studio-"]').forEach(b => b.classList.toggle('active', b.dataset.vm === 'studio-' + mode));
+  renderOKR();
+}
+function setBizView(mode) {
+  bizAlignMode = mode === 'align';
+  document.querySelectorAll('[data-vm^="biz-"]').forEach(b => b.classList.toggle('active', b.dataset.vm === 'biz-' + mode));
+  renderBizOKRContent(activeBizOkrTab);
+}
+
+function setOKRSection(section) {
+  activeOKRSection = section;
+  document.querySelectorAll('.okr-section-btn').forEach(b => b.classList.toggle('active', b.dataset.section === section));
+  document.getElementById('okr-studio-section').style.display = section === 'studio' ? '' : 'none';
+  document.getElementById('okr-biz-section').style.display = section === 'biz' ? '' : 'none';
+  if (section === 'biz') renderBizOKR();
+}
+
 function renderOKR(orgId) {
-  if (orgId) activeOrgTab = orgId;
+  if (orgId) { activeOKRSection = 'studio'; activeOrgTab = orgId; }
+  // セクションタブの状態を反映
+  document.querySelectorAll('.okr-section-btn').forEach(b => b.classList.toggle('active', b.dataset.section === activeOKRSection));
+  document.getElementById('okr-studio-section').style.display = activeOKRSection === 'studio' ? '' : 'none';
+  document.getElementById('okr-biz-section').style.display = activeOKRSection === 'biz' ? '' : 'none';
+  if (activeOKRSection === 'biz') { renderBizOKR(); return; }
+
   const tabsEl = document.getElementById('okr-org-tabs');
   tabsEl.innerHTML = Object.keys(OKR_DATA).map(id => {
     const meta = ORG_META[id];
@@ -1567,6 +1682,13 @@ function renderOKR(orgId) {
   const orgData = OKR_DATA[activeOrgTab];
   const meta = ORG_META[activeOrgTab];
   const contentEl = document.getElementById('okr-content');
+
+  // アライメントモード
+  if (studioAlignMode) {
+    contentEl.innerHTML = buildAlignmentTree(orgData.objectives, meta);
+    return;
+  }
+
   contentEl.innerHTML = `<div class="okr-accordion">${orgData.objectives.map((obj,i) => {
     const projsForObj = state.projects.filter(p=>(p.linkedKRs||[]).some(krId=>obj.krs.some(kr=>kr.id===krId)));
     const krRates = obj.krs.map(kr=>krAchRate(kr)).filter(r=>r!==null);
@@ -1608,7 +1730,6 @@ function renderOKR(orgId) {
       </div>
     </div>`;
   }).join('')}</div>`;
-  renderBizOKR();
 }
 
 function selectOKROrg(orgId) {
@@ -1619,6 +1740,115 @@ function selectOKROrg(orgId) {
 function toggleObj(objId) {
   const card = document.getElementById('obj-card-' + objId);
   card.classList.toggle('open');
+}
+
+// ================== ALIGNMENT TREE ==================
+function buildAlignmentTree(objectives, orgMeta) {
+  if (!objectives.length) return '<div style="padding:24px;text-align:center;color:#bbb;font-size:13px">Objectiveが設定されていません</div>';
+  const statusLabel = {active:'進行中', warning:'要注意', delayed:'遅延', completed:'完了'};
+  const statusColor = {active:'#3b82f6', warning:'#f59e0b', delayed:'#ef4444', completed:'#22c55e'};
+
+  return `<div class="align-tree">${objectives.map((obj, i) => {
+    return `<div class="align-obj-block">
+      <div class="align-obj-head">
+        <div class="align-obj-num" style="background:${orgMeta.color}">${i+1}</div>
+        <div style="flex:1">
+          <div class="align-obj-name">${e(obj.name)}</div>
+          ${obj.desc ? `<div style="font-size:11px;color:#888;margin-top:2px">${e(obj.desc)}</div>` : ''}
+        </div>
+      </div>
+      ${obj.krs.map(kr => {
+        const actual = state.actuals[kr.id]?.actual ?? null;
+        const rate = krAchRate(kr);
+        const fillW = rate !== null ? Math.min(100, rate) : 0;
+        const rateColor = rate === null ? '#ccc' : rate >= 100 ? '#16a34a' : rate >= 70 ? '#3b82f6' : rate >= 40 ? '#f59e0b' : '#ef4444';
+        const linkedProjs = state.projects.filter(p => (p.linkedKRs||[]).includes(kr.id));
+        return `<div class="align-kr-block">
+          <div class="align-kr-head">
+            <span style="font-size:13px;flex-shrink:0">📊</span>
+            <span class="align-kr-label">${e(kr.name)}</span>
+            <div class="align-kr-meta">
+              <span class="align-kr-target">目標 ${kr.target !== null && kr.target !== undefined ? kr.target + (kr.unit||'') : '—'}</span>
+              ${actual !== null ? `<span class="align-kr-target" style="background:#e0f2fe;color:#0284c7">実績 ${actual}${kr.unit||''}</span>` : ''}
+              <div class="align-kr-bar"><div class="align-kr-fill" style="width:${fillW}%;background:${rateColor}"></div></div>
+              <span class="align-kr-rate" style="color:${rateColor}">${rate !== null ? rate+'%' : '—'}</span>
+            </div>
+          </div>
+          <div class="align-proj-list">
+            ${linkedProjs.length ? linkedProjs.map(proj => {
+              const tasks = ganttTasks.filter(t => t.projectId === proj.id && !t.parentId);
+              const doneTasks = tasks.filter(t => t.status === 'done' || t.status === '完了');
+              const sc = statusColor[proj.status] || '#94a3b8';
+              const sl = statusLabel[proj.status] || proj.status;
+              return `<div class="align-proj-row" style="border-left-color:${sc}22;background:${sc}08">
+                <div class="align-proj-body">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                    <span style="font-size:14px">📁</span>
+                    <span class="align-proj-name">${e(proj.name)}</span>
+                    <span style="font-size:10px;padding:2px 7px;border-radius:10px;background:${sc}22;color:${sc};font-weight:600">${sl}</span>
+                    ${proj.owner ? `<span style="font-size:11px;color:#888">👤 ${e(proj.owner)}</span>` : ''}
+                    ${tasks.length ? `<span style="font-size:11px;color:#888">タスク ${doneTasks.length}/${tasks.length}完了</span>` : ''}
+                  </div>
+                  ${proj.impactMetric ? `<div style="font-size:11px;color:#555;margin-top:4px;padding:3px 6px;background:#fff7ed;border-radius:5px;display:inline-block">🎯 ${e(proj.impactMetric)}</div>` : ''}
+                  ${tasks.length ? `<div class="align-task-list">${tasks.slice(0, 6).map(t => {
+                    const done = t.status === 'done' || t.status === '完了';
+                    return `<div class="align-task-item">
+                      <div class="align-task-dot" style="background:${done?'#22c55e':'#cbd5e1'}"></div>
+                      <span style="${done?'text-decoration:line-through;color:#aaa':''}">${e(t.name)}</span>
+                    </div>`;
+                  }).join('')}${tasks.length > 6 ? `<div style="font-size:11px;color:#aaa;margin-left:13px">… 他${tasks.length-6}件</div>` : ''}</div>` : ''}
+                </div>
+              </div>`;
+            }).join('') : `<div class="align-empty-proj">プロジェクトがまだ紐づいていません</div>`}
+            <button class="align-link-btn" onclick="openLinkProjModal('${kr.id}')">＋ プロジェクトを紐づける</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+// ================== LINK PROJ MODAL ==================
+function openLinkProjModal(krId) {
+  linkingKRId = krId;
+  const kr = getKRById(krId);
+  document.getElementById('lpm-kr-name').textContent = kr ? kr.name : krId;
+  const list = document.getElementById('lpm-proj-list');
+  if (!state.projects.length) {
+    list.innerHTML = '<div style="color:#bbb;font-size:13px;text-align:center;padding:20px">プロジェクトがありません。先にプロジェクトを追加してください。</div>';
+  } else {
+    const statusLabel = {active:'進行中', warning:'要注意', delayed:'遅延', completed:'完了'};
+    list.innerHTML = state.projects.map(p => {
+      const linked = (p.linkedKRs||[]).includes(krId);
+      return `<label class="lpm-proj-item">
+        <input class="lpm-proj-check" type="checkbox" value="${p.id}" ${linked?'checked':''}
+          onchange="toggleProjKRLink('${krId}','${p.id}',this.checked)">
+        <div class="lpm-proj-info">
+          <div class="lpm-proj-pname">${e(p.name)}</div>
+          <div class="lpm-proj-pmeta">${statusLabel[p.status]||p.status}${p.owner?' · '+e(p.owner):''}${p.impactMetric?' · 🎯 '+e(p.impactMetric.slice(0,30)):''}
+          </div>
+        </div>
+      </label>`;
+    }).join('');
+  }
+  document.getElementById('link-proj-modal').classList.add('open');
+}
+
+function toggleProjKRLink(krId, projId, linked) {
+  const proj = state.projects.find(p => p.id === projId);
+  if (!proj) return;
+  proj.linkedKRs = proj.linkedKRs || [];
+  if (linked) { if (!proj.linkedKRs.includes(krId)) proj.linkedKRs.push(krId); }
+  else { proj.linkedKRs = proj.linkedKRs.filter(id => id !== krId); }
+  saveProjects();
+}
+
+function closeLinkProjModal() {
+  document.getElementById('link-proj-modal').classList.remove('open');
+  linkingKRId = null;
+  // 表示を更新
+  if (activeOKRSection === 'studio') renderOKR();
+  else renderBizOKRContent(activeBizOkrTab);
 }
 
 function saveKRActual(krId, val) {
@@ -1693,6 +1923,16 @@ function renderBizOKRContent(bizId) {
   if (!contentEl) return;
   const data = getBizOkrData(bizId);
 
+  // アライメントモード
+  if (bizAlignMode) {
+    if (!data.objectives.length) {
+      contentEl.innerHTML = `<div class="biz-okr-empty"><div style="font-size:13px;color:#ccc">OKRが設定されていません</div><div style="margin-top:12px"><button class="btn-primary" onclick="openBizObjModal('${bizId}',null)">＋ Objectiveを追加</button></div></div>`;
+    } else {
+      contentEl.innerHTML = buildAlignmentTree(data.objectives, {color: biz.color, name: biz.name, icon: biz.icon||'📦'});
+    }
+    return;
+  }
+
   if (!data.objectives.length) {
     contentEl.innerHTML = `<div class="biz-okr-empty">
       <div style="font-size:32px;margin-bottom:12px">${biz.icon||'📦'}</div>
@@ -1712,23 +1952,28 @@ function renderBizOKRContent(bizId) {
           <div class="obj-head" onclick="toggleBizObj('${obj.id}')">
             <div class="obj-num" style="background:${biz.color}">${i+1}</div>
             <div style="flex:1">
-              <div class="obj-name">${e(obj.name)}</div>
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                <span class="kgi-badge" style="background:${biz.color}22;color:${biz.color}">KGI</span>
+                <div class="obj-name">${e(obj.name)}</div>
+              </div>
               ${obj.desc?`<div class="obj-desc">${e(obj.desc)}</div>`:''}
             </div>
             ${avgRate!==null?`<div style="font-size:14px;font-weight:700;margin-right:8px">${avgRate}%</div>`:''}
-            <button class="btn-icon" style="margin-right:4px" onclick="event.stopPropagation();openBizObjModal('${bizId}','${obj.id}')" title="編集">✎</button>
+            <button class="btn-icon" style="margin-right:4px" onclick="event.stopPropagation();openBizObjModal('${bizId}','${obj.id}')" title="KGIを編集">✎</button>
             <button class="btn-icon" style="color:#ef4444;margin-right:6px" onclick="event.stopPropagation();deleteBizObj('${bizId}','${obj.id}')" title="削除">✕</button>
             <div class="obj-chevron">▶</div>
           </div>
           <div class="obj-body">
-            <div class="kr-list">
-              <div class="kr-header"><div>Key Result</div><div>目標</div><div>実績入力</div><div>進捗</div><div>達成率</div></div>
+            <div class="kr-list biz-kr-list">
+              <div class="kr-header">
+                <div>KPI（重要指標）</div><div>目標</div><div>実績入力</div><div>進捗</div><div>達成率</div><div></div>
+              </div>
               ${obj.krs.length ? obj.krs.map(kr => {
                 const actual = state.actuals[kr.id]?.actual ?? '';
                 const rate = krAchRate(kr);
                 const fillW = rate !== null ? Math.min(100,rate) : 0;
-                return `<div class="kr-item">
-                  <div class="kr-name">${e(kr.name)}${kr.lowerIsBetter?'<div style="font-size:10px;color:#999">※低いほど良い</div>':''}</div>
+                return `<div class="kr-item" id="kr-item-${kr.id}">
+                  <div class="kr-name">${e(kr.name)}${kr.lowerIsBetter?'<span style="font-size:10px;color:#999;margin-left:4px">↓低い方が良い</span>':''}</div>
                   <div class="kr-target">${kr.target!==null&&kr.target!==undefined?kr.target+' '+e(kr.unit||''):'—'}</div>
                   <div class="kr-actual-wrap">
                     <input class="kr-actual-input" type="number" value="${actual}" placeholder="実績"
@@ -1739,20 +1984,112 @@ function renderBizOKRContent(bizId) {
                     <div class="kr-bar"><div class="${rateClass(rate)}" id="krbar-${kr.id}" style="width:${fillW}%"></div></div>
                   </div>
                   <div class="kr-rate ${rateTextClass(rate)}" id="krrate-${kr.id}">${rate!==null?rate+'%':'—'}</div>
+                  <div class="kr-action-btns">
+                    <button class="btn-icon" onclick="startKREdit('${bizId}','${obj.id}','${kr.id}')" title="編集">✎</button>
+                    <button class="btn-icon" style="color:#ef4444" onclick="deleteKR('${bizId}','${obj.id}','${kr.id}')" title="削除">✕</button>
+                  </div>
                 </div>`;
-              }).join('') : '<div style="padding:12px 0;color:#ccc;font-size:13px;text-align:center">KRがありません。Objectiveを編集してKRを追加してください。</div>'}
+              }).join('') : `<div style="padding:12px 0;color:#ccc;font-size:13px;text-align:center">KPIがまだ設定されていません</div>`}
+              <div id="kr-add-area-${obj.id}"></div>
+            </div>
+            <div style="padding:10px 20px 14px">
+              <button id="kr-add-btn-${obj.id}" class="align-link-btn" onclick="startKRAdd('${bizId}','${obj.id}')">＋ KPIを追加</button>
             </div>
           </div>
         </div>`;
       }).join('')}
     </div>
     <div style="margin-top:14px">
-      <button class="btn-primary" onclick="openBizObjModal('${bizId}',null)">＋ Objectiveを追加</button>
+      <button class="btn-primary" onclick="openBizObjModal('${bizId}',null)">＋ KGIを追加</button>
     </div>`;
 }
 
 function toggleBizObj(objId) {
   document.getElementById('biz-obj-card-' + objId)?.classList.toggle('open');
+}
+
+// ── KPI インライン編集 ──
+function startKREdit(bizId, objId, krId) {
+  const kr = getBizOkrData(bizId).objectives.find(o=>o.id===objId)?.krs.find(k=>k.id===krId);
+  if (!kr) return;
+  const el = document.getElementById('kr-item-' + krId);
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = `<div class="kr-edit-row">
+    <div class="kr-edit-fields">
+      <input id="kre-name-${krId}" class="fc" style="flex:1;min-width:140px;max-width:280px" value="${e(kr.name)}" placeholder="KPI名">
+      <input id="kre-target-${krId}" class="fc" style="width:80px" type="number" value="${kr.target??''}" placeholder="目標値">
+      <input id="kre-unit-${krId}" class="fc" style="width:72px" value="${e(kr.unit||'')}" placeholder="単位">
+      <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap">
+        <input id="kre-lower-${krId}" type="checkbox" ${kr.lowerIsBetter?'checked':''}> 低い方が良い
+      </label>
+      <div style="display:flex;gap:6px">
+        <button class="btn-primary" style="padding:6px 14px;font-size:12px" onclick="saveKREdit('${bizId}','${objId}','${krId}')">保存</button>
+        <button class="btn-cancel" style="padding:6px 10px;font-size:12px" onclick="renderBizOKRContent('${bizId}')">キャンセル</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('kre-name-' + krId)?.focus();
+}
+
+function saveKREdit(bizId, objId, krId) {
+  const name = document.getElementById('kre-name-'+krId)?.value.trim();
+  if (!name) { toast('KPI名を入力してください'); return; }
+  const targetVal = document.getElementById('kre-target-'+krId)?.value;
+  const unit = document.getElementById('kre-unit-'+krId)?.value.trim();
+  const lower = document.getElementById('kre-lower-'+krId)?.checked;
+  const data = getBizOkrData(bizId);
+  const kr = data.objectives.find(o=>o.id===objId)?.krs.find(k=>k.id===krId);
+  if (!kr) return;
+  kr.name = name; kr.target = targetVal===''?null:parseFloat(targetVal); kr.unit = unit; kr.lowerIsBetter = lower;
+  saveBizOkr(bizId);
+  renderBizOKRContent(bizId);
+}
+
+function deleteKR(bizId, objId, krId) {
+  if (!confirm('このKPIを削除しますか？')) return;
+  const data = getBizOkrData(bizId);
+  const obj = data.objectives.find(o=>o.id===objId);
+  if (!obj) return;
+  obj.krs = obj.krs.filter(k=>k.id!==krId);
+  saveBizOkr(bizId);
+  renderBizOKRContent(bizId);
+}
+
+function startKRAdd(bizId, objId) {
+  const btn = document.getElementById('kr-add-btn-'+objId);
+  if (btn) btn.style.display = 'none';
+  const area = document.getElementById('kr-add-area-'+objId);
+  if (!area) return;
+  area.innerHTML = `<div class="kr-add-row" style="margin:6px 0">
+    <div class="kr-edit-fields">
+      <input id="krn-name-${objId}" class="fc" style="flex:1;min-width:140px;max-width:280px" placeholder="KPI名（例: 売上）">
+      <input id="krn-target-${objId}" class="fc" style="width:80px" type="number" placeholder="目標値">
+      <input id="krn-unit-${objId}" class="fc" style="width:72px" placeholder="単位（万円など）">
+      <label style="font-size:12px;display:flex;align-items:center;gap:4px;cursor:pointer;white-space:nowrap">
+        <input id="krn-lower-${objId}" type="checkbox"> 低い方が良い
+      </label>
+      <div style="display:flex;gap:6px">
+        <button class="btn-primary" style="padding:6px 14px;font-size:12px" onclick="saveKRAdd('${bizId}','${objId}')">追加</button>
+        <button class="btn-cancel" style="padding:6px 10px;font-size:12px" onclick="renderBizOKRContent('${bizId}')">キャンセル</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('krn-name-'+objId)?.focus();
+}
+
+function saveKRAdd(bizId, objId) {
+  const name = document.getElementById('krn-name-'+objId)?.value.trim();
+  if (!name) { toast('KPI名を入力してください'); return; }
+  const targetVal = document.getElementById('krn-target-'+objId)?.value;
+  const unit = document.getElementById('krn-unit-'+objId)?.value.trim();
+  const lower = document.getElementById('krn-lower-'+objId)?.checked;
+  const data = getBizOkrData(bizId);
+  const obj = data.objectives.find(o=>o.id===objId);
+  if (!obj) return;
+  obj.krs.push({ id:'bkr_'+Date.now(), name, target:targetVal===''?null:parseFloat(targetVal), unit:unit||'', lowerIsBetter:lower||false });
+  saveBizOkr(bizId);
+  renderBizOKRContent(bizId);
 }
 
 function openBizObjModal(bizId, objId) {
@@ -1763,12 +2100,12 @@ function openBizObjModal(bizId, objId) {
   if (objId) {
     const obj = getBizOkrData(bizId).objectives.find(o => o.id === objId);
     if (!obj) return;
-    document.getElementById('bom-title').textContent = 'Objectiveを編集';
+    document.getElementById('bom-title').textContent = 'KGIを編集';
     document.getElementById('bom-name').value = obj.name;
     document.getElementById('bom-desc').value = obj.desc || '';
     bizOkrEditingKRs = obj.krs.map(kr => ({...kr}));
   } else {
-    document.getElementById('bom-title').textContent = 'Objectiveを追加';
+    document.getElementById('bom-title').textContent = 'KGIを追加';
     document.getElementById('bom-name').value = '';
     document.getElementById('bom-desc').value = '';
     bizOkrEditingKRs = [];
@@ -1841,6 +2178,7 @@ function deleteBizObj(bizId, objId) {
 
 // Close biz OKR modal on overlay click
 document.getElementById('biz-okr-obj-modal').addEventListener('click', function(ev){ if(ev.target===this) closeBizObjModal(); });
+document.getElementById('link-proj-modal').addEventListener('click', function(ev){ if(ev.target===this) closeLinkProjModal(); });
 
 function exportOKR() {
   let text = '2026年度 OKRサマリー\n\n';
@@ -2698,39 +3036,69 @@ function renderBiz() {
   }
 }
 
+// スタジオ／事業を統一して返すヘルパー
+function getBizOrStudio(id) {
+  const biz = state.businesses.find(b => b.id === id);
+  if (biz) return { ...biz, isStudio: false };
+  const meta = ORG_META[id];
+  if (meta) return { id, name: meta.name, color: meta.color, icon: meta.icon, isStudio: true };
+  return null;
+}
+
 function renderBizGrid(){
   const grid = document.getElementById('biz-grid');
   if(!grid) return;
-  if(!state.businesses.length){
-    grid.innerHTML='<div style="color:#ccc;text-align:center;padding:60px;font-size:14px">事業が登録されていません</div>';
-    return;
-  }
-  grid.innerHTML = state.businesses.map(biz=>{
-    const projs = state.projects.filter(p=>p.businessId===biz.id);
+
+  function buildCard(id, color, icon, name, projs, isStudio) {
     const active = projs.filter(p=>p.status==='active'||p.status==='warning').length;
     const done   = projs.filter(p=>p.status==='completed').length;
     const total  = projs.length;
     const pct    = total ? Math.round(done/total*100) : 0;
     const tasks  = ganttTasks.filter(t=> projs.some(p=>p.id===t.projectId));
     const activeTasks = tasks.filter(t=>t.status==='doing').length;
-    return `<div class="biz-card" style="border-top-color:${biz.color}" onclick="openBizDetail('${biz.id}')">
-      <div class="biz-card-acts">
-        <button class="biz-act-btn" onclick="event.stopPropagation();openBizModal('${biz.id}')" title="編集">✎</button>
-        <button class="biz-act-btn" onclick="event.stopPropagation();deleteBiz('${biz.id}')" title="削除" style="color:#ef4444">✕</button>
-      </div>
+    const acts = isStudio ? '' : `<div class="biz-card-acts">
+      <button class="biz-act-btn" onclick="event.stopPropagation();openBizModal('${id}')" title="編集">✎</button>
+      <button class="biz-act-btn" onclick="event.stopPropagation();deleteBiz('${id}')" title="削除" style="color:#ef4444">✕</button>
+    </div>`;
+    const label = isStudio
+      ? `<span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:${color}22;color:${color}">スタジオ</span>`
+      : '';
+    return `<div class="biz-card" style="border-top-color:${color}" onclick="openBizDetail('${id}')">
+      ${acts}
       <div class="biz-card-head">
-        <div class="biz-card-icon" style="background:${biz.color}22">${biz.icon||'📦'}</div>
-        <div class="biz-card-name">${e(biz.name)}</div>
+        <div class="biz-card-icon" style="background:${color}22">${icon||'📦'}</div>
+        <div style="flex:1"><div class="biz-card-name">${e(name)}</div>${label}</div>
       </div>
       <div class="biz-card-stats">
-        <div class="biz-stat"><div class="biz-stat-num" style="color:${biz.color}">${active}</div><div class="biz-stat-lbl">進行中PJ</div></div>
+        <div class="biz-stat"><div class="biz-stat-num" style="color:${color}">${active}</div><div class="biz-stat-lbl">進行中PJ</div></div>
         <div class="biz-stat"><div class="biz-stat-num" style="color:#22c55e">${done}</div><div class="biz-stat-lbl">完了PJ</div></div>
         <div class="biz-stat"><div class="biz-stat-num" style="color:#3b82f6">${activeTasks}</div><div class="biz-stat-lbl">対応中タスク</div></div>
       </div>
-      <div class="biz-card-bar"><div class="biz-card-fill" style="width:${pct}%;background:${biz.color}"></div></div>
+      <div class="biz-card-bar"><div class="biz-card-fill" style="width:${pct}%;background:${color}"></div></div>
       <div style="font-size:11px;color:#aaa;margin-top:6px">プロジェクト ${total}件 / 完了率 ${pct}%</div>
     </div>`;
-  }).join('');
+  }
+
+  const studioCards = Object.entries(ORG_META).map(([id, meta]) =>
+    buildCard(id, meta.color, meta.icon, meta.name,
+      state.projects.filter(p=>p.org===id), true)
+  ).join('');
+
+  const bizCards = state.businesses.map(biz =>
+    buildCard(biz.id, biz.color, biz.icon||'📦', biz.name,
+      state.projects.filter(p=>p.businessId===biz.id), false)
+  ).join('');
+
+  grid.innerHTML = `
+    <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-bottom:-4px">
+      <span style="font-size:13px;font-weight:700;color:#555">🏢 スタジオ</span>
+    </div>
+    ${studioCards}
+    <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-top:8px;margin-bottom:-4px">
+      <span style="font-size:13px;font-weight:700;color:#555">📦 事業</span>
+    </div>
+    ${bizCards || '<div style="grid-column:1/-1;color:#ccc;font-size:13px;padding:12px 0">事業が登録されていません</div>'}
+  `;
 }
 
 function openBizDetail(bizId){
@@ -2750,21 +3118,29 @@ function selectTab(tabId){
 }
 
 function renderBizDetail(bizId){
-  const biz = state.businesses.find(b=>b.id===bizId);
+  const biz = getBizOrStudio(bizId);
   if(!biz) return;
   // Header
   const iconEl = document.getElementById('biz-d-icon');
   const nameEl = document.getElementById('biz-d-name');
   if(iconEl){ iconEl.textContent=biz.icon||'📦'; iconEl.style.background=biz.color+'22'; }
   if(nameEl){ nameEl.textContent=biz.name; nameEl.style.color=biz.color; }
+  const actsEl = document.getElementById('biz-d-edit-acts');
+  if(actsEl){
+    actsEl.innerHTML = biz.isStudio ? '' :
+      `<button class="btn-cancel" style="font-size:12px;padding:5px 12px" onclick="openBizModal('${bizId}')">✎ 編集</button>
+       <button class="btn-cancel" style="font-size:12px;padding:5px 12px;color:#ef4444" onclick="deleteBiz('${bizId}')">✕ 削除</button>`;
+  }
   // OKR
   const okrEl = document.getElementById('biz-d-okr');
   if(okrEl){
-    const bizOkr = getBizOkrData(bizId);
-    if(!bizOkr.objectives.length){
+    const objectives = biz.isStudio
+      ? (OKR_DATA[bizId]?.objectives || [])
+      : getBizOkrData(bizId).objectives;
+    if(!objectives.length){
       okrEl.innerHTML=`<div style="text-align:center;padding:16px;color:#ccc;font-size:13px">OKRが設定されていません。<button class="btn-cancel" style="margin-left:8px;font-size:12px;padding:4px 10px" onclick="selectTab('okr')">OKRタブで設定する</button></div>`;
     } else {
-      okrEl.innerHTML = bizOkr.objectives.map((obj,i)=>{
+      okrEl.innerHTML = objectives.map((obj,i)=>{
         const krRates = obj.krs.map(kr=>krAchRate(kr)).filter(r=>r!==null);
         const avgRate = krRates.length ? Math.round(krRates.reduce((a,b)=>a+b,0)/krRates.length) : null;
         const rateColor = avgRate===null?'#ccc':avgRate>=100?'#16a34a':avgRate>=70?'#1a1a2e':'#d97706';
@@ -2782,8 +3158,10 @@ function renderBizDetail(bizId){
       }).join('');
     }
   }
-  // Projects
-  const projs = state.projects.filter(p=>p.businessId===bizId);
+  // Projects（スタジオはp.org、事業はp.businessId）
+  const projs = biz.isStudio
+    ? state.projects.filter(p=>p.org===bizId)
+    : state.projects.filter(p=>p.businessId===bizId);
   const projGrid = document.getElementById('biz-proj-grid');
   if(projGrid){
     if(!projs.length){
@@ -2867,18 +3245,18 @@ function renderBizSidebar() {
     if (!bizSidebarOrder.includes(item.id)) ordered.push(item);
   }
 
-  const allItem = { id:'all', name:'すべて', icon:'🌐', color:'#6366f1' };
-  const filtered = [allItem, ...ordered.filter(item=>!q||item.name.toLowerCase().includes(q))];
+  // 「すべて」なし。初回アクセス時は最初の項目を自動選択
+  if ((ganttBizFilter === 'all' || !ordered.find(x=>x.id===ganttBizFilter)) && ordered.length > 0) {
+    ganttBizFilter = ordered[0].id;
+  }
+  const filtered = ordered.filter(item=>!q||item.name.toLowerCase().includes(q));
 
   list.innerHTML = filtered.map((item,i)=>{
     const cnt = getBizTaskCount(item.id);
     const isActive = ganttBizFilter===item.id;
-    const isAll = item.id === 'all';
-    const sep = (i===1 && filtered.length>1) ? '<div class="biz-sidebar-sep"></div>' : '';
-    const dragAttrs = isAll ? '' :
-      `draggable="true" ondragstart="bizDragStart(event,'${item.id}')" ondragover="bizDragOver(event,'${item.id}')" ondragleave="bizDragLeave(event)" ondrop="bizDrop(event,'${item.id}')" ondragend="bizDragEnd(event)"`;
-    const handle = isAll ? '' : `<span class="biz-drag-handle" title="ドラッグで並び替え">⠿</span>`;
-    return sep + `<div class="biz-sidebar-item${isActive?' active':''}" ${dragAttrs} onclick="if(!bizDragJustDone)selectBizSidebar('${item.id}')">
+    const dragAttrs = `draggable="true" ondragstart="bizDragStart(event,'${item.id}')" ondragover="bizDragOver(event,'${item.id}')" ondragleave="bizDragLeave(event)" ondrop="bizDrop(event,'${item.id}')" ondragend="bizDragEnd(event)"`;
+    const handle = `<span class="biz-drag-handle" title="ドラッグで並び替え">⠿</span>`;
+    return `<div class="biz-sidebar-item${isActive?' active':''}" ${dragAttrs} onclick="if(!bizDragJustDone)selectBizSidebar('${item.id}')">
       ${handle}
       <span class="biz-sidebar-icon">${item.icon}</span>
       <span class="biz-sidebar-name">${e(item.name)}</span>
@@ -2974,7 +3352,10 @@ function openGanttModalForBiz() {
 function renderBizGantt(bizId){
   const dates = getBizGanttDates();
   const today = new Date().toISOString().slice(0,10);
-  const projs = state.projects.filter(p=>p.businessId===bizId);
+  const isStudio = !!ORG_META[bizId];
+  const projs = isStudio
+    ? state.projects.filter(p=>p.org===bizId)
+    : state.projects.filter(p=>p.businessId===bizId);
   const projIds = new Set(projs.map(p=>p.id));
 
   const s=new Date(bizGanttViewStart+'T00:00:00'),en=new Date(dates[dates.length-1]+'T00:00:00');
@@ -3105,6 +3486,29 @@ const GANTT_DAYS = 56;
 let ganttEditId = null;
 let ganttCollapsed = new Set();
 let ganttBizFilter = 'all'; // 'all' or biz/org ID
+let activeStFilters = new Set(['todo','doing','done','hold']); // 複数選択ステータス
+
+function toggleStFilter(el, st) {
+  if (activeStFilters.has(st)) {
+    activeStFilters.delete(st);
+    el.classList.remove('active');
+  } else {
+    activeStFilters.add(st);
+    el.classList.add('active');
+  }
+  renderTaskView();
+}
+
+function updateAssigneeFilter() {
+  const sel = document.getElementById('gt-assignee-filter');
+  if (!sel) return;
+  const cur = sel.value;
+  const names = [...new Set(
+    ganttTasks.map(t=>t.assignee||'').filter(Boolean).sort()
+  )];
+  sel.innerHTML = '<option value="all">すべての担当者</option>' +
+    names.map(n=>`<option value="${e(n)}" ${n===cur?'selected':''}>${e(n)}</option>`).join('');
+}
 let ganttDrag = null; // {taskId, handle, startX, origStart, origEnd}
 let taskViewMode = 'list'; // 'list' or 'gantt'
 let tlCollapsed = new Set(); // collapsed project sections in list view
@@ -3457,7 +3861,7 @@ function renderGantt() {
   }
 
   const fProj=document.getElementById('gt-proj-filter')?.value||'all';
-  const fSt=document.getElementById('gt-st-filter')?.value||'all';
+  const fAssigneeG = document.getElementById('gt-assignee-filter')?.value||'all';
 
   const ordered = ganttFlatOrder().filter(t=>{
     // 事業フィルター
@@ -3467,7 +3871,8 @@ function renderGantt() {
       if((proj.businessId||proj.org)!==ganttBizFilter) return false;
     }
     if(fProj!=='all' && t.projectId!==fProj) return false;
-    if(fSt!=='all'   && t.status!==fSt)      return false;
+    if(activeStFilters.size > 0 && !activeStFilters.has(t.status)) return false;
+    if(fAssigneeG!=='all' && (t.assignee||'')!==fAssigneeG) return false;
     return true;
   });
 
@@ -3848,8 +4253,9 @@ function renderTaskListView() {
   const wrap = document.getElementById('tl-list-wrap');
   if (!wrap) return;
 
-  const fSt   = document.getElementById('gt-st-filter')?.value||'all';
-  const fProj = document.getElementById('gt-proj-filter')?.value||'all';
+  updateAssigneeFilter();
+  const fProj     = document.getElementById('gt-proj-filter')?.value||'all';
+  const fAssignee = document.getElementById('gt-assignee-filter')?.value||'all';
 
   const visibleProjs = ganttBizFilter==='all'
     ? state.projects
@@ -3865,6 +4271,13 @@ function renderTaskListView() {
     return;
   }
 
+  // タスクフィルター関数
+  const passTask = t => {
+    if (activeStFilters.size > 0 && !activeStFilters.has(t.status)) return false;
+    if (fAssignee !== 'all' && (t.assignee||'') !== fAssignee) return false;
+    return true;
+  };
+
   // ガントと同じテーブル構造（日付列なし）で描画
   const LIST_COLS = 10;
   let rows = [];
@@ -3873,15 +4286,14 @@ function renderTaskListView() {
     rows.push(buildProjHeaderRow(proj, LIST_COLS));
     if (!tlCollapsed.has(proj.id)) {
       const rootTasks = ganttTasks.filter(t => t.projectId===proj.id && !t.parentId);
-      const filtered  = fSt==='all' ? rootTasks : rootTasks.filter(t=>t.status===fSt);
+      const filtered  = rootTasks.filter(passTask);
       let isFirstTask = true;
       for (const task of filtered) {
         rows.push(buildGanttRow(task, [], '', true, isFirstTask));
         isFirstTask = false;
         if (tlExpandedTasks.has(task.id)) {
           const children = ganttTasks.filter(c=>c.parentId===task.id);
-          const filtCh = fSt==='all' ? children : children.filter(c=>c.status===fSt);
-          filtCh.forEach(child => rows.push(buildGanttRow(child, [], '', true, false)));
+          children.filter(passTask).forEach(child => rows.push(buildGanttRow(child, [], '', true, false)));
         }
       }
       rows.push(buildAddTaskRow(proj.id, LIST_COLS));
@@ -4031,7 +4443,7 @@ loadBizOkr();
 loadWeeklyReports();
 loadGanttTasks();
 loadBizOrder();
-renderDashboard();
+renderBiz();
 renderOKR();
 </script>
 <div id="gantt-drag-tooltip"></div>

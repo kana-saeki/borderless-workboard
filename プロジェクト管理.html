@@ -545,21 +545,20 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
   <div class="header-inner">
     <h1>🌏 BJ プロジェクト管理</h1>
     <nav class="tab-nav">
-      <!-- <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button> -->
-      <!-- 他タブは要件確定後に再表示予定 -->
-      <!-- <button class="tab-btn" data-tab="biz">📦 事業</button> -->
-      <!-- <button class="tab-btn" data-tab="okr">OKR</button> -->
-      <!-- <button class="tab-btn" data-tab="weekly">📅 週次報告</button> -->
-      <!-- <button class="tab-btn" data-tab="projects">プロジェクト</button> -->
+      <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
+      <button class="tab-btn" data-tab="biz">📦 事業</button>
+      <button class="tab-btn" data-tab="okr">OKR</button>
+      <button class="tab-btn" data-tab="weekly">📅 週次報告</button>
+      <button class="tab-btn" data-tab="projects">プロジェクト</button>
       <button class="tab-btn" data-tab="gantt">📋 タスク一覧</button>
-      <!-- <button class="tab-btn" data-tab="monitor">モニタリング</button> -->
-      <!-- <button class="tab-btn" data-tab="settings">⚙ 設定</button> -->
+      <button class="tab-btn" data-tab="monitor">モニタリング</button>
+      <button class="tab-btn" data-tab="settings">⚙ 設定</button>
     </nav>
   </div>
 </header>
 
 <!-- DASHBOARD TAB -->
-<div id="tab-dashboard" class="tab-content">
+<div id="tab-dashboard" class="tab-content active">
   <div class="page">
     <div style="font-size:13px;color:#888;margin-bottom:10px;font-weight:600">🏢 ボーダレスグループ 全事業 KR達成状況</div>
     <div class="dash-grid" id="dash-org-cards"></div>
@@ -754,7 +753,7 @@ tr.gt-proj-drag-over td{background:#eff3ff!important;border-top:2px solid #6366f
 </div>
 
 <!-- GANTT / TASK LIST TAB -->
-<div id="tab-gantt" class="tab-content active">
+<div id="tab-gantt" class="tab-content">
   <div class="page" style="padding:0;background:transparent;box-shadow:none">
     <div class="task-layout">
       <!-- ── 左サイドバー: 事業一覧 ── -->
@@ -1379,7 +1378,7 @@ function getBizOkrData(bizId) {
 }
 
 // ================== TABS ==================
-let activeTab = 'gantt';
+let activeTab = 'dashboard';
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
@@ -4032,7 +4031,8 @@ loadBizOkr();
 loadWeeklyReports();
 loadGanttTasks();
 loadBizOrder();
-renderTaskView();
+renderDashboard();
+renderOKR();
 </script>
 <div id="gantt-drag-tooltip"></div>
 </body>
